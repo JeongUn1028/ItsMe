@@ -4,7 +4,7 @@ summary: "Next.js 기반 개인 포트폴리오 프로젝트"
 thumbnail: "images/portfolio.png"
 tags: ["Next.js", "TypeScript", "TDD"]
 status: "published"
-createAt: "2026-03-25"
+createdAt: "2026-03-25"
 ---
 
 ## 프로젝트 소개
