@@ -1,20 +1,35 @@
+//**
+//** type  */
+
+
 interface RawFrontmatter {
-  title?: string;
-  summary?: string;
+  //* 백그라운드에서 동작 하는 필드
   thumbnail?: string;
-  tags?: string[];
+  size?: number[];
   status?: "draft" | "published";
+  //* 상단에 있는 필드
+  title?: string;
+  tags?: string[];
   createdAt?: string;
+  publishedAt?: string;
+  githubLink?: string;
+  velogLink?: string;
+  //* 하단에 있는 필드
+  summary?: string;
 }
 
 interface Project {
   slug: string;
-  title: string;
-  summary: string;
   thumbnail: string;
-  tags: string[];
+  size: number[];
   status: "draft" | "published";
+  title: string;
+  tags: string[];
   createdAt: string;
+  publishedAt: string;
+  githubLink: string;
+  velogLink: string;
+  summary: string;
 }
 
 export type { RawFrontmatter, Project };
