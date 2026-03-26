@@ -1,10 +1,14 @@
 ---
-title: "샘플 포트폴리오 프로젝트"
-summary: "Next.js 기반 개인 포트폴리오 프로젝트"
 thumbnail: "images/portfolio.png"
-tags: ["Next.js", "TypeScript", "TDD"]
+size: [1, 4]
 status: "published"
-createdAt: "2026-03-25"
+title: "Next.js 기반 개인 포트폴리오 프로젝트"
+tags: ["Next.js", "TypeScript", "TDD"]
+createdAt: "2026-04-26"
+publishedAt: "2026-03-26"
+githubLink: "https://github.com/JeongUn1028"
+velogLink: "https://velog.io/@jeongun1028/Next.js-%EA%B8%B0%EB%B0%98-Static-Portfolio-%EA%B5%AC%EC%B6%95"
+summary: "
 ---
 
 ## 프로젝트 소개
@@ -17,7 +21,7 @@ createdAt: "2026-03-25"
 
 기존 포트폴리오는 결과만 보여주는 경우가 많았습니다.
 
---
+---
 
 ## 해결
 
@@ -25,8 +29,4 @@ createdAt: "2026-03-25"
 
 ---
 
-## 기술 스택
-
-- Next.js
-- Tailwind CSS
-- Vitest
+"
