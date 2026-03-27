@@ -4,7 +4,9 @@ import Image from "next/image";
 
 export default function Links() {
   return (
-    <div className={`${style.container} glass`}>
+    <div
+      className={`${style.container} glass col-span-1 row-span-1 h-full xl:col-start-2 xl:row-start-1`}
+    >
       <h1 className={style.title}>GIT/VELOG LINKS</h1>
       <div className={style.subContainer}>
         <div className={style.links}>

@@ -3,7 +3,9 @@ import style from "./contact.module.css";
 
 export default function Contact() {
   return (
-    <div className={`${style.container} glass`}>
+    <div
+      className={`${style.container} glass col-span-1 row-span-1 h-full xl:col-start-2 xl:row-start-2`}
+    >
       <h2 className={style.title}>Contact</h2>
       <div className={style.subContainer}>
         <div className={style.contacts}>
