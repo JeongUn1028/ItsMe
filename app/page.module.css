@@ -1,0 +1,11 @@
+.container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 1rem auto;
+  padding: 0.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}

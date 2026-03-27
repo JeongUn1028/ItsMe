@@ -1,6 +1,6 @@
 ---
 thumbnail: "images/portfolio.png"
-size: [1, 4]
+size: [2, 1]
 status: "published"
 title: "Next.js 기반 개인 포트폴리오 프로젝트"
 tags: ["Next.js", "TypeScript", "TDD"]

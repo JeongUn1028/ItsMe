@@ -7,6 +7,7 @@
   --glow-mint: rgba(150, 228, 209, 0.4);
   --glow-apricot: rgba(244, 182, 124, 0.32);
   --glow-cream: rgba(255, 247, 232, 0.9);
+  padding: 2rem;
 }
 
 @theme inline {
@@ -23,6 +24,7 @@ html {
 body {
   position: relative;
   min-height: 100vh;
+  width: 100%;
   overflow-x: hidden;
   background-color: var(--background);
   background-image:
@@ -76,4 +78,15 @@ body::after {
 main {
   position: relative;
   z-index: 1;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  box-shadow:
+    0 4px 24px rgba(180, 150, 100, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
