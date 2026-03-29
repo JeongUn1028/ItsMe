@@ -1,35 +1,23 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 100%;
-  height: 100%;
-  padding: 1rem;
+@reference "../../globals.css";
+
+.card {
+  @apply flex h-full w-full flex-col justify-evenly p-4;
 }
 
 .title {
-  font-size: 1.22rem;
-  font-weight: 600;
+  @apply text-xl font-semibold;
 }
-.subContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+
+.content {
+  @apply flex flex-col items-center justify-evenly;
   height: 70%;
 }
 
-.links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 60%;
-  height: 100%;
+.iconRow {
+  @apply flex h-full w-3/5 flex-row items-center justify-evenly;
 }
 
-.tag {
-  font-size: 0.8rem;
-  padding: 0.2rem 0.4rem;
-  color: rgb(75, 75, 74);
+.account {
+  @apply text-base;
+  color: #757575;
 }
