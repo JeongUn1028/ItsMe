@@ -1,107 +1,72 @@
-.container {
-  display: flex;
-  width: 100%;
-  height: 100%;
+@reference "../../globals.css";
+
+.card {
+  @apply flex h-full w-full overflow-hidden p-4;
   gap: 0.8rem;
-  min-height: 0;
-  overflow: hidden;
 }
 
-/** 가로 >= 세로: row 배치 (image 왼쪽, 텍스트 오른쪽) */
-.row {
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
+.rowLayout {
+  @apply flex-col sm:flex-row;
 }
 
-/** 세로 > 가로: column 배치 (image 위, 텍스트 아래) */
-.column {
-  flex-direction: row;
-  align-items: stretch;
-  justify-content: stretch;
+.columnLayout {
+  @apply flex-row;
 }
 
 .thumbnailWrap {
-  flex-shrink: 0;
-  width: 100%;
-  flex: 0 0 52%;
-  min-height: 0;
-  overflow: hidden;
-  border-radius: 10px;
+  @apply w-full shrink-0 overflow-hidden rounded-[10px];
+  flex-basis: 52%;
 }
 
-.thumbnail {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.thumbnailWrapRow {
+  @apply sm:w-auto;
 }
 
-.column .thumbnailWrap {
+.thumbnailWrapColumn {
   flex-basis: 58%;
 }
 
+.thumbnail {
+  @apply block h-full w-full object-cover;
+}
+
 .info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+  @apply flex min-h-0 min-w-0 flex-[1_1_0] flex-col justify-evenly overflow-hidden;
   gap: 0.4rem;
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
 }
 
-.info h2 {
+.title {
+  @apply m-0 overflow-hidden text-ellipsis whitespace-nowrap font-semibold;
   font-size: 1rem;
-  font-weight: 600;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.info p {
+.summary {
+  @apply m-0 overflow-hidden;
   font-size: 0.85rem;
-  margin: 0;
   opacity: 0.78;
   display: -webkit-box;
+  -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .tags {
-  display: flex;
-  flex-wrap: wrap;
+  @apply m-0 flex list-none flex-wrap p-0;
   gap: 0.3rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
 }
 
-.tags li {
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.65);
+.tag {
+  @apply rounded-full border border-white/65 bg-white/45 px-2 text-[0.75rem];
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
 }
 
-/** 태블릿 이상: 가로 배치 카드는 실제로 row */
 @media (min-width: 640px) {
-  .row {
-    flex-direction: row;
-    align-items: stretch;
-  }
-
-  .row .thumbnailWrap {
-    width: auto;
+  .thumbnailWrapRow {
     flex-basis: 45%;
   }
 
-  .row .info {
+  .infoRow {
     flex-basis: 55%;
   }
 }

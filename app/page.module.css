@@ -1,11 +1,47 @@
-.container {
-  width: 100%;
-  max-width: 1600px;
-  margin: 1rem auto;
-  padding: 0.5rem 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  justify-content: center;
-  align-items: center;
+@reference "./globals.css";
+
+.pageWrap {
+  @apply mx-auto m-4 flex w-full max-w-[1600px] flex-col items-center px-0.5;
+}
+
+.homeGrid {
+  @apply m-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3;
+  grid-auto-rows: clamp(130px, 34vw, 180px);
+}
+
+@media (min-width: 640px) {
+  .homeGrid {
+    grid-auto-rows: 200px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .homeGrid {
+    grid-auto-rows: 220px;
+  }
+}
+
+.velogCard {
+  @apply col-span-1 row-span-2 h-full sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1;
+}
+
+.velogInner {
+  @apply h-full w-full p-4;
+}
+
+.portfolioGrid {
+  @apply grid w-full grid-cols-2 grid-flow-row-dense gap-3 sm:grid-cols-2 xl:grid-cols-3;
+  grid-auto-rows: 150px;
+}
+
+@media (min-width: 640px) {
+  .portfolioGrid {
+    grid-auto-rows: 200px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .portfolioGrid {
+    grid-auto-rows: 220px;
+  }
 }

@@ -5,11 +5,11 @@ import Image from "next/image";
 export default function Links() {
   return (
     <div
-      className={`${style.container} glass col-span-1 row-span-1 h-full xl:col-start-2 xl:row-start-1`}
+      className={`glass col-span-1 row-span-1 xl:col-start-2 xl:row-start-1 ${style.card}`}
     >
       <h1 className={style.title}>GIT/VELOG LINKS</h1>
-      <div className={style.subContainer}>
-        <div className={style.links}>
+      <div className={style.content}>
+        <div className={style.iconRow}>
           <Link
             href="https://github.com/JEONGUN1028"
             target="_blank"
@@ -35,7 +35,7 @@ export default function Links() {
             />
           </Link>
         </div>
-        <div className={style.tag}>@JEONGUN1028</div>
+        <div className={style.account}>@JEONGUN1028</div>
       </div>
     </div>
   );

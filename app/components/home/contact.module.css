@@ -1,33 +1,23 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 100%;
-  height: 100%;
-  padding: 1rem;
+@reference "../../globals.css";
+
+.card {
+  @apply flex h-full w-full flex-col justify-evenly p-4;
 }
 
 .title {
-  font-size: 1.22rem;
-  font-weight: 600;
+  @apply text-xl font-semibold;
 }
 
-.subContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+.content {
+  @apply flex flex-col items-center;
   height: 70%;
 }
 
-.contacts {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 60%;
-  gap: 0.5rem;
-  height: 100%;
-  font-size: 0.9rem;
-  color: rgb(75, 75, 74);
+.row {
+  @apply flex h-full flex-row items-center justify-center gap-1;
+  color: #757575;
+}
+
+.value {
+  @apply text-base;
 }
