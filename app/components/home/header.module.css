@@ -1,9 +1,10 @@
 @reference "../../globals.css";
 
 .container {
-  @apply mx-auto flex w-full max-w-[1600px] flex-row items-center justify-between p-4;
+  @apply mx-auto flex w-full max-w-[1600px] flex-row items-center justify-between gap-3 p-4;
 }
 
 .title {
-  @apply text-4xl font-bold;
+  @apply min-w-0 text-[1.75rem] font-bold leading-none sm:text-4xl;
+  word-break: break-word;
 }

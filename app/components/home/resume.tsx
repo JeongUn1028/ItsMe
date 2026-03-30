@@ -8,7 +8,7 @@ export default function Resume() {
       <div className={style.content}>
         <div className={style.imageWrap}>
           <Image
-            src="/profile.jpg"
+            src="/profile.JPG"
             alt="profile image"
             width={220}
             height={220}
