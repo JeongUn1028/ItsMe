@@ -1,0 +1,119 @@
+@reference "../../globals.css";
+
+.viewport {
+  @apply mx-auto w-full max-w-[1100px] px-4 pb-16 pt-8 sm:px-6;
+}
+
+.modal {
+  @apply mx-auto w-full max-w-[860px] overflow-hidden rounded-[18px];
+  background: var(--background-soft);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 20px 52px rgba(94, 72, 34, 0.12),
+    0 2px 10px rgba(94, 72, 34, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px) saturate(135%);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+}
+
+.header {
+  @apply flex flex-col gap-4 border-b px-5 py-5 sm:px-8;
+  border-color: rgba(130, 102, 64, 0.16);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 250, 239, 0.45) 100%
+  );
+}
+
+.backLink {
+  @apply w-fit rounded-full px-3 py-1 text-sm font-medium transition-colors;
+  background: rgba(255, 255, 255, 0.58);
+  color: rgba(46, 33, 19, 0.88);
+}
+
+.backLink:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.title {
+  @apply m-0 text-2xl font-bold leading-tight sm:text-3xl;
+  color: rgba(29, 22, 15, 0.96);
+}
+
+.summary {
+  @apply m-0 text-sm leading-relaxed sm:text-base;
+  color: rgba(49, 36, 23, 0.84);
+}
+
+.metaRow {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.tag {
+  @apply rounded-full px-3 py-1 text-xs font-medium;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  color: rgba(67, 47, 24, 0.85);
+}
+
+.meta {
+  @apply text-xs font-medium;
+  color: rgba(70, 55, 40, 0.74);
+}
+
+.divider {
+  color: rgba(120, 94, 61, 0.38);
+}
+
+.linkRow {
+  @apply flex flex-wrap gap-2;
+}
+
+.resourceLink {
+  @apply rounded-full px-3 py-1 text-xs font-semibold transition-colors;
+  border: 1px solid rgba(144, 114, 74, 0.34);
+  background: rgba(250, 241, 227, 0.78);
+  color: rgba(80, 58, 33, 0.9);
+}
+
+.resourceLink:hover {
+  background: rgba(255, 248, 236, 0.95);
+}
+
+.content {
+  @apply px-5 py-6 sm:px-8 sm:py-8;
+}
+
+.content :global(h1),
+.content :global(h2),
+.content :global(h3) {
+  @apply mt-7 font-semibold first:mt-0;
+  color: rgba(32, 23, 14, 0.95);
+}
+
+.content :global(p),
+.content :global(li) {
+  @apply text-[0.97rem] leading-7;
+  color: rgba(46, 35, 24, 0.88);
+}
+
+.content :global(ul),
+.content :global(ol) {
+  @apply my-4 pl-5;
+}
+
+.content :global(code) {
+  @apply rounded px-1.5 py-0.5 text-[0.86rem];
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.content :global(pre) {
+  @apply my-5 overflow-x-auto rounded-xl p-4;
+  background: rgba(37, 26, 14, 0.9);
+}
+
+.content :global(pre code) {
+  @apply bg-transparent p-0;
+  color: rgba(252, 246, 236, 0.95);
+}

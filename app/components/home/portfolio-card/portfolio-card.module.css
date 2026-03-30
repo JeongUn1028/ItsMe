@@ -1,7 +1,7 @@
-@reference "../../globals.css";
+@reference "../../../globals.css";
 
 .card {
-  @apply flex h-full w-full overflow-hidden p-4;
+  @apply flex h-full w-full overflow-hidden p-4 hover:cursor-pointer rounded-[10px] transition-transform duration-200 ease-in-out;
   gap: 0.8rem;
 }
 
