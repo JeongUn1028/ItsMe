@@ -36,4 +36,11 @@ interface Project {
   contents: string;
 }
 
-export type { RawFrontmatter, Project, SpanSize, TabletSpanSize };
+interface VelogPost {
+  title: string;
+  tags: string[];
+  url_slug: string;
+  released_at: string;
+}
+
+export type { RawFrontmatter, Project, SpanSize, TabletSpanSize, VelogPost };
