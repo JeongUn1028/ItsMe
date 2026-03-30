@@ -19,7 +19,6 @@ export default function Resume() {
           <p className={style.description}>
             설계부터 시작해 나가는 개발자입니다.
           </p>
-          <div className={style.linkText}>View Full Markdown Resume</div>
         </div>
       </div>
     </div>

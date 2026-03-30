@@ -1,9 +1,47 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getProjectData } from "@/lib/projects/getProjectData";
 import { useMDXComponents } from "@/mdx-components";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
-import BackToHomeButton from "@/app/components/back-to-home-button";
+import BackToHomeButton from "@/app/components/ui/back-to-home-button";
 import style from "./page.module.css";
+
+function getProjectOrNotFound(slug: string) {
+  try {
+    return getProjectData(slug);
+  } catch {
+    notFound();
+  }
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ "project-slug": string }>;
+}): Promise<Metadata> {
+  const { "project-slug": slug } = await params;
+  const project = getProjectOrNotFound(slug);
+
+  return {
+    title: project.title,
+    description: project.summary,
+    openGraph: {
+      title: project.title,
+      description: project.summary,
+      type: "article",
+      images: project.thumbnail
+        ? [{ url: project.thumbnail, alt: project.title }]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.summary,
+      images: project.thumbnail ? [project.thumbnail] : undefined,
+    },
+  };
+}
 
 export default async function Portfolio({
   params,
@@ -12,7 +50,7 @@ export default async function Portfolio({
 }) {
   const { "project-slug": slug } = await params;
 
-  const project = getProjectData(slug);
+  const project = getProjectOrNotFound(slug);
 
   return (
     <section className={style.viewport}>

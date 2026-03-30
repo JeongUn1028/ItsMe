@@ -1,5 +1,5 @@
 import { getProjects } from "@/lib/projects/getProjects";
-import PortfolioCard from "./components/home/portfolio-card/portfolio-card";
+import PortfolioCard from "./components/portfolio/portfolio-card/portfolio-card";
 import Header from "./components/home/header";
 import Resume from "./components/home/resume";
 import Links from "./components/home/links";
