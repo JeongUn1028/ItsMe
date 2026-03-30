@@ -1,8 +1,26 @@
 @reference "../../../globals.css";
 
 .card {
-  @apply flex h-full w-full overflow-hidden p-4 hover:cursor-pointer rounded-[10px] transition-transform duration-200 ease-in-out;
+  @apply flex h-full w-full overflow-hidden p-4 rounded-[10px] transition-all duration-200 ease-in-out hover:cursor-pointer;
   gap: 0.8rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    0 4px 12px rgba(40, 30, 18, 0.08);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.58),
+    0 8px 20px rgba(40, 30, 18, 0.15);
 }
 
 .rowLayout {

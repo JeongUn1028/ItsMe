@@ -2,6 +2,7 @@ import { getProjectData } from "@/lib/projects/getProjectData";
 import { useMDXComponents } from "@/mdx-components";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
+import BackToHomeButton from "@/app/components/back-to-home-button";
 import style from "./page.module.css";
 
 export default async function Portfolio({
@@ -17,9 +18,7 @@ export default async function Portfolio({
     <section className={style.viewport}>
       <article className={style.modal}>
         <header className={style.header}>
-          <Link href="/" className={style.backLink}>
-            ← Back to Home
-          </Link>
+          <BackToHomeButton className={style.backLink} />
 
           <h1 className={style.title}>{project.title}</h1>
           <p className={style.summary}>{project.summary}</p>
