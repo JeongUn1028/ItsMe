@@ -21,8 +21,12 @@
   }
 }
 
+.title {
+  @apply text-xl font-semibold;
+}
+
 .velogCard {
-  @apply col-span-1 row-span-2 h-full sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1;
+  @apply grid w-full h-full p-4 col-span-1 row-span-2 h-full sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1;
 }
 
 .portfolioGrid {
