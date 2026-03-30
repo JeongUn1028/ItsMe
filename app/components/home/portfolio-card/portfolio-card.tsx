@@ -1,10 +1,12 @@
 //* 포트폴리오 container를 클릭하면 상세 페이지로 이동
 //* 왼쪽사이드에 썸네일, 오른쪽 사이드에 프로젝트 제목, 설명, 태그가 보이는 형태
+"use client";
 
 import { Project } from "@/lib/projects/types";
 import Image from "next/image";
 import style from "./portfolio-card.module.css";
-import { getSpanClasses } from "../../../lib/projects/portfolio-card-span";
+import { getSpanClasses } from "../../../../lib/projects/portfolio-card-span";
+import { useRouter } from "next/navigation";
 
 //* mobile: col-span-2 row-span-2
 
@@ -21,10 +23,16 @@ export default function PortfolioCard(project: Project) {
     tabletRowSpan,
     desktopRowSpan,
   } = getSpanClasses(size);
+  const router = useRouter();
+  //* 프로젝트 상세 페이지로 이동하는 로직 추가
+  const onClickCard = () => {
+    router.push(`/portfolio/${project.slug}`);
+  };
 
   return (
     <div
       className={`glass ${style.card} ${mobileColSpan} ${mobileRowSpan} ${tabletColSpan} ${desktopColSpan} ${tabletRowSpan} ${desktopRowSpan} ${isRowLayout ? style.rowLayout : style.columnLayout}`}
+      onClick={onClickCard}
     >
       <div
         className={`${style.thumbnailWrap} ${isRowLayout ? style.thumbnailWrapRow : style.thumbnailWrapColumn}`}

@@ -1,0 +1,40 @@
+@reference "../../../globals.css";
+
+.container {
+  @apply flex flex-col gap-2 rounded-xl px-4 py-3;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.container:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 24px rgba(40, 30, 18, 0.15);
+}
+
+.title {
+  @apply line-clamp-2 text-base font-semibold leading-snug sm:text-lg;
+  color: rgba(34, 24, 14, 0.92);
+}
+
+.tag {
+  @apply flex flex-wrap gap-1.5;
+}
+
+.tag p {
+  @apply rounded-full border border-white/70 bg-white/55 px-2 py-0.5 text-[0.72rem] font-medium;
+  color: rgba(68, 49, 26, 0.86);
+}
+
+.dateContainer {
+  @apply mt-1 flex w-full justify-end;
+}
+
+.dateContainer p {
+  @apply text-xs;
+  color: rgba(79, 60, 36, 0.64);
+}
