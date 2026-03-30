@@ -5,8 +5,9 @@ import Resume from "./components/home/resume";
 import Links from "./components/home/links";
 import Contact from "./components/home/contact";
 import style from "./page.module.css";
+import Posts from "./components/home/velog-posts";
 
-export default function Home() {
+export default async function Home() {
   //* projects 중 status가 published인 프로젝트만 필터링
   const projects = getProjects().filter(
     (project) => project.status === "published",
@@ -23,7 +24,7 @@ export default function Home() {
           <Contact />
           {/* Velog: mobile 1×2, tablet 2×2, desktop 1×2 */}
           <div className={style.velogCard}>
-            <div className={`glass ${style.velogInner}`}>벨로그 최근 글</div>
+            <Posts />
           </div>
         </main>
 
