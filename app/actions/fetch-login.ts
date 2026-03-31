@@ -1,0 +1,50 @@
+"use server";
+
+import { SignJWT } from "jose";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+export async function fetchLoginAction(formData: FormData): Promise<void> {
+  const username = formData.get("username")?.toString() ?? "";
+  const password = formData.get("password")?.toString() ?? "";
+
+  if (!username || !password) {
+    redirect("/login?error=missing");
+  }
+
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      },
+    );
+
+    if (!response.ok) {
+      redirect("/login?error=invalid");
+    }
+
+    const token = await new SignJWT({ username })
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime(Number(process.env.JWT_EXPIRES_IN) || 3600)
+      .sign(new TextEncoder().encode(process.env.JWT_SECRET_KEY));
+
+    const cookiesStore = await cookies();
+    cookiesStore.set("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: Number(process.env.JWT_EXPIRES_IN) || 3600,
+    });
+  } catch (error) {
+    console.error("Login SeverAction error:", error);
+    redirect("/login?error=server");
+  }
+
+  redirect("/");
+}
