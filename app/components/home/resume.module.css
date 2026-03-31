@@ -1,33 +1,80 @@
 @reference "../../globals.css";
 
 .card {
-  @apply col-span-1 row-span-2 flex h-full w-full flex-col justify-between p-4 sm:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-1;
+  @apply col-span-1 row-span-2 flex h-full w-full flex-col p-6 sm:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-1;
 }
 
 .title {
-  @apply text-xl font-semibold;
+  @apply m-0 text-xl font-semibold;
+}
+
+.toggleButton {
+  @apply hidden;
 }
 
 .content {
-  @apply flex h-[90%] flex-col items-center justify-center gap-[0.9rem] sm:flex-row sm:items-center sm:justify-between sm:gap-4 xl:flex-col xl:items-center xl:justify-center xl:gap-[0.9rem];
+  @apply mt-4 flex min-h-0 flex-1 flex-col items-center justify-start gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6 xl:mt-0 xl:flex-col xl:items-center xl:justify-center xl:gap-5;
 }
 
 .imageWrap {
-  @apply flex h-auto w-full items-center justify-center sm:w-1/2 sm:justify-start xl:w-full xl:justify-center;
+  @apply flex h-auto w-full items-center justify-center sm:w-1/2 xl:w-full;
 }
 
 .image {
-  @apply h-auto w-[44%] max-w-[220px] rounded-[14px] object-cover sm:w-full xl:w-[52%] xl:max-w-[220px];
+  @apply h-auto w-[62%] max-w-[260px] rounded-[14px] object-cover sm:w-[62%] xl:w-[44%] xl:max-w-[190px];
 }
 
 .textWrap {
-  @apply flex flex-col items-center gap-[0.4rem] text-center sm:w-1/2 sm:items-start sm:text-left xl:w-full xl:items-center xl:text-center;
+  @apply flex min-h-0 w-full max-w-[520px] flex-col items-center gap-[0.9rem] text-center sm:w-1/2 sm:items-center sm:text-center xl:w-full xl:items-center xl:text-center;
+  overflow: hidden;
+  padding-right: 0.15rem;
 }
 
 .description {
-  @apply m-0;
+  @apply m-0 text-[0.88rem] leading-[1.7] sm:text-[0.93rem];
+  color: rgba(46, 35, 24, 0.9);
+}
+
+.actions {
+  @apply mt-2 flex w-full flex-col items-center gap-2;
+}
+
+.resumeLink {
+  @apply inline-flex w-fit rounded-full px-3 py-1 text-[0.8rem] font-semibold transition-colors;
+  border: 1px solid rgba(144, 114, 74, 0.36);
+  background: rgba(250, 241, 227, 0.78);
+  color: rgba(78, 56, 31, 0.92);
+}
+
+.resumeLink:hover {
+  background: rgba(255, 248, 236, 0.95);
 }
 
 .linkText {
-  @apply text-[0.92rem] opacity-[0.82];
+  @apply m-0 text-[0.76rem] leading-[1.45] opacity-[0.72];
+}
+
+@media (min-width: 1280px) {
+  .toggleButton {
+    @apply mt-3 inline-flex w-fit self-center rounded-full px-3 py-1 text-[0.8rem] font-semibold transition-colors;
+    border: 1px solid rgba(144, 114, 74, 0.36);
+    background: rgba(250, 241, 227, 0.78);
+    color: rgba(78, 56, 31, 0.92);
+  }
+
+  .toggleButton:hover {
+    background: rgba(255, 248, 236, 0.95);
+  }
+
+  .desktopPhoto .textWrap {
+    display: none;
+  }
+
+  .desktopDescription .imageWrap {
+    display: none;
+  }
+
+  .desktopDescription .textWrap {
+    @apply mt-3 w-full gap-8 flex-col justify-between;
+  }
 }

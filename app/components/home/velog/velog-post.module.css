@@ -1,7 +1,7 @@
 @reference "../../../globals.css";
 
 .container {
-  @apply flex flex-col gap-2 rounded-xl px-4 py-3;
+  @apply flex flex-col gap-1.5 rounded-xl px-3 py-2.5;
   transition:
     transform 0.2s ease,
     background 0.2s ease,
@@ -17,12 +17,14 @@
 }
 
 .title {
-  @apply line-clamp-2 text-base font-semibold leading-snug sm:text-lg;
+  @apply line-clamp-1 text-[0.95rem] font-semibold leading-snug sm:line-clamp-2 sm:text-lg;
   color: rgba(34, 24, 14, 0.92);
 }
 
 .tag {
-  @apply flex flex-wrap gap-1.5;
+  @apply flex flex-wrap gap-1;
+  max-height: 1.55rem;
+  overflow: hidden;
 }
 
 .tag p {
@@ -31,10 +33,26 @@
 }
 
 .dateContainer {
-  @apply mt-1 flex w-full justify-end;
+  @apply mt-0.5 flex w-full justify-end;
 }
 
 .dateContainer p {
   @apply text-xs;
   color: rgba(79, 60, 36, 0.64);
+}
+
+@media (min-width: 640px) {
+  .container {
+    @apply gap-2 px-4 py-3;
+  }
+
+  .tag {
+    @apply gap-1.5;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .dateContainer {
+    @apply mt-1;
+  }
 }
