@@ -45,16 +45,20 @@ export async function generateMetadata({
 
 export default async function Portfolio({
   params,
+  isModal = false,
 }: {
   params: Promise<{ "project-slug": string }>;
+  isModal?: boolean;
 }) {
   const { "project-slug": slug } = await params;
 
   const project = getProjectOrNotFound(slug);
 
   return (
-    <section className={style.viewport}>
-      <article className={style.modal}>
+    <section className={isModal ? style.viewportModal : style.viewport}>
+      <article
+        className={`${style.modal} ${isModal ? style.modalScrollable : ""}`}
+      >
         <header className={style.header}>
           <BackToHomeButton className={style.backLink} />
 

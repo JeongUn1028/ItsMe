@@ -70,35 +70,39 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
   }
 
   return createPortal(
-    <div
-      role="presentation"
-      // 오버레이 바깥 클릭 시 모달을 닫습니다.
-      onClick={closeModal}
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 1000,
-        display: "grid",
-        placeItems: "center",
-        padding: "24px",
-        background: "rgba(15, 12, 8, 0.45)",
-      }}
-    >
+    <>
+      <div
+        role="presentation"
+        onClick={closeModal}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 999,
+          background: "rgba(15, 12, 8, 0.18)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+        }}
+      />
       <div
         role="dialog"
         aria-modal="true"
-        // 내부 클릭은 오버레이 클릭으로 전파되지 않도록 막습니다.
         onClick={(event) => event.stopPropagation()}
         style={{
-          width: "min(980px, 100%)",
+          position: "fixed",
+          top: "24px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 1000,
+          width: "min(980px, calc(100vw - 48px))",
           maxHeight: "calc(100vh - 48px)",
-          overflowY: "auto",
+          overflow: "hidden",
+          overscrollBehavior: "contain",
           borderRadius: "18px",
         }}
       >
         {children}
       </div>
-    </div>,
+    </>,
     modalRoot,
   );
 };

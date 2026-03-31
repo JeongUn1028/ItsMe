@@ -10,7 +10,7 @@ export default function ProjectModalPage({
   return (
     // 실제 상세 페이지를 그대로 재사용하되, 모달 컨테이너 안에서 렌더링합니다.
     <Modal>
-      <Portfolio params={params} />
+      <Portfolio params={params} isModal />
     </Modal>
   );
 }
