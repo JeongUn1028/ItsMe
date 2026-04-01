@@ -30,7 +30,7 @@ export async function fetchLoginAction(formData: FormData): Promise<void> {
 
     const token = await new SignJWT({ username })
       .setProtectedHeader({ alg: "HS256" })
-      .setExpirationTime(Number(process.env.JWT_EXPIRES_IN) || 3600)
+      .setExpirationTime("1h")
       .sign(new TextEncoder().encode(process.env.JWT_SECRET_KEY));
 
     const cookiesStore = await cookies();
@@ -39,7 +39,7 @@ export async function fetchLoginAction(formData: FormData): Promise<void> {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: Number(process.env.JWT_EXPIRES_IN) || 3600,
+      maxAge: 3600,
     });
   } catch (error) {
     console.error("Login SeverAction error:", error);
