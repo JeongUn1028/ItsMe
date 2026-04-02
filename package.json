@@ -16,6 +16,7 @@
     "@types/mdx": "^2.0.13",
     "gray-matter": "^4.0.3",
     "install": "^0.13.0",
+    "jose": "^6.2.2",
     "next": "15.5.14",
     "next-mdx-remote": "^6.0.0",
     "postcss": "^8.5.8",

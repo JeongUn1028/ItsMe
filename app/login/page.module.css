@@ -1,0 +1,128 @@
+@reference "../globals.css";
+
+.page {
+  @apply relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-10 sm:px-6;
+}
+
+.shell {
+  @apply relative z-10 grid w-full max-w-5xl gap-6 lg:grid-cols-[1.1fr_0.9fr];
+}
+
+.intro {
+  @apply hidden flex-col justify-between rounded-[28px] p-8 lg:flex;
+  background:
+    linear-gradient(
+      150deg,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.18)
+    ),
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.75),
+      transparent 34%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  box-shadow:
+    0 30px 60px rgba(140, 110, 70, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.eyebrow {
+  @apply text-[0.72rem] font-semibold tracking-[0.28em] uppercase;
+  color: rgba(79, 59, 39, 0.62);
+}
+
+.headline {
+  @apply max-w-[11ch] text-5xl leading-[0.92] font-semibold;
+}
+
+.copy {
+  @apply max-w-md text-[0.98rem] leading-7;
+  color: rgba(61, 43, 25, 0.74);
+}
+
+.meta {
+  @apply flex items-center gap-3 text-sm;
+  color: rgba(61, 43, 25, 0.58);
+}
+
+.dot {
+  @apply h-2.5 w-2.5 rounded-full;
+  background: linear-gradient(135deg, #f4b67c, #96e4d1);
+}
+
+.card {
+  @apply relative z-10 flex w-full flex-col gap-6 p-6 sm:p-8;
+}
+
+.cardHeader {
+  @apply flex flex-col gap-3;
+}
+
+.title {
+  @apply text-3xl font-semibold leading-tight;
+}
+
+.description {
+  @apply text-[0.95rem] leading-6;
+  color: rgba(61, 43, 25, 0.7);
+}
+
+.form {
+  @apply flex flex-col gap-4;
+}
+
+.field {
+  @apply flex flex-col gap-2;
+}
+
+.label {
+  @apply text-[0.78rem] font-semibold tracking-[0.18em] uppercase;
+  color: rgba(79, 59, 39, 0.58);
+}
+
+.input {
+  @apply w-full rounded-2xl px-4 py-3 text-[0.98rem] outline-none transition;
+  background: rgba(255, 251, 244, 0.7);
+  border: 1px solid rgba(201, 175, 135, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.input:focus {
+  border-color: rgba(150, 228, 209, 0.9);
+  box-shadow:
+    0 0 0 4px rgba(150, 228, 209, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.submit {
+  @apply mt-2 inline-flex items-center justify-center rounded-2xl px-4 py-3 text-[0.95rem] font-semibold transition;
+  color: #fffaf2;
+  background: linear-gradient(135deg, #20160e, #4a3321);
+  box-shadow: 0 18px 30px rgba(39, 26, 16, 0.18);
+}
+
+.submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 34px rgba(39, 26, 16, 0.22);
+}
+
+.hint {
+  @apply text-sm leading-6;
+  color: rgba(61, 43, 25, 0.56);
+}
+
+.accent {
+  @apply pointer-events-none absolute -top-10 -right-6 h-28 w-28 rounded-full blur-2xl;
+  background: radial-gradient(
+    circle,
+    rgba(150, 228, 209, 0.55),
+    transparent 68%
+  );
+}
+
+@media (max-width: 1023px) {
+  .page {
+    @apply py-6;
+  }
+}
