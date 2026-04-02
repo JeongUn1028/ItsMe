@@ -1,6 +1,5 @@
 import { getProjects } from "@/lib/projects/getProjects";
 import PortfolioCard from "./components/portfolio/portfolio-card/portfolio-card";
-import Header from "./components/home/headers/header";
 import Resume from "./components/home/resume";
 import Links from "./components/home/links";
 import Contact from "./components/home/contact";
@@ -18,7 +17,6 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
       <div className={style.pageWrap}>
         {/* 상단 홈 카드 그리드 */}
         <main className={style.homeGrid}>

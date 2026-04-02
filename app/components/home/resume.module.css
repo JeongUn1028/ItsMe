@@ -18,10 +18,11 @@
 
 .imageWrap {
   @apply flex h-auto w-full items-center justify-center sm:w-1/2 xl:w-full;
+  flex-shrink: 0;
 }
 
 .image {
-  @apply h-auto w-[62%] max-w-[260px] rounded-[14px] object-cover sm:w-[62%] xl:w-[44%] xl:max-w-[190px];
+  @apply h-auto w-full max-w-[220px] rounded-[14px] object-cover sm:w-[62%] sm:max-w-[260px] xl:w-[44%] xl:max-w-[190px];
 }
 
 .textWrap {
@@ -33,6 +34,24 @@
 .description {
   @apply m-0 text-[0.88rem] leading-[1.7] sm:text-[0.93rem];
   color: rgba(46, 35, 24, 0.9);
+}
+
+.skills {
+  @apply m-0 mt-1 flex w-full max-w-[460px] list-none flex-wrap items-center justify-center gap-2 p-0;
+}
+
+.skill {
+  @apply rounded-full px-3 py-1 text-[0.76rem] font-medium;
+  border: 1px solid rgba(144, 114, 74, 0.34);
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(255, 255, 255, 0.7),
+      transparent 60%
+    ),
+    rgba(249, 239, 223, 0.82);
+  color: rgba(78, 56, 31, 0.92);
+  letter-spacing: 0.01em;
 }
 
 .actions {
@@ -52,6 +71,20 @@
 
 .linkText {
   @apply m-0 text-[0.76rem] leading-[1.45] opacity-[0.72];
+}
+
+@media (max-width: 639px) {
+  .content {
+    @apply gap-4;
+  }
+
+  .imageWrap {
+    @apply px-2;
+  }
+
+  .image {
+    width: min(72vw, 240px);
+  }
 }
 
 @media (min-width: 1280px) {
