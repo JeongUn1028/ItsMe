@@ -7,7 +7,9 @@ import { getSpanClasses } from "@/lib/projects/portfolio-card-span";
 import style from "./portfolio-card.module.css";
 
 export default function PortfolioCard(project: Project) {
+  // const isEditMode = isEdit ?? false;
   const { thumbnail, title, summary, tags, size } = project;
+
   const {
     isRowLayout,
     mobileColSpan,

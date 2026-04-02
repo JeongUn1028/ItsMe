@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "./components/home/headers/header";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE ??
@@ -62,6 +63,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header />
         {children}
         {/* Portal로 렌더링되는 모달 전용 DOM 루트입니다. */}
         <div id="modal-root"></div>
