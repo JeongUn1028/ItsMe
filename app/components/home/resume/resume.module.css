@@ -1,4 +1,4 @@
-@reference "../../globals.css";
+@reference "../../../globals.css";
 
 .card {
   @apply col-span-1 row-span-2 flex h-full w-full flex-col p-6 sm:col-span-2 xl:col-span-1 xl:col-start-1 xl:row-start-1;
@@ -18,11 +18,11 @@
 
 .imageWrap {
   @apply flex h-auto w-full items-center justify-center sm:w-1/2 xl:w-full;
-  flex-shrink: 0;
 }
 
 .image {
-  @apply h-auto w-full max-w-[220px] rounded-[14px] object-cover sm:w-[62%] sm:max-w-[260px] xl:w-[44%] xl:max-w-[190px];
+  @apply h-auto rounded-[14px] object-cover sm:w-[62%] sm:max-w-[260px] xl:w-[44%] xl:max-w-[190px];
+  width: min(calc(100vw - 48px), 180px);
 }
 
 .textWrap {
@@ -74,16 +74,28 @@
 }
 
 @media (max-width: 639px) {
+  .card {
+    @apply p-4;
+  }
+
   .content {
-    @apply gap-4;
+    @apply gap-3;
   }
 
   .imageWrap {
-    @apply px-2;
+    @apply w-full;
+    padding: 0;
+    max-height: 200px;
   }
 
   .image {
-    width: min(72vw, 240px);
+    width: min(calc(100vw - 48px), 160px);
+    height: min(calc(100vw - 48px), 160px);
+    max-width: none;
+  }
+
+  .textWrap {
+    @apply max-w-full px-2;
   }
 }
 

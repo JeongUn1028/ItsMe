@@ -1,8 +1,8 @@
 import { getProjects } from "@/lib/projects/getProjects";
 import PortfolioCard from "./components/portfolio/portfolio-card/portfolio-card";
-import Resume from "./components/home/resume";
-import Links from "./components/home/links";
-import Contact from "./components/home/contact";
+import Resume from "./components/home/resume/resume";
+import Links from "./components/home/links/links";
+import Contact from "./components/home/contact/contact";
 import style from "./page.module.css";
 import { getVelogPosts } from "@/lib/projects/getVelogPosts";
 import VelogPost from "./components/home/velog/velog-post";

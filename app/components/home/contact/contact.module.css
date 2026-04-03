@@ -1,4 +1,4 @@
-@reference "../../globals.css";
+@reference "../../../globals.css";
 
 .card {
   @apply flex h-full w-full flex-col justify-evenly p-4;
