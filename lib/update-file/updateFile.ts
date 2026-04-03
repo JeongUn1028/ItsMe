@@ -16,8 +16,8 @@ export async function updateFile(fileName: string, content: object) {
   const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
   const PATH =
     fileName === "resume.json"
-      ? `/content/${fileName}`
-      : `/content/projects/${fileName}`;
+      ? `content/${fileName}`
+      : `content/projects/${fileName}`;
 
   if (!OWNER || !REPO || !TOKEN) {
     return NextResponse.json(
