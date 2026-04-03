@@ -3,6 +3,7 @@
   "skills": [
     "React",
     "Next.js",
-    "TypeScript"
+    "TypeScript",
+    "Vitest"
   ]
 }
