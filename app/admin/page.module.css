@@ -1,0 +1,20 @@
+@reference "../globals.css";
+
+.container {
+  @apply flex flex-col w-full h-full gap-8;
+}
+
+.resumeSection {
+  @apply flex flex-col gap-3;
+}
+
+.editResumeButton {
+  @apply inline-flex w-fit items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition-colors;
+  border: 1px solid rgba(144, 114, 74, 0.36);
+  background: rgba(250, 241, 227, 0.78);
+  color: rgba(78, 56, 31, 0.92);
+}
+
+.editResumeButton:hover {
+  background: rgba(255, 248, 236, 0.95);
+}

@@ -1,13 +1,12 @@
 "use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import style from "./resume.module.css";
-import resume from "../../../public/resume.json";
+import { useState } from "react";
+import { getResume } from "@/lib/resume/getResume";
 
 export default function Resume() {
   const [isShowingDescription, setIsShowingDescription] = useState(false);
-  const { description, skills } = resume;
+  const { description, skills } = getResume();
 
   return (
     <div className={`glass ${style.card}`}>
