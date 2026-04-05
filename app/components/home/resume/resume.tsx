@@ -6,7 +6,7 @@ import { getResume } from "@/lib/resume/getResume";
 
 export default function Resume() {
   const [isShowingDescription, setIsShowingDescription] = useState(false);
-  const { description, skills } = getResume();
+  const { description, skills, imagePath, pdfPath } = getResume();
 
   return (
     <div className={`glass ${style.card}`}>
@@ -16,7 +16,7 @@ export default function Resume() {
       >
         <div className={style.imageWrap}>
           <Image
-            src="/profile.JPG"
+            src={imagePath}
             alt="profile image"
             width={220}
             height={220}
@@ -34,16 +34,13 @@ export default function Resume() {
           </ul>
           <div className={style.actions}>
             <a
-              href="/resume.pdf"
+              href={pdfPath}
               target="_blank"
               rel="noopener noreferrer"
               className={style.resumeLink}
             >
               Resume PDF 보기
             </a>
-            <p className={style.linkText}>
-              public/resume.pdf 파일을 업로드하면 링크가 바로 연결됩니다.
-            </p>
           </div>
         </div>
       </div>

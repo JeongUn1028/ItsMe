@@ -1,5 +1,5 @@
 ---
-thumbnail: "/itsme-project.png"
+thumbnail: "/portfolio/itsme.png"
 size: [2, 1]
 status: "published"
 title: "Next.js 기반 개인 포트폴리오 프로젝트"

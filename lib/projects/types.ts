@@ -1,5 +1,3 @@
-//**
-//** type  */
 
 type SpanSize = 1 | 2 | 3;
 

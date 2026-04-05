@@ -10,7 +10,7 @@ export default function Contact() {
       <div className={style.content}>
         <div className={style.row}>
           <Image
-            src="/email_icon.png"
+            src="/contact/email_icon.png"
             alt="Email Icon"
             width={18}
             height={18}
@@ -19,7 +19,7 @@ export default function Contact() {
         </div>
         <div className={style.row}>
           <Image
-            src="/phone_icon.png"
+            src="/contact/phone_icon.png"
             alt="Phone Icon"
             width={18}
             height={18}
