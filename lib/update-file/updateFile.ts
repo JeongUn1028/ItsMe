@@ -32,13 +32,6 @@ export async function updateFile(
     };
   }
 
-  if (!OWNER || !REPO || !TOKEN) {
-    return {
-      success: false,
-      message: "Missing GitHub environment variables",
-    };
-  }
-
   try {
     const octokit = new Octokit({
       auth: TOKEN,
@@ -59,15 +52,19 @@ export async function updateFile(
     //* 파일 업데이트 요청
 
     //* 1. content를 타입에 따라 적절히 변환
-    const content = async () => {
-      //* JSON
-      if (typeof content === "object") {
-        return Buffer.from(JSON.stringify(content, null, 2)).toString("base64");
-      }
-      //* Image or PDF
-      else if (content instanceof File) {
+    const gitHubcontent = async (): Promise<string> => {
+      //* Image or PDF — File 체크를 object보다 먼저 해야 함 (File은 object)
+      if (content instanceof File) {
         const arrayBuffer = await content.arrayBuffer();
         return Buffer.from(arrayBuffer).toString("base64");
+      }
+      //* JSON
+      else if (typeof content === "object") {
+        return Buffer.from(JSON.stringify(content, null, 2)).toString("base64");
+      }
+      //* Markdown or plain string
+      else {
+        return Buffer.from(content).toString("base64");
       }
     };
 
@@ -80,7 +77,7 @@ export async function updateFile(
         name: "itsme-bot",
         email: "wjddns363@naver.com",
       },
-      content: await content(),
+      content: await gitHubcontent(),
       sha,
       headers: {
         "X-GitHub-Api-Version": "2026-03-10",
