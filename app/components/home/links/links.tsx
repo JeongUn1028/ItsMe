@@ -16,7 +16,7 @@ export default function Links() {
             rel="noopener noreferrer"
           >
             <Image
-              src="/github_logo_icon.png"
+              src="/links/github_logo_icon.png"
               alt="GitHub"
               width={32}
               height={32}
@@ -28,7 +28,7 @@ export default function Links() {
             rel="noopener noreferrer"
           >
             <Image
-              src="/velog_logo_icon.svg"
+              src="/links/velog_logo_icon.svg"
               alt="Velog"
               width={32}
               height={32}

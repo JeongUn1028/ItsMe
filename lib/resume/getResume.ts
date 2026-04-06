@@ -1,6 +1,6 @@
 import resume from "../../content/resume.json";
 
 export const getResume = () => {
-  const { description, skills } = resume;
-  return { description, skills };
+  const { description, skills, imagePath, pdfPath } = resume;
+  return { description, skills, imagePath, pdfPath };
 };
