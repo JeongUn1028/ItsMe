@@ -63,13 +63,7 @@ export async function submitResumeAction(
           message: "프로필 이미지는 jpg 또는 PNG만 업로드할 수 있습니다.",
         };
       }
-
-      const imageDir = path.join(process.cwd(), "public/resume");
-      await fs.mkdir(imageDir, { recursive: true });
-
-      const imageBuffer = await imageFile.arrayBuffer();
-      const imageSavePath = path.join(imageDir, "profile.jpg");
-      await fs.writeFile(imageSavePath, Buffer.from(imageBuffer));
+      await updateFile("public/resume/profile.jpg", imageFile);
     }
 
     if (pdfFile && pdfFile.size > 0) {
@@ -79,10 +73,7 @@ export async function submitResumeAction(
           message: "이력서는 PDF 파일만 업로드할 수 있습니다.",
         };
       }
-      const pdfDir = path.join(process.cwd(), "public/resume");
-      const pdfBuffer = await pdfFile.arrayBuffer();
-      const pdfSavePath = path.join(pdfDir, "resume.pdf");
-      await fs.writeFile(pdfSavePath, Buffer.from(pdfBuffer));
+      await updateFile("public/resume/resume.pdf", pdfFile);
     }
 
     //* 4. 새로운 데이터 생성 (기존 데이터는 무시)
@@ -93,12 +84,8 @@ export async function submitResumeAction(
       pdfPath,
     };
 
-    //* 5. resume.json 저장
-    const resumePath = path.join(process.cwd(), "content/resume.json");
-    await fs.writeFile(resumePath, JSON.stringify(newData, null, 2), "utf-8");
-
     //* 6. GitHub에 업데이트
-    const gitHubResult = await updateFile("resume.json", newData);
+    const gitHubResult = await updateFile("content/resume.json", newData);
     if (!gitHubResult.success) {
       return {
         success: false,
