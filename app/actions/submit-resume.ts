@@ -60,7 +60,7 @@ export async function submitResumeAction(
       if (!allowedImageMimeTypes.includes(imageFile.type)) {
         return {
           success: false,
-          message: "프로필 이미지는 JPG 또는 PNG만 업로드할 수 있습니다.",
+          message: "프로필 이미지는 jpg 또는 PNG만 업로드할 수 있습니다.",
         };
       }
 
