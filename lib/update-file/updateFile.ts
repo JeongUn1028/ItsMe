@@ -1,16 +1,24 @@
-import { NextResponse } from "next/server";
 import { Octokit } from "octokit";
 
-export async function updateFile(fileName: string, content: object) {
+interface UpdateFileResult {
+  success: boolean;
+  message: string;
+}
+
+export async function updateFile(
+  fileName: string,
+  content: object,
+): Promise<UpdateFileResult> {
   //* finename: json, md 파일명
   //* content: 업데이트할 내용
 
   if (!fileName || !content) {
-    return NextResponse.json(
-      { message: "Missing fileName or content" },
-      { status: 400 },
-    );
+    return {
+      success: false,
+      message: "Missing fileName or content",
+    };
   }
+
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
   const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
@@ -20,10 +28,10 @@ export async function updateFile(fileName: string, content: object) {
       : `content/projects/${fileName}`;
 
   if (!OWNER || !REPO || !TOKEN) {
-    return NextResponse.json(
-      { message: "Missing GitHub environment variables" },
-      { status: 500 },
-    );
+    return {
+      success: false,
+      message: "Missing GitHub environment variables",
+    };
   }
 
   try {
@@ -62,15 +70,15 @@ export async function updateFile(fileName: string, content: object) {
         "X-GitHub-Api-Version": "2026-03-10",
       },
     });
-    return NextResponse.json(
-      { message: "File updated successfully and redeployed" },
-      { status: 200 },
-    );
+    return {
+      success: true,
+      message: "File updated successfully",
+    };
   } catch (error) {
     console.error("Error updating file:", error);
-    return NextResponse.json(
-      { message: "Internal Server Error" },
-      { status: 500 },
-    );
+    return {
+      success: false,
+      message: "Failed to update file on GitHub",
+    };
   }
 }

@@ -98,11 +98,11 @@ export async function submitResumeAction(
     await fs.writeFile(resumePath, JSON.stringify(newData, null, 2), "utf-8");
 
     //* 6. GitHub에 업데이트
-    const gitHubResponse = await updateFile("resume.json", newData);
-    if (!gitHubResponse || !gitHubResponse.ok) {
+    const gitHubResult = await updateFile("resume.json", newData);
+    if (!gitHubResult.success) {
       return {
         success: false,
-        message: "GitHub 업데이트에 실패했습니다.",
+        message: gitHubResult.message || "GitHub 업데이트에 실패했습니다.",
       };
     }
 
