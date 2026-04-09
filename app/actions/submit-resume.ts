@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import fs from "fs/promises";
 import path from "path";
-import { getSession } from "@/lib/auth/getSession";
+import { getLoginStatus } from "@/lib/auth/getLoginStatus";
 import { updateFile } from "@/lib/update-file/updateFile";
 
 interface ResumeState {
@@ -23,7 +23,7 @@ export async function submitResumeAction(
   formData: FormData,
 ): Promise<ResumeState> {
   //* 1. 로그인 여부 확인
-  const isLoggedIn = await getSession();
+  const isLoggedIn = await getLoginStatus();
   if (!isLoggedIn) {
     return { success: false, message: "로그인이 필요합니다." };
   }

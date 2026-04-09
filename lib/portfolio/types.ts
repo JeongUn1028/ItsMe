@@ -1,4 +1,3 @@
-
 type SpanSize = 1 | 2 | 3;
 
 type TabletSpanSize = 1 | 2;
@@ -19,7 +18,7 @@ interface RawFrontmatter {
   //* 하단에 있는 필드
 }
 
-interface Project {
+interface Portfolio {
   slug: string;
   thumbnail: string;
   size: SpanSize[];
@@ -41,4 +40,4 @@ interface VelogPost {
   released_at: string;
 }
 
-export type { RawFrontmatter, Project, SpanSize, TabletSpanSize, VelogPost };
+export type { RawFrontmatter, Portfolio, SpanSize, TabletSpanSize, VelogPost };

@@ -1,4 +1,4 @@
-import { getProjects } from "@/lib/projects/getProjects";
+import { getProjects } from "@/lib/portfolio/getPortfolios";
 import { expect, describe, it } from "vitest";
 
 describe("getProjects", () => {

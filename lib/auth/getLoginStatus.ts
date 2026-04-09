@@ -3,7 +3,7 @@
 import { jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
-export const getSession = async () => {
+export const getLoginStatus = async () => {
   const cookiesStore = await cookies();
   const token = cookiesStore.get("access_token")?.value;
   if (!token) {
@@ -17,7 +17,7 @@ export const getSession = async () => {
 
     return true;
   } catch (error) {
-    console.error("getSession error:", error);
+    console.error("getLoginStatus error:", error);
     return false;
   }
 };

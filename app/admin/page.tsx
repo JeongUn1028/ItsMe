@@ -1,13 +1,13 @@
 import style from "./page.module.css";
-import { getProjects } from "@/lib/projects/getProjects";
+import { getPortfolios } from "@/lib/portfolio/getPortfolios";
 import Resume from "../components/home/resume/resume";
 import PortfolioCard from "../components/portfolio/portfolio-card/portfolio-card";
-import { Project } from "@/lib/projects/types";
+import { Portfolio } from "@/lib/portfolio/types";
 import Link from "next/link";
 
 //* Admin Page
 export default function Page() {
-  const projects = getProjects();
+  const portfolio = getPortfolios();
   //TODO 레주메 Update 기능
 
   //TODO 포트폴리오 추가, 수정, 삭제 기능
@@ -20,8 +20,8 @@ export default function Page() {
         <Resume />
       </div>
 
-      {projects.map((project: Project) => (
-        <PortfolioCard key={project.slug} {...project} />
+      {portfolio.map((portfolio: Portfolio) => (
+        <PortfolioCard key={portfolio.slug} {...portfolio} />
       ))}
     </div>
   );

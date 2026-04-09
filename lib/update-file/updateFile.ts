@@ -17,7 +17,7 @@ export async function updateFile(fileName: string, content: object) {
   const PATH =
     fileName === "resume.json"
       ? `content/${fileName}`
-      : `content/projects/${fileName}`;
+      : `content/portfolio/${fileName}`;
 
   if (!OWNER || !REPO || !TOKEN) {
     return NextResponse.json(

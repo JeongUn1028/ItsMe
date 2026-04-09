@@ -41,7 +41,7 @@ ItsMe는 개인을 소개하고 프로젝트를 효과적으로 전달하기 위
 ## 🧱 아키텍처
 
 ```text
-/content/projects (Markdown)
+/content/portfolio (Markdown)
         ↓
 MD 파싱 (gray-matter)
         ↓

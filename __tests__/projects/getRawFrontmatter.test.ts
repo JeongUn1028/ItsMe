@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
-import { getRawFrontmatter } from "@/lib/projects/getRawFrontmatter";
+import { getRawFrontmatter } from "@/lib/portfolio/getRawFrontmatter";
 
 describe("getRawFrontmatter", () => {
   it("마크다운 파일의 경로를 입력받아 frontmatter를 파싱해서 반환한다", () => {
