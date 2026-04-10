@@ -1,40 +1,39 @@
+"use client";
+
 import Link from "next/link";
 import { Portfolio } from "@/lib/portfolio/types";
 import style from "./editPortfolioComponent.module.css";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
 export default function EditPortfolioComponent({
   portfolio,
 }: {
   portfolio: Portfolio;
 }) {
-  const {
-    slug,
-    thumbnail,
-    size,
-    status,
-    title,
-    tags,
-    createdAt,
-    publishedAt,
-    githubLink,
-    velogLink,
-    summary,
-    contents,
-  } = portfolio;
+  const [portFolioData, setPortFolioData] = useState<Portfolio | undefined>(
+    undefined,
+  );
 
+  useEffect(() => {
+    setPortFolioData(portfolio);
+  }, [portfolio]);
   return (
     <section className={style.viewport}>
       <article className={style.panel}>
         <header className={style.header}>
           <div className={style.headerTop}>
-            <Link href={`/portfolio/${slug}`} className={style.previewLink}>
+            <Link
+              href={`/portfolio/${portFolioData?.slug}`}
+              className={style.previewLink}
+            >
               미리보기
             </Link>
-            <span className={style.statusChip}>{status}</span>
+            <span className={style.statusChip}>{portFolioData?.status}</span>
           </div>
 
           <h1 className={style.title}>프로젝트 수정</h1>
-          <p className={style.subtitle}>슬러그: {slug}</p>
+          <p className={style.subtitle}>슬러그: {portFolioData?.slug}</p>
         </header>
 
         <form className={style.form}>
@@ -44,29 +43,37 @@ export default function EditPortfolioComponent({
               <input
                 className={style.input}
                 name="title"
-                defaultValue={title}
+                defaultValue={portFolioData?.title}
                 placeholder="프로젝트 제목"
               />
             </label>
 
             <label className={style.fieldGroup}>
-              <span className={style.label}>썸네일 경로</span>
-              <input
-                className={style.input}
-                name="thumbnail"
-                defaultValue={thumbnail}
-                placeholder="/portfolio/example.png"
+              <span className={style.label}>썸네일</span>
+              <Image
+                src={portFolioData?.thumbnail || ""}
+                alt={portFolioData?.title || ""}
+                width={100}
+                height={100}
               />
             </label>
 
             <label className={style.fieldGroup}>
               <span className={style.label}>상태</span>
-              <input
-                className={style.input}
-                name="status"
-                defaultValue={status}
-                placeholder="draft | published"
-              />
+              <select>
+                <option
+                  value="draft"
+                  selected={portFolioData?.status === "draft"}
+                >
+                  Draft
+                </option>
+                <option
+                  value="published"
+                  selected={portFolioData?.status === "published"}
+                >
+                  Published
+                </option>
+              </select>
             </label>
 
             <label className={style.fieldGroup}>
@@ -74,7 +81,7 @@ export default function EditPortfolioComponent({
               <input
                 className={style.input}
                 name="tags"
-                defaultValue={tags.join(", ")}
+                defaultValue={portFolioData?.tags.join(", ")}
                 placeholder="Next.js, TypeScript, ..."
               />
             </label>
@@ -84,28 +91,18 @@ export default function EditPortfolioComponent({
               <input
                 className={style.input}
                 name="size"
-                defaultValue={size.join(",")}
+                defaultValue={portFolioData?.size.join(",")}
                 placeholder="1,1"
               />
             </label>
 
             <label className={style.fieldGroup}>
-              <span className={style.label}>생성일</span>
+              <span className={style.label}>글 작성일</span>
               <input
                 className={style.input}
                 name="createdAt"
-                defaultValue={createdAt}
-                placeholder="YYYY-MM-DD"
-              />
-            </label>
-
-            <label className={style.fieldGroup}>
-              <span className={style.label}>게시일</span>
-              <input
-                className={style.input}
-                name="publishedAt"
-                defaultValue={publishedAt}
-                placeholder="YYYY-MM-DD"
+                defaultValue={portFolioData?.createdAt}
+                type="date"
               />
             </label>
 
@@ -114,7 +111,7 @@ export default function EditPortfolioComponent({
               <input
                 className={style.input}
                 name="githubLink"
-                defaultValue={githubLink}
+                defaultValue={portFolioData?.githubLink}
                 placeholder="https://github.com/..."
               />
             </label>
@@ -124,7 +121,7 @@ export default function EditPortfolioComponent({
               <input
                 className={style.input}
                 name="velogLink"
-                defaultValue={velogLink}
+                defaultValue={portFolioData?.velogLink}
                 placeholder="https://velog.io/..."
               />
             </label>
@@ -135,7 +132,7 @@ export default function EditPortfolioComponent({
             <textarea
               className={style.textarea}
               name="summary"
-              defaultValue={summary}
+              defaultValue={portFolioData?.summary}
               rows={3}
               placeholder="프로젝트 요약"
             />
@@ -146,7 +143,7 @@ export default function EditPortfolioComponent({
             <textarea
               className={`${style.textarea} ${style.contentsArea}`}
               name="contents"
-              defaultValue={contents}
+              defaultValue={portFolioData?.contents}
               rows={18}
               placeholder="마크다운 내용을 입력하세요"
             />

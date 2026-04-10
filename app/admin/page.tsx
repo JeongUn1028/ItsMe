@@ -13,16 +13,35 @@ export default function Page() {
   //TODO 포트폴리오 추가, 수정, 삭제 기능
   return (
     <div className={style.container}>
-      <div className={style.resumeSection}>
-        <Link href="/admin/edit/resume" className={style.editResumeButton}>
-          레주메 수정
-        </Link>
-        <Resume />
+      <div className={`glass ${style.actionsSection}`}>
+        <p className={style.actionsTitle}>관리 메뉴</p>
+        <div className={style.buttonGroup}>
+          <Link href="/admin/edit/resume" className={style.editResumeButton}>
+            레주메 수정
+          </Link>
+          <Link href="/admin/write" className={style.addPortfolioButton}>
+            포트폴리오 추가
+          </Link>
+        </div>
       </div>
 
-      {portfolio.map((portfolio: Portfolio) => (
-        <PortfolioCard key={portfolio.slug} {...portfolio} />
-      ))}
+      <section className={style.contentSection}>
+        <div className={` glass ${style.resumeSection}`}>
+          <h2 className={style.sectionTitle}>Resume</h2>
+          <div className={style.resumeCardWrap}>
+            <Resume />
+          </div>
+        </div>
+
+        <div className={` glass ${style.portfolioSection}`}>
+          <h2 className={style.sectionTitle}>Portfolio</h2>
+          <div className={style.portfolioGrid}>
+            {portfolio.map((portfolio: Portfolio) => (
+              <PortfolioCard key={portfolio.slug} {...portfolio} />
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

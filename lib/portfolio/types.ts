@@ -11,7 +11,6 @@ interface RawFrontmatter {
   title?: string;
   tags?: string[];
   createdAt?: string;
-  publishedAt?: string;
   githubLink?: string;
   velogLink?: string;
   summary?: string;
@@ -26,7 +25,6 @@ interface Portfolio {
   title: string;
   tags: string[];
   createdAt: string;
-  publishedAt: string;
   githubLink: string;
   velogLink: string;
   summary: string;

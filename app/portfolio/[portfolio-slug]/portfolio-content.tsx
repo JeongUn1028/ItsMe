@@ -58,10 +58,6 @@ export async function PortfolioContent({
 
           <div className={style.metaRow}>
             <span className={style.divider}>•</span>
-            <span className={style.meta}>
-              Published {portfolio.publishedAt}
-            </span>
-            <span className={style.divider}>•</span>
             <span className={style.meta}>Created {portfolio.createdAt}</span>
           </div>
 

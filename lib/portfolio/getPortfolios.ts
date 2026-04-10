@@ -26,7 +26,6 @@ export const getPortfolios = (): Portfolio[] => {
       title: rawFrontMatterData.title ?? "",
       tags: rawFrontMatterData.tags ?? [],
       createdAt: rawFrontMatterData.createdAt ?? "",
-      publishedAt: rawFrontMatterData.publishedAt ?? "",
       githubLink: rawFrontMatterData.githubLink ?? "",
       velogLink: rawFrontMatterData.velogLink ?? "",
       summary: rawFrontMatterData.summary ?? "",
