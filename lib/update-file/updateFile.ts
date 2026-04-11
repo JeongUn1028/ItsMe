@@ -1,13 +1,13 @@
 import { Octokit } from "octokit";
 
 export async function updateFile(fileName: string, content: object | string) {
-  //* finename: json, md, 파일명
+  //* fileName: json, md, 파일명
   //* content: 업데이트할 내용
 
-  if (!filePath || !content) {
+  if (!fileName || !content) {
     return {
       success: false,
-      message: "Missing filePath or content",
+      message: "Missing fileName or content",
     };
   }
 
@@ -70,7 +70,7 @@ export async function updateFile(fileName: string, content: object | string) {
       owner: OWNER,
       repo: REPO,
       path: PATH,
-      message: `chore(file): Update ${filePath} via API`,
+      message: `chore(file): Update ${fileName} via API`,
       committer: {
         name: "itsme-bot",
         email: "wjddns363@naver.com",
