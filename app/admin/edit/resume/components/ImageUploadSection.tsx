@@ -65,7 +65,7 @@ export function ImageUploadSection({
               >
                 파일 선택
               </button>
-              <div className={style.uploadHint}>JPG, PNG 형식만 지원합니다</div>
+              <div className={style.uploadHint}>jpg, PNG 형식만 지원합니다</div>
             </div>
           </div>
           {selectedImageFile && (
