@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     siteName: "JEONGUN1028's Portfolio",
     images: [
       {
-        url: "/profile.JPG",
+        url: "/profile.jpg",
         width: 1200,
         height: 630,
         alt: "JEONGUN1028 portfolio preview",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "JEONGUN1028's Portfolio",
     description: "itsme의 포트폴리오 사이트입니다.",
-    images: ["/profile.JPG"],
+    images: ["/profile.jpg"],
   },
 };
 
