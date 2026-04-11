@@ -99,7 +99,7 @@ export async function submitResumeAction(
 
     //* 6. GitHub에 업데이트
     const gitHubResponse = await updateFile("resume.json", newData);
-    if (!gitHubResponse || !gitHubResponse.ok) {
+    if (!gitHubResponse || gitHubResponse.status >= 400) {
       return {
         success: false,
         message: "GitHub 업데이트에 실패했습니다.",
