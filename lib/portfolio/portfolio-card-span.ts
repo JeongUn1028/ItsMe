@@ -1,4 +1,4 @@
-import { Project, SpanSize, TabletSpanSize } from "@/lib/projects/types";
+import { Portfolio, SpanSize, TabletSpanSize } from "@/lib/portfolio/types";
 
 const desktopColSpanMap: Record<SpanSize, string> = {
   1: "xl:col-span-1",
@@ -22,14 +22,14 @@ const tabletRowSpanMap: Record<TabletSpanSize, string> = {
   2: "sm:row-span-2",
 };
 
-function normalizeSize(size: Project["size"]) {
+function normalizeSize(size: Portfolio["size"]) {
   const col = size?.[0] ?? 1;
   const row = size?.[1] ?? 1;
 
   return { col, row };
 }
 
-export function getSpanClasses(size: Project["size"]) {
+export function getSpanClasses(size: Portfolio["size"]) {
   const { col, row } = normalizeSize(size);
   const isRowLayout = col >= row;
 

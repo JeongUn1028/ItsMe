@@ -1,4 +1,4 @@
-import { getRawContents } from "@/lib/projects/getRawContents";
+import { getRawContents } from "@/lib/portfolio/getRawContents";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 

@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import type { Project } from "@/lib/projects/types";
-import { getSpanClasses } from "@/lib/projects/portfolio-card-span";
+import type { Portfolio } from "@/lib/portfolio/types";
+import { getSpanClasses } from "@/lib/portfolio/portfolio-card-span";
 import style from "./portfolio-card.module.css";
 
-export default function PortfolioCard(project: Project) {
+export default function PortfolioCard(portfolio: Portfolio) {
   // const isEditMode = isEdit ?? false;
-  const { thumbnail, title, summary, tags, size } = project;
+  const { thumbnail, title, summary, tags, size } = portfolio;
 
   const {
     isRowLayout,
@@ -22,7 +22,7 @@ export default function PortfolioCard(project: Project) {
   const router = useRouter();
 
   const onClickCard = () => {
-    router.push(`/portfolio/${project.slug}`);
+    router.push(`/portfolio/${portfolio.slug}`);
   };
 
   return (

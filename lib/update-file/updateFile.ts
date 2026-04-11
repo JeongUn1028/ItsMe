@@ -1,15 +1,7 @@
 import { Octokit } from "octokit";
 
-interface UpdateFileResult {
-  success: boolean;
-  message: string;
-}
-
-export async function updateFile(
-  filePath: string,
-  content: object | string | File,
-): Promise<UpdateFileResult> {
-  //* filePath: json, md 파일 경로
+export async function updateFile(fileName: string, content: object | string) {
+  //* finename: json, md, 파일명
   //* content: 업데이트할 내용
 
   if (!filePath || !content) {
@@ -22,8 +14,14 @@ export async function updateFile(
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
   const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
-
-  const PATH = filePath;
+  let PATH = "";
+  if (fileName.endsWith(".json")) {
+    PATH = `content/${fileName}`;
+  } else if (fileName.endsWith(".md")) {
+    PATH = `content/portfolio/${fileName}`;
+  } else {
+    PATH = `content/portfolio/${fileName}`;
+  }
 
   if (!OWNER || !REPO || !TOKEN) {
     return {

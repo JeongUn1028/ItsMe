@@ -1,4 +1,3 @@
-
 type SpanSize = 1 | 2 | 3;
 
 type TabletSpanSize = 1 | 2;
@@ -12,14 +11,13 @@ interface RawFrontmatter {
   title?: string;
   tags?: string[];
   createdAt?: string;
-  publishedAt?: string;
   githubLink?: string;
   velogLink?: string;
   summary?: string;
   //* 하단에 있는 필드
 }
 
-interface Project {
+interface Portfolio {
   slug: string;
   thumbnail: string;
   size: SpanSize[];
@@ -27,7 +25,6 @@ interface Project {
   title: string;
   tags: string[];
   createdAt: string;
-  publishedAt: string;
   githubLink: string;
   velogLink: string;
   summary: string;
@@ -41,4 +38,4 @@ interface VelogPost {
   released_at: string;
 }
 
-export type { RawFrontmatter, Project, SpanSize, TabletSpanSize, VelogPost };
+export type { RawFrontmatter, Portfolio, SpanSize, TabletSpanSize, VelogPost };
