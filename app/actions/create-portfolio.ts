@@ -6,6 +6,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { updateFile } from "@/lib/update-file/updateFile";
 
 export interface CreatePortfolioState {
   success: boolean | null;
@@ -25,7 +26,7 @@ function isRedirectError(error: unknown): boolean {
   );
 }
 
-// 입력된 날짜를 YYYY-MM-DD 형식으로 정규화합니다.
+//* 입력된 날짜를 YYYY-MM-DD 형식으로 변환
 function normalizeDate(input: string) {
   if (!input) {
     return new Date().toISOString().slice(0, 10);
@@ -34,12 +35,12 @@ function normalizeDate(input: string) {
   return input.slice(0, 10);
 }
 
-// YAML 문자열 내부 큰따옴표를 이스케이프합니다.
+//* 문자열 내부 큰따옴표를 이스케이프합니다.
 function escapeYamlQuotedString(value: string) {
   return value.replace(/"/g, '\\"');
 }
 
-// frontmatter 값을 YAML 한 줄 표현으로 직렬화합니다.
+//* frontmatter 값을 YAML 한 줄 표현으로 직렬화합니다.
 function stringifyYamlValue(value: FrontmatterValue): string {
   if (Array.isArray(value)) {
     return `[${value
@@ -236,13 +237,14 @@ export async function createPortfolio(
         };
       }
 
+      //* 이미지 파일 저장
       const extension = thumbnail.type === "image/png" ? "png" : "jpg";
-      const imageFileName = `${normalizedSlug}-portfolio.${extension}`;
+      const imageFileName = `${normalizedSlug}.${extension}`;
       const imagePath = path.join(imageDir, imageFileName);
       const imageBuffer = await thumbnail.arrayBuffer();
-
       await fs.writeFile(imagePath, Buffer.from(imageBuffer));
 
+      //* Markdown 생성 및 저장
       const markdown = makeMarkdownContent({
         thumbnailPath: `/portfolio/${imageFileName}`,
         size: sizeArray,
@@ -256,8 +258,19 @@ export async function createPortfolio(
         summary,
         contents,
       });
-
       await fs.writeFile(markdownPath, markdown, "utf-8");
+
+      //* gitHub에 업데이트
+
+      const gitHubResponse = await updateFile(`${normalizedSlug}.md`, markdown);
+      if (!gitHubResponse || !gitHubResponse.ok) {
+        return {
+          success: false,
+          message: "GitHub 업데이트에 실패했습니다.",
+        };
+      }
+
+      //* 캐시 재검증
 
       revalidatePath("/");
       revalidatePath("/admin");

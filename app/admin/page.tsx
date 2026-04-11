@@ -8,7 +8,6 @@ import Link from "next/link";
 //* Admin Page
 export default function Page() {
   const portfolio = getPortfolios();
-  //TODO 레주메 Update 기능
 
   //TODO 포트폴리오 추가, 수정, 삭제 기능
   return (

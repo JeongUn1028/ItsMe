@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { Octokit } from "octokit";
 
-export async function updateFile(fileName: string, content: object) {
-  //* finename: json, md 파일명
+export async function updateFile(fileName: string, content: object | string) {
+  //* finename: json, md, 파일명
   //* content: 업데이트할 내용
 
   if (!fileName || !content) {
@@ -14,10 +14,14 @@ export async function updateFile(fileName: string, content: object) {
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
   const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
-  const PATH =
-    fileName === "resume.json"
-      ? `content/${fileName}`
-      : `content/portfolio/${fileName}`;
+  let PATH = "";
+  if (fileName.endsWith(".json")) {
+    PATH = `content/${fileName}`;
+  } else if (fileName.endsWith(".md")) {
+    PATH = `content/portfolio/${fileName}`;
+  } else {
+    PATH = `content/portfolio/${fileName}`;
+  }
 
   if (!OWNER || !REPO || !TOKEN) {
     return NextResponse.json(
