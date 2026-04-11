@@ -263,7 +263,7 @@ export async function createPortfolio(
       //* gitHub에 업데이트
 
       const gitHubResponse = await updateFile(`${normalizedSlug}.md`, markdown);
-      if (!gitHubResponse || !gitHubResponse.ok) {
+      if (!gitHubResponse || !gitHubResponse.success) {
         return {
           success: false,
           message: "GitHub 업데이트에 실패했습니다.",
