@@ -1,57 +1,167 @@
-## 🚀 itsme: 저를 소개하는 웹서비스
+# itsme
 
-프론트엔드 개발자로서의 기술적 지향점과 실무 역량을 증명하기 위해 제작된 Next.js 15 기반 포트폴리오 서비스입니다.
-<br />
-단순한 결과물 나열보다는 데이터 모델링, 라우팅 최적화, 미들웨어, 유닛 테스트 등으로 프론트엔드 아키텍처를 구축하는 데 집중했습니다.
-<br />
-[🌐 Live Demo 바로가기](https://www.leejeongun.com)
+신입 프론트엔드 개발자로서 저를 소개하기 위해 만든 개인 포트폴리오 웹서비스입니다.
 
----
-## 📌 핵심 아키텍처 포인트
+단순히 결과물을 나열하는 데서 끝나지 않고, 실제 서비스처럼 콘텐츠를 관리할 수 있는 구조를 직접 설계하고 구현하는 데 집중했습니다. 사용자에게는 깔끔한 포트폴리오 경험을, 관리자에게는 이력서와 프로젝트를 직접 수정할 수 있는 관리 기능을 제공하는 것이 목표였습니다.
 
-1. UX 최적화: Intercepting & Parallel Routes<br />
-   도입 이유: 사용자가 리스트에서 상세 페이지로 진입할 때 기존의 맥락(Context)을 유지하면서도, 새로고침시에는 독립적인 상세 페이지를 제공하기 위해 Next.js의 고급 라우팅 기능을 도입했습니. <br />
-   결과: 모달 형태의 상세 보기와 개별 페이지 렌더링을 동시에 지원하여 부드러운 사용자 경험을 구현했습니다.<br />
-   
-2. 콘텐츠 파이프라인: MDX & 정적 데이터화<br />
-   도입 이유: 외부 CMS 의존도를 낮추고 버전 관리가 용이하도록 로컬 마크다운(MDX) 기반 시스템을 설계했습니다.<br />
-   결과: gray-matter를 활용해 메타데이터(Frontmatter)와 본문을 분리하고, 정적 타입 기반의 데이터 파싱 로직을 구축했습니다.<br />
-3. 보안 미들웨어 & Edge Runtime Auth<br />
-   도입 이유: 관리자 페이지의 보안을 강화하기 위해 클라이언트 측 라우트 가드가 아닌, 서버 측 미들웨어 검증 방식을 채택했습니다.<br />
-   결과: JOSE 라이브러리를 활용해 Edge Runtime 환경에서도 가볍고 빠르게 동작하는 JWT 검증 로직을 구현했습니다.<br />
----
-## 🛠 기술 스택
+[Live Demo](https://www.leejeongun.com)
 
+## 프로젝트 소개
 
-| 분류    | 스택 | 도입 목적 |
-| ---------- | ---------- | ----|
-|Framework| Next.js 15 (App Router)| 서버 컴포넌트 활용 및 최신 렌더링 최적화|
-|Language| HTML, CSS, JavaScript, TypeScript| 정적 타입을 통한 개발 생산성 및 안정성 확보|
-|UI| React 19, Tailwind CSS| 최신 리액트 기능 활용 및 유연한 디자인 시스템 구축|
-|Content| MD, gray-matter| 구조화된 콘텐츠 관리 및 확장성 있는 문서 작성|
-|Auth|JOSE (JWT) |Edge 환경 호환성 및 경량화된 인증 로직 구현|
-|Test| Vitest| 로직의 정합성 검증 및 리팩토링 안정성 확보|
+itsme는 다음 두 가지를 보여주기 위해 만든 프로젝트입니다.
 
----
-## 📂 프로젝트 구조
-<pre>
-   <code>
-├── app/ # App Router 기반 레이아웃 및 페이지
-│ ├── (auth)/ # 로그인 관련 경로
-│ ├── admin/ # 미들웨어 보호 관리자 경로
-│ ├── portfolio/ # 상세 페이지 라우트
-│ └── @modal/ # 인터셉팅 라우트를 위한 병렬 경로
-├── components/ # 재사용 가능한 UI 컴포넌트 (Atomic Design 지향)
-├── content/ # 프로젝트 데이터 (.md 파일)
-├── lib/ # 비즈니스 로직 및 유틸리티 (UI와 분리)
-└── **tests**/ # 데이터 파싱 로직 단위 테스트
-   </code>
-</pre>
----
-## 🚀 Future Roadmap (고도화 계획)
+- 사용자 입장에서 보기 좋은 포트폴리오 UI를 만들 수 있는지
+- 개발자 입장에서 유지보수 가능한 구조를 설계할 수 있는지
 
-[ ] RBAC 고도화: 관리자 세션 상태에 따른 UI/UX 조건부 렌더링 최적화<br />
-[ ] Resume Engine: 마크다운 기반의 동적 이력서 생성 페이지 추가<br />
-[ ] Embedded CMS: 관리자 페이지 내에서 직접 포트폴리오를 추가/수정/삭제할 수 있는 대시보드 구축<br />
-[ ] Performance Optimization: 이미지 최적화 및 코드 스플리팅을 통한 로딩 속도 개선<br />
-[ ] Accessibility Audit: 웹 접근성 표준 준수를 위한 전반적인 UI/UX 개선<br />
+이를 위해 포트폴리오 상세 페이지 모달 라우팅, 관리자 인증, Markdown 기반 콘텐츠 관리, Server Action 기반 폼 처리까지 직접 구현했습니다.
+
+## 주요 기능
+
+### 사용자 기능
+
+- 자기소개, 기술 스택, 연락처, 외부 링크 확인
+- 포트폴리오 목록 조회
+- 포트폴리오 상세 페이지 조회
+- 목록에서 진입할 때는 모달, 직접 URL 접근 시에는 독립 페이지로 진입
+- Velog 게시글 목록 조회
+
+### 관리자 기능
+
+- 로그인 후 관리자 페이지 접근
+- 이력서 소개글, 기술 스택, 프로필 이미지, PDF 이력서 수정
+- 새 포트폴리오 작성
+- 포트폴리오 삭제
+
+## 구현 포인트
+
+### 1. 모달과 페이지를 함께 지원하는 상세 라우팅
+
+포트폴리오 카드를 눌렀을 때는 현재 페이지 흐름을 유지한 채 모달로 상세 내용을 보여주고, URL로 직접 접근했을 때는 독립적인 상세 페이지가 열리도록 구성했습니다.
+
+- Next.js App Router의 Intercepting Route와 Parallel Route 활용
+- 같은 콘텐츠를 상황에 따라 다른 진입 방식으로 제공
+- 사용자 경험과 라우팅 구조를 함께 고려한 구현
+
+### 2. Markdown 기반 포트폴리오 관리
+
+포트폴리오 콘텐츠를 코드와 함께 관리할 수 있도록 Markdown 기반 구조를 사용했습니다.
+
+- frontmatter로 메타데이터 관리
+- 본문은 Markdown으로 작성
+- gray-matter와 MDX 렌더링으로 화면 출력
+- 콘텐츠 수정과 버전 관리를 쉽게 할 수 있는 구조
+
+### 3. 관리자 인증과 보호된 라우트
+
+관리자 페이지는 누구나 접근할 수 없도록 JWT 쿠키 검증을 통해 보호했습니다.
+
+- 로그인 성공 시 JWT 발급
+- middleware에서 /admin 경로 접근 제어
+- 서버 환경에서도 동작 가능한 인증 흐름 구성
+
+### 4. 직접 관리 가능한 콘텐츠 업데이트 흐름
+
+이력서와 포트폴리오 데이터를 직접 수정할 수 있도록 관리자 폼과 저장 로직을 연결했습니다.
+
+- Server Action 기반 폼 처리
+- GitHub Contents API를 이용한 파일 저장 및 삭제
+- 저장 후 revalidatePath로 화면 데이터 갱신
+
+## 기술 스택
+
+| 구분      | 사용 기술                                   |
+| --------- | ------------------------------------------- |
+| Framework | Next.js 15, React 19                        |
+| Language  | TypeScript                                  |
+| Styling   | Tailwind CSS v4, CSS Modules                |
+| Content   | Markdown, MDX, gray-matter, next-mdx-remote |
+| Auth      | jose, JWT Cookie                            |
+| API       | octokit                                     |
+| Test      | Vitest, Testing Library, jsdom              |
+
+## 프로젝트 구조
+
+```text
+.
+├── app
+│   ├── @modal                  # 포트폴리오 상세 모달 인터셉트 라우트
+│   ├── actions                 # Server Actions
+│   ├── admin                   # 관리자 페이지
+│   ├── api                     # 로그인/로그아웃/이력서 API
+│   ├── components              # 화면 컴포넌트
+│   ├── login                   # 로그인 페이지
+│   └── portfolio               # 포트폴리오 상세 페이지
+├── content
+│   ├── portfolio               # 포트폴리오 Markdown 원본
+│   └── resume.json             # 이력서 데이터 원본
+├── lib
+│   ├── auth                    # 인증 유틸
+│   ├── portfolio               # 포트폴리오 파싱/조회 로직
+│   ├── resume                  # 이력서 데이터 처리 로직
+│   └── update-file             # GitHub 파일 저장/삭제 유틸
+├── public                      # 정적 자산
+└── __tests__                   # 유틸 단위 테스트
+```
+
+## 실행 방법
+
+```bash
+npm install
+npm run dev
+```
+
+브라우저에서 http://localhost:3000 으로 접속하면 됩니다.
+
+## 환경 변수
+
+```bash
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE=http://localhost:3000
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+JWT_SECRET_KEY=your-jwt-secret
+NEXT_ID=admin-id
+NEXT_SECRET=admin-password
+
+NEXT_PUBLIC_GITHUB_CLIENT_ID=your-github-owner
+NEXT_PUBLIC_GITHUB_REPO=your-repo-name
+NEXT_PUBLIC_TOKEN_KEY=your-github-token
+```
+
+- NEXT_ID, NEXT_SECRET은 관리자 로그인 검증에 사용합니다.
+- JWT_SECRET_KEY는 로그인 후 발급하는 JWT 서명과 검증에 사용합니다.
+- GitHub 관련 환경 변수는 이력서와 포트폴리오 파일 저장에 사용합니다.
+
+## 스크립트
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+npm run test
+```
+
+## 테스트
+
+Vitest 기반 단위 테스트를 작성했습니다. 현재는 콘텐츠 파싱과 조회 로직을 중심으로 테스트하고 있습니다.
+
+- frontmatter 파싱 검증
+- Markdown 본문 추출 검증
+- 포트폴리오 목록 생성 검증
+- raw content / raw frontmatter 유틸 검증
+
+## 아쉬운 점과 개선 예정
+
+- 포트폴리오 수정 화면은 구현되어 있지만 저장 액션은 아직 연결되지 않았습니다.
+- 관리자 기능 전반에 사용자 피드백 UI를 더 보강할 수 있습니다.
+- 테스트 범위를 UI와 액션 레벨까지 확장할 계획입니다.
+
+## 프로젝트를 통해 배우고자 한 점
+
+이 프로젝트를 통해 단순한 화면 구현을 넘어, 프론트엔드 개발자가 실제로 고민해야 하는 흐름을 연습하고자 했습니다.
+
+- 사용자가 자연스럽게 느끼는 화면 전환 경험
+- 관리자 기능까지 고려한 서비스 구조 설계
+- 데이터와 UI를 분리한 유지보수 가능한 코드 작성
+- 새 기능 추가 시 테스트와 타입 안정성을 함께 고려하는 개발 방식
