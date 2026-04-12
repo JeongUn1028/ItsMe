@@ -6,6 +6,7 @@ import { useMDXComponents } from "@/mdx-components";
 import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
 import style from "./page.module.css";
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
+import DeleteForm from "./deleteForm";
 
 function getPortfolioOrNotFound(slug: string) {
   try {
@@ -23,7 +24,6 @@ export async function PortfolioContent({
   isModal?: boolean;
 }) {
   const { "portfolio-slug": slug } = await params;
-
   const portfolio = getPortfolioOrNotFound(slug);
   const isLogin = await getLoginStatus();
 
@@ -36,12 +36,15 @@ export async function PortfolioContent({
           <div className={style.headerRow}>
             <BackToHomeButton className={style.backLink} />
             {isLogin && (
-              <Link
-                href={`/admin/edit/portfolio/${slug}`}
-                className={style.editLink}
-              >
-                {"Edit->"}
-              </Link>
+              <div>
+                <Link
+                  href={`/admin/edit/portfolio/${slug}`}
+                  className={style.editLink}
+                >
+                  {"Edit->"}
+                </Link>
+                <DeleteForm slug={slug} thumbnail={portfolio.thumbnail} />
+              </div>
             )}
           </div>
 
