@@ -1,20 +1,14 @@
 "use server";
 
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
-import fs from "node:fs/promises";
-import path from "node:path";
-import matter from "gray-matter";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { updateFile } from "@/lib/update-file/updateFile";
+import { makeMarkdownContent } from "@/lib/portfolio/setPortfolio";
 
 export interface CreatePortfolioState {
   success: boolean | null;
   message: string;
 }
-
-type FrontmatterPrimitive = string | number | boolean;
-type FrontmatterValue = FrontmatterPrimitive | FrontmatterPrimitive[];
 
 function isRedirectError(error: unknown): boolean {
   return (
@@ -35,90 +29,7 @@ function normalizeDate(input: string) {
   return input.slice(0, 10);
 }
 
-//* 문자열 내부 큰따옴표를 이스케이프합니다.
-function escapeYamlQuotedString(value: string) {
-  return value.replace(/"/g, '\\"');
-}
-
-//* frontmatter 값을 YAML 한 줄 표현으로 직렬화합니다.
-function stringifyYamlValue(value: FrontmatterValue): string {
-  if (Array.isArray(value)) {
-    return `[${value
-      .map((item) =>
-        typeof item === "string"
-          ? `"${escapeYamlQuotedString(item)}"`
-          : String(item),
-      )
-      .join(", ")}]`;
-  }
-
-  if (typeof value === "string") {
-    return `"${escapeYamlQuotedString(value)}"`;
-  }
-
-  return String(value);
-}
-
-// 문자열 필드는 항상 따옴표가 붙도록 frontmatter 본문을 생성합니다.
-function stringifyQuotedFrontmatter(data: Record<string, FrontmatterValue>) {
-  return Object.entries(data)
-    .map(([key, value]) => `${key}: ${stringifyYamlValue(value)}`)
-    .join("\n");
-}
-
-// 폼 데이터로 gray-matter 기반 Markdown(frontmatter + 본문) 문자열을 생성합니다.
-function makeMarkdownContent(params: {
-  thumbnailPath: string;
-  size: number[];
-  status: string;
-  title: string;
-  tags: string[];
-  createdAt: string;
-  publishedAt: string;
-  githubLink: string;
-  velogLink: string;
-  summary: string;
-  contents: string;
-}) {
-  const {
-    thumbnailPath,
-    size,
-    status,
-    title,
-    tags,
-    createdAt,
-    publishedAt,
-    githubLink,
-    velogLink,
-    summary,
-    contents,
-  } = params;
-
-  const frontmatterData = {
-    thumbnail: thumbnailPath,
-    size: [size[0], size[1]],
-    status,
-    title,
-    tags,
-    createdAt,
-    publishedAt,
-    githubLink,
-    velogLink,
-    summary,
-  };
-
-  return matter.stringify(`${contents.trim()}\n`, frontmatterData, {
-    engines: {
-      yaml: {
-        parse: () => ({}),
-        stringify: (data: unknown) =>
-          stringifyQuotedFrontmatter(data as Record<string, FrontmatterValue>),
-      },
-    },
-  });
-}
-
-// 새 포트폴리오를 이미지와 함께 저장하고 md 문서를 생성합니다.
+//* 새 포트폴리오를 이미지와 함께 저장하고 md 문서를 생성합니다.
 export async function createPortfolio(
   _prevState: CreatePortfolioState,
   formData: FormData,
@@ -209,76 +120,57 @@ export async function createPortfolio(
     }
 
     const normalizedCreatedAt = normalizeDate(createdAt);
-    const publishedAt = status === "published" ? normalizedCreatedAt : "";
 
-    const portfolioDir = path.join(process.cwd(), "content/portfolio");
-    const imageDir = path.join(process.cwd(), "public/portfolio");
-    const markdownPath = path.join(portfolioDir, `${normalizedSlug}.md`);
-
-    await fs.mkdir(portfolioDir, { recursive: true });
-    await fs.mkdir(imageDir, { recursive: true });
-
-    try {
-      await fs.access(markdownPath);
-      return {
-        success: false,
-        message: "같은 프로젝트 명의 포트폴리오가 이미 존재합니다.",
-      };
-    } catch {
-      // 파일이 없으면 정상 흐름
-    }
-
+    //* 3. Image GitHub에 저장 (파일이 있는 경우)
     if (thumbnail && thumbnail.size > 0) {
-      const allowedImageMimeTypes = ["image/jpeg", "image/png"];
-      if (!allowedImageMimeTypes.includes(thumbnail.type)) {
+      if (
+        !thumbnail.type ||
+        !["image/jpeg", "image/png"].includes(thumbnail.type)
+      ) {
         return {
           success: false,
           message: "썸네일 이미지는 JPG 또는 PNG만 업로드할 수 있습니다.",
         };
       }
-
-      //* 이미지 파일 저장
-      const extension = thumbnail.type === "image/png" ? "png" : "jpg";
-      const imageFileName = `${normalizedSlug}.${extension}`;
-      const imagePath = path.join(imageDir, imageFileName);
-      const imageBuffer = await thumbnail.arrayBuffer();
-      await fs.writeFile(imagePath, Buffer.from(imageBuffer));
-
-      //* Markdown 생성 및 저장
-      const markdown = makeMarkdownContent({
-        thumbnailPath: `/portfolio/${imageFileName}`,
-        size: sizeArray,
-        status,
-        title,
-        tags: tagsArray,
-        createdAt: normalizedCreatedAt,
-        publishedAt,
-        githubLink,
-        velogLink,
-        summary,
-        contents,
-      });
-      await fs.writeFile(markdownPath, markdown, "utf-8");
-
-      //* gitHub에 업데이트
-
-      const gitHubResponse = await updateFile(`${normalizedSlug}.md`, markdown);
-      if (!gitHubResponse || !gitHubResponse.success) {
-        return {
-          success: false,
-          message: "GitHub 업데이트에 실패했습니다.",
-        };
-      }
-
-      //* 캐시 재검증
-
-      revalidatePath("/");
-      revalidatePath("/admin");
-      revalidatePath(`/portfolio/${normalizedSlug}`);
-      redirect("/admin");
+      await updateFile(`public/portfolio/${normalizedSlug}.jpg`, thumbnail);
     }
 
-    return { success: false, message: "썸네일 이미지를 선택해주세요." };
+    // *4 Markdown 파일 생성 및 저장
+
+    //* Markdown 생성 및 저장
+    const markdown = makeMarkdownContent({
+      thumbnailPath: `/public/portfolio/${slug.trim().toLowerCase()}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
+      size: sizeArray,
+      status,
+      title,
+      tags: tagsArray,
+      createdAt: normalizedCreatedAt,
+      githubLink,
+      velogLink,
+      summary,
+      contents,
+    });
+
+    //* gitHub에 업데이트
+
+    const gitHubResponse = await updateFile(`${normalizedSlug}.md`, markdown);
+    if (!gitHubResponse || !gitHubResponse.success) {
+      return {
+        success: false,
+        message: "GitHub 업데이트에 실패했습니다.",
+      };
+    }
+
+    //* 캐시 재검증
+
+    revalidatePath("/");
+    revalidatePath("/admin");
+    revalidatePath(`/portfolio/${normalizedSlug}`);
+
+    return {
+      success: true,
+      message: "포트폴리오가 성공적으로 생성되었습니다.",
+    };
   } catch (error) {
     if (isRedirectError(error)) {
       throw error;

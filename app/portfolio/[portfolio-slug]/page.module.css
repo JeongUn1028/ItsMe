@@ -38,6 +38,10 @@
   @apply flex flex-wrap items-center justify-between gap-3;
 }
 
+.actionGroup {
+  @apply flex flex-wrap items-center gap-2;
+}
+
 .backLink {
   @apply w-fit rounded-full px-3 py-1 text-sm font-medium transition-colors;
   background: rgba(255, 255, 255, 0.58);
@@ -56,6 +60,21 @@
 
 .editLink:hover {
   background: rgba(255, 255, 255, 0.8);
+}
+
+.deleteForm {
+  @apply contents;
+}
+
+.deleteButton {
+  @apply w-fit rounded-full px-3 py-1 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+  border: 1px solid rgba(179, 59, 59, 0.22);
+  background: rgba(255, 238, 238, 0.92);
+  color: rgba(142, 32, 32, 0.92);
+}
+
+.deleteButton:hover {
+  background: rgba(255, 228, 228, 0.98);
 }
 
 .title {

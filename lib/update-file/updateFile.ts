@@ -1,3 +1,7 @@
+//TODO - 한번에 여러 파일 업데이트할 수 있도록 개선하기 (예: 포트폴리오 md + 이미지)
+//TODO - 업데이트 실패 시 롤백 메커니즘 고려 (예: md는 업데이트됐는데 이미지 업데이트 실패 시 md도 원래대로 돌리는 식)
+//TODO - 공통 업데이트 함수 만들기 (예: createPortfolio, submitResume 등에서 공통으로 GitHub 업데이트하는 부분을 updateFile로 대체)
+
 import { Octokit } from "octokit";
 
 export async function updateFile(fileName: string, content: object | string) {
@@ -15,12 +19,19 @@ export async function updateFile(fileName: string, content: object | string) {
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
   const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
   let PATH = "";
+  //* Resume 의 .json 파일
   if (fileName.endsWith(".json")) {
     PATH = `content/${fileName}`;
+    //* Portfolio 의 .md 파일
   } else if (fileName.endsWith(".md")) {
     PATH = `content/portfolio/${fileName}`;
+    //* 이미지나 PDF 파일 (resume의 경우 public/resume폴더, portfolio의 경우 public/portfolio 폴더)
   } else {
-    PATH = `content/portfolio/${fileName}`;
+    if (fileName.includes("resume")) {
+      PATH = `public/resume/${fileName}`;
+    } else {
+      PATH = `public/portfolio/${fileName}`;
+    }
   }
 
   if (!OWNER || !REPO || !TOKEN) {
