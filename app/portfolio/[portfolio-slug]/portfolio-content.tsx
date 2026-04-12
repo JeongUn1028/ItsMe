@@ -36,7 +36,7 @@ export async function PortfolioContent({
           <div className={style.headerRow}>
             <BackToHomeButton className={style.backLink} />
             {isLogin && (
-              <div>
+              <div className={style.actionGroup}>
                 <Link
                   href={`/admin/edit/portfolio/${slug}`}
                   className={style.editLink}
