@@ -59,11 +59,10 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
         {children}
         {/* Portal로 렌더링되는 모달 전용 DOM 루트입니다. */}
         <div id="modal-root"></div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { createPortfolio } from "@/app/actions/create-portfolio";
+import { createPortfolio } from "@/app/actions/create-portfolio.action";
 import style from "./page.module.css";
 import { useActionState } from "react";
 

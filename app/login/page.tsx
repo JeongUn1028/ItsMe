@@ -1,4 +1,4 @@
-import { fetchLoginAction } from "@/app/actions/fetch-login";
+import { fetchLoginAction } from "@/app/actions/fetch-login.action";
 import { JSX } from "react";
 import style from "./page.module.css";
 

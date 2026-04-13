@@ -1,0 +1,16 @@
+@reference "../../../globals.css";
+
+.container {
+  @apply grid h-full w-full content-start gap-2 p-4 col-span-1 row-span-2 sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1;
+}
+
+.title {
+  @apply min-w-0 text-xl font-semibold;
+  word-break: break-word;
+}
+
+@media (min-width: 640px) {
+  .container {
+    @apply gap-3;
+  }
+}

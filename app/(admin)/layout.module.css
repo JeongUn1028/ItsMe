@@ -1,0 +1,18 @@
+@reference "../globals.css";
+
+.page {
+  @apply mx-auto w-full max-w-[1600px];
+}
+
+.container {
+  @apply flex w-full flex-row items-center justify-between gap-3 p-4;
+}
+
+.title {
+  @apply min-w-0 text-[1.75rem] font-bold leading-none sm:text-4xl mb-8;
+  word-break: break-word;
+}
+
+.content {
+  @apply w-full;
+}

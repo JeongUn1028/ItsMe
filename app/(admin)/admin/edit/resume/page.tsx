@@ -4,7 +4,7 @@ import Link from "next/link";
 import style from "./page.module.css";
 import { getResume } from "@/lib/resume/getResume";
 import { useActionState, useEffect, useState } from "react";
-import { submitResumeAction } from "@/app/actions/submit-resume";
+import { submitResumeAction } from "@/app/actions/submit-resume.action";
 import { ImageUploadSection } from "./components/ImageUploadSection";
 import { DescriptionSection } from "./components/DescriptionSection";
 import { SkillsSection } from "./components/SkillsSection";

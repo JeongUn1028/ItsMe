@@ -1,4 +1,5 @@
 import { Octokit } from "octokit";
+import { getGithubSHA } from "./getGithubSHA";
 
 // 일단 포트폴리오 전용으로 만들고 필요하면 이력서에도 적용하기
 // 파일명으로 한번에 md파일, 이미지 파일 삭제
@@ -31,23 +32,18 @@ export async function deleteFile(fileName: string, thumbnail: string) {
     });
 
     //* 1. 이미지 파일 삭제
-    const imageSha = await octokit
-      .request(`GET /repos/${OWNER}/${REPO}/contents/${thumbnailPath}`, {
-        owner: OWNER,
-        repo: REPO,
-        path: thumbnailPath,
-        headers: {
-          "X-GitHub-Api-Version": "2026-03-10",
-        },
-      })
-      .then((response) => response.data.sha);
+    const imageSha = await getGithubSHA(thumbnailPath);
     await octokit.request(
       `DELETE /repos/${OWNER}/${REPO}/contents/${thumbnailPath}`,
       {
         owner: OWNER,
         repo: REPO,
         path: thumbnailPath,
-        message: `Delete thumbnail for ${fileName}`,
+        message: `chore(file): Delete thumbnail for ${fileName}`,
+        committer: {
+          name: "itsme-bot",
+          email: "wjddns363@naver.com",
+        },
         sha: imageSha,
         headers: {
           "X-GitHub-Api-Version": "2026-03-10",
@@ -56,22 +52,17 @@ export async function deleteFile(fileName: string, thumbnail: string) {
     );
 
     //* 2. md 파일 삭제
-    const mdSha = await octokit
-      .request(`GET /repos/${OWNER}/${REPO}/contents/${mdPath}`, {
-        owner: OWNER,
-        repo: REPO,
-        path: mdPath,
-        headers: {
-          "X-GitHub-Api-Version": "2026-03-10",
-        },
-      })
-      .then((response) => response.data.sha);
+    const mdSha = await getGithubSHA(mdPath);
 
     await octokit.request(`DELETE /repos/${OWNER}/${REPO}/contents/${mdPath}`, {
       owner: OWNER,
       repo: REPO,
       path: mdPath,
-      message: `Delete markdown file for ${fileName}`,
+      message: `chore(file): Delete markdown file for ${fileName}`,
+      committer: {
+        name: "itsme-bot",
+        email: "wjddns363@naver.com",
+      },
       sha: mdSha,
       headers: {
         "X-GitHub-Api-Version": "2026-03-10",

@@ -1,4 +1,4 @@
-@reference "./globals.css";
+@reference "../globals.css";
 
 .pageWrap {
   @apply mx-auto m-4 flex w-full max-w-[1600px] flex-col items-center px-0.5;
@@ -19,14 +19,6 @@
   .homeGrid {
     grid-auto-rows: 220px;
   }
-}
-
-.title {
-  @apply text-xl font-semibold;
-}
-
-.velogCard {
-  @apply grid w-full h-full p-4 col-span-1 row-span-2 h-full sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1;
 }
 
 .portfolioGrid {

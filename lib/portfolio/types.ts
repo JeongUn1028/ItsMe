@@ -31,11 +31,17 @@ interface Portfolio {
   contents: string;
 }
 
-interface VelogPost {
+interface VelogPostType {
   title: string;
   tags: string[];
   url_slug: string;
   released_at: string;
 }
 
-export type { RawFrontmatter, Portfolio, SpanSize, TabletSpanSize, VelogPost };
+export type {
+  RawFrontmatter,
+  Portfolio,
+  SpanSize,
+  TabletSpanSize,
+  VelogPostType,
+};

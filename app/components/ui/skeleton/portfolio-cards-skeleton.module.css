@@ -1,0 +1,76 @@
+@reference "../../../globals.css";
+
+.skeletonCard {
+  pointer-events: none;
+}
+
+.thumbnailSkeleton,
+.bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.thumbnailSkeleton {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.bar {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.thumbnailSkeleton::after,
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.72),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+.titleBar {
+  height: 1rem;
+  width: 78%;
+}
+
+.summaryBar {
+  height: 0.78rem;
+  width: 100%;
+}
+
+.summaryBarShort {
+  height: 0.78rem;
+  width: 72%;
+}
+
+.tags {
+  @apply mt-auto flex flex-wrap gap-1.5;
+}
+
+.tagBar {
+  height: 1.35rem;
+  width: 4rem;
+}
+
+.tagBarShort {
+  height: 1.35rem;
+  width: 3rem;
+}
+
+.tagBarTiny {
+  height: 1.35rem;
+  width: 2.4rem;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
