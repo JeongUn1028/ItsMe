@@ -18,7 +18,7 @@ export async function updateFile(fileName: string, content: object | string) {
 
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
-  const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
+  const TOKEN = process.env.NEXT_GITHUB_TOKEN_KEY;
   let PATH = "";
   //* Resume 의 .json 파일
   if (fileName.endsWith(".json")) {

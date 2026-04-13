@@ -15,7 +15,7 @@ export async function deleteFile(fileName: string, thumbnail: string) {
 
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
-  const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
+  const TOKEN = process.env.NEXT_GITHUB_TOKEN_KEY;
   const thumbnailPath = `public/portfolio/${thumbnailFileName}`;
   const mdPath = `content/portfolio/${fileName}.md`;
 

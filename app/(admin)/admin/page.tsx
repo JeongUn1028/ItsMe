@@ -9,7 +9,6 @@ import Link from "next/link";
 export default function Page() {
   const portfolio = getPortfolios();
 
-  //TODO 포트폴리오 추가, 수정, 삭제 기능
   return (
     <div className={style.container}>
       <div className={`glass ${style.actionsSection}`}>

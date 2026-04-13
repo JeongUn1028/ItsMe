@@ -1,5 +1,5 @@
 import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
-import EditPortfolioComponent from "./editPortfolioComponent";
+import EditPortfolioComponent from "./EditPortfolioForm";
 
 export default async function Page({
   params,

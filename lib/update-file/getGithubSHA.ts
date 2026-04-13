@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 
 const octokit = new Octokit({
-  auth: process.env.NEXT_PUBLIC_TOKEN_KEY,
+  auth: process.env.NEXT_GITHUB_TOKEN_KEY,
 });
 
 export const getGithubSHA = async (filePath: string): Promise<string> => {

@@ -3,19 +3,27 @@ import { jwtVerify } from "jose";
 
 export async function middleware(request: NextRequest) {
   const token = request.cookies.get("access_token")?.value;
+  const redirectPath = `${request.nextUrl.pathname}${request.nextUrl.search}`;
 
-  if (
-    !token ||
-    (!(await jwtVerify(
+  try {
+    if (!token) {
+      const loginUrl = new URL("/login", request.url);
+      loginUrl.searchParams.set("redirect", redirectPath);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    await jwtVerify(
       token,
       new TextEncoder().encode(process.env.JWT_SECRET_KEY),
-    )) &&
-      request.nextUrl.pathname.startsWith("/admin"))
-  ) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+    );
 
-  return NextResponse.next();
+    return NextResponse.next();
+  } catch (error) {
+    console.error("JWT 검증 실패:", error);
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", redirectPath);
+    return NextResponse.redirect(loginUrl);
+  }
 }
 
 export const config = {
