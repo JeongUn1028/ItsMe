@@ -121,6 +121,52 @@
   );
 }
 
+.errorMessage {
+  @apply mt-4 rounded-md bg-red-50 p-4 text-sm text-red-800;
+}
+
+.skeletonCard {
+  @apply flex flex-col gap-5;
+}
+
+.skeletonLine {
+  @apply rounded-xl;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 255, 255, 0.72) 50%,
+    rgba(255, 255, 255, 0.34) 100%
+  );
+  background-size: 200% 100%;
+  animation: loginShimmer 1.2s ease-in-out infinite;
+}
+
+.skeletonLabel {
+  @apply h-3 w-24 rounded-lg;
+}
+
+.skeletonInput {
+  @apply h-12 w-full rounded-2xl;
+}
+
+.skeletonButton {
+  @apply mt-2 h-12 w-full rounded-2xl;
+}
+
+.skeletonHint {
+  @apply h-4 w-3/4 rounded-lg;
+}
+
+@keyframes loginShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 @media (max-width: 1023px) {
   .page {
     @apply py-6;

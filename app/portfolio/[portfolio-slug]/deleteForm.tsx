@@ -1,6 +1,6 @@
 "use client";
 
-import { deletePortfolio } from "@/app/actions/delete-portfolio";
+import { deletePortfolio } from "@/app/actions/delete-portfolio.action";
 import { useActionState } from "react";
 import style from "./page.module.css";
 

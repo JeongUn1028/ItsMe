@@ -1,0 +1,97 @@
+@reference "../../../globals.css";
+
+.container {
+  @apply grid h-full w-full content-start gap-2 p-4 col-span-1 row-span-2 sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1;
+}
+
+.headingBar {
+  height: 1.45rem;
+  width: 9.5rem;
+}
+
+.list {
+  @apply flex flex-col gap-2;
+}
+
+.item {
+  @apply flex flex-col gap-2 rounded-xl px-3 py-2.5;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.bar {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.68),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+.titleBar {
+  height: 1rem;
+  width: 84%;
+}
+
+.tags {
+  @apply flex flex-wrap gap-1.5;
+}
+
+.tagBar {
+  height: 1.4rem;
+  width: 4.5rem;
+}
+
+.tagBarShort {
+  height: 1.4rem;
+  width: 3.4rem;
+}
+
+.tagBarTiny {
+  height: 1.4rem;
+  width: 2.7rem;
+}
+
+.dateRow {
+  @apply flex justify-end;
+}
+
+.dateBar {
+  height: 0.8rem;
+  width: 5.8rem;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (min-width: 640px) {
+  .container {
+    @apply gap-3;
+  }
+
+  .list {
+    @apply gap-3;
+  }
+
+  .item {
+    @apply px-4 py-3;
+  }
+
+  .titleBar {
+    height: 1.15rem;
+  }
+}

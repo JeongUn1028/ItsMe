@@ -3,6 +3,7 @@
 //TODO - 공통 업데이트 함수 만들기 (예: createPortfolio, submitResume 등에서 공통으로 GitHub 업데이트하는 부분을 updateFile로 대체)
 
 import { Octokit } from "octokit";
+import { getGithubSHA } from "./getGithubSHA";
 
 export async function updateFile(fileName: string, content: object | string) {
   //* fileName: json, md, 파일명
@@ -17,7 +18,7 @@ export async function updateFile(fileName: string, content: object | string) {
 
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
-  const TOKEN = process.env.NEXT_PUBLIC_TOKEN_KEY;
+  const TOKEN = process.env.NEXT_GITHUB_TOKEN_KEY;
   let PATH = "";
   //* Resume 의 .json 파일
   if (fileName.endsWith(".json")) {
@@ -46,18 +47,7 @@ export async function updateFile(fileName: string, content: object | string) {
       auth: TOKEN,
     });
     //* 파일의 SHA 값 가져오기
-    const sha = await octokit
-      .request(`GET /repos/${OWNER}/${REPO}/contents/${PATH}`, {
-        owner: OWNER,
-        repo: REPO,
-        path: PATH,
-        headers: {
-          "X-GitHub-Api-Version": "2026-03-10",
-        },
-      })
-      .then((response) => {
-        return response.data.sha;
-      });
+    const sha = await getGithubSHA(PATH);
     //* 파일 업데이트 요청
 
     //* 1. content를 타입에 따라 적절히 변환

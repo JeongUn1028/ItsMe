@@ -32,7 +32,7 @@ function stringifyQuotedFrontmatter(data: Record<string, FrontmatterValue>) {
     .join("\n");
 }
 
-export function makeMarkdownContent(params: {
+export function setMarkdownContent(params: {
   thumbnailPath: string;
   size: number[];
   status: string;

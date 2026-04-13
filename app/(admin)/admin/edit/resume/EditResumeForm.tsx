@@ -4,14 +4,14 @@ import Link from "next/link";
 import style from "./page.module.css";
 import { getResume } from "@/lib/resume/getResume";
 import { useActionState, useEffect, useState } from "react";
-import { submitResumeAction } from "@/app/actions/submit-resume";
+import { submitResumeAction } from "@/app/actions/submit-resume.action";
 import { ImageUploadSection } from "./components/ImageUploadSection";
 import { DescriptionSection } from "./components/DescriptionSection";
 import { SkillsSection } from "./components/SkillsSection";
 import { PdfUploadSection } from "./components/PdfUploadSection";
 
 //* Resume Edit Page
-export default function Page() {
+export default function EditResumeForm() {
   const [resume, setResume] = useState<{
     description: string;
     skills: string[];

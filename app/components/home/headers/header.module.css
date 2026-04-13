@@ -8,3 +8,9 @@
   @apply min-w-0 text-[1.75rem] font-bold leading-none sm:text-4xl;
   word-break: break-word;
 }
+
+.adminLink {
+  @apply rounded-full px-3 py-1 text-sm font-medium transition-colors;
+  background: rgba(255, 255, 255, 0.58);
+  color: rgba(46, 33, 19, 0.88);
+}

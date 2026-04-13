@@ -12,7 +12,7 @@ export const getVelogPosts = async () => {
           limit: 3,
         },
       }),
-      next: { revalidate: 60 },
+      next: { revalidate: 86400 },
     });
     const data = await res.json();
     return data.data.posts;

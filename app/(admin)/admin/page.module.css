@@ -1,4 +1,4 @@
-@reference "../globals.css";
+@reference "../../globals.css";
 
 .container {
   @apply mx-auto flex w-full max-w-[1500px] flex-col gap-6 px-2 pb-10;

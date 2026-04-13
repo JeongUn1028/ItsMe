@@ -7,9 +7,15 @@ import { redirect } from "next/navigation";
 export async function fetchLoginAction(formData: FormData): Promise<void> {
   const username = formData.get("username")?.toString() ?? "";
   const password = formData.get("password")?.toString() ?? "";
+  const redirectPath = formData.get("redirect")?.toString() ?? "/admin";
+  const safeRedirectPath = redirectPath.startsWith("/")
+    ? redirectPath
+    : "/admin";
 
   if (!username || !password) {
-    redirect("/login?error=missing");
+    redirect(
+      `/login?error=missing&redirect=${encodeURIComponent(safeRedirectPath)}`,
+    );
   }
 
   try {
@@ -25,7 +31,9 @@ export async function fetchLoginAction(formData: FormData): Promise<void> {
     );
 
     if (!response.ok) {
-      redirect("/login?error=invalid");
+      redirect(
+        `/login?error=invalid&redirect=${encodeURIComponent(safeRedirectPath)}`,
+      );
     }
 
     const token = await new SignJWT({ username })
@@ -43,8 +51,10 @@ export async function fetchLoginAction(formData: FormData): Promise<void> {
     });
   } catch (error) {
     console.error("Login SeverAction error:", error);
-    redirect("/login?error=server");
+    redirect(
+      `/login?error=server&redirect=${encodeURIComponent(safeRedirectPath)}`,
+    );
   }
 
-  redirect("/");
+  redirect(safeRedirectPath);
 }

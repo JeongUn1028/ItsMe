@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { createPortfolio } from "@/app/actions/create-portfolio";
-import style from "./page.module.css";
+import { createPortfolio } from "@/app/actions/create-portfolio.action";
+import style from "./WritePortfolioForm.module.css";
 import { useActionState } from "react";
 
-export default function Page() {
+export default function WritePortfolioForm() {
   const [state, formAction, isPending] = useActionState(createPortfolio, {
     success: null,
     message: "",
@@ -152,7 +152,9 @@ export default function Page() {
           {state.message && (
             <p
               className={
-                state.success ? `${style.alert} ${style.alertSuccess}` : style.alert
+                state.success
+                  ? `${style.alert} ${style.alertSuccess}`
+                  : style.alert
               }
             >
               {state.message}
