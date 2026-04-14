@@ -1,6 +1,6 @@
 import { getSpanClasses } from "@/lib/portfolio/portfolio-card-span";
-import cardStyle from "../../portfolio/portfolio-card/portfolio-card.module.css";
-import style from "./portfolio-cards-skeleton.module.css";
+import cardStyle from "../../portfolio/portfolio-card/PortfolioCard.module.css";
+import style from "./PortfolioCardsSkeleton.module.css";
 
 const skeletonLayouts = [
   [2, 1],

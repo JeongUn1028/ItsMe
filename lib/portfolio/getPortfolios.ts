@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { getSlugFromFileName } from "./getSlugFromFileName";
 import { getRawFrontmatter } from "./getRawFrontmatter";
-import type { Portfolio } from "./types";
+import type { Portfolio } from "../types/portfilioTypes";
 import { getRawContents } from "./getRawContents";
 
 //* content/portfolio 디렉토리에 있는 md 파일들을 읽어서 프로젝트 데이터를 반환

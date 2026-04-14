@@ -1,14 +1,13 @@
-"use client";
-
 import { fetchLoginAction } from "@/app/actions/fetch-login.action";
-import { useSearchParams } from "next/navigation";
 import style from "./page.module.css";
 
-export default function LoginForm() {
-  const searchParams = useSearchParams();
-  const error = searchParams.get("error") ?? undefined;
-  const redirect = searchParams.get("redirect") ?? undefined;
-
+export default function LoginFormUI({
+  error,
+  redirect,
+}: {
+  error?: string;
+  redirect?: string;
+}) {
   const errorMessage =
     error === "missing"
       ? "아이디와 비밀번호를 모두 입력해 주세요."

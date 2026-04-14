@@ -1,4 +1,8 @@
-import { Portfolio, SpanSize, TabletSpanSize } from "@/lib/portfolio/types";
+import {
+  Portfolio,
+  SpanSize,
+  TabletSpanSize,
+} from "@/lib/types/portfilioTypes";
 
 const desktopColSpanMap: Record<SpanSize, string> = {
   1: "xl:col-span-1",

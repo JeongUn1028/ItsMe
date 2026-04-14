@@ -1,6 +1,6 @@
 import Link from "next/link";
 import style from "./layout.module.css";
-import LogoutButton from "../components/ui/logout-button";
+import LogoutButton from "../components/ui/LogoutBtn";
 
 export default async function AdminLayout({
   children,

@@ -31,17 +31,4 @@ interface Portfolio {
   contents: string;
 }
 
-interface VelogPostType {
-  title: string;
-  tags: string[];
-  url_slug: string;
-  released_at: string;
-}
-
-export type {
-  RawFrontmatter,
-  Portfolio,
-  SpanSize,
-  TabletSpanSize,
-  VelogPostType,
-};
+export type { RawFrontmatter, Portfolio, SpanSize, TabletSpanSize };

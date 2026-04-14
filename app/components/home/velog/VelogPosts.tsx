@@ -1,7 +1,7 @@
-import style from "./velog-posts.module.css";
-import { getVelogPosts } from "@/lib/getVelogPosts";
-import VelogPost from "./velog-post";
-import { VelogPostType } from "@/lib/portfolio/types";
+import style from "./VelogPosts.module.css";
+import { getVelogPosts } from "@/lib/velog/getVelogPosts";
+import VelogPost from "./VelogPost";
+import { velogPost } from "@/lib/types/velogTypes";
 
 export async function VelogPosts() {
   const posts = await getVelogPosts();
@@ -9,7 +9,7 @@ export async function VelogPosts() {
     <div className={`glass ${style.container}`}>
       <h1 className={style.title}>VELOG POSTS</h1>
       {posts.length > 0 ? (
-        posts.map((post: VelogPostType) => (
+        posts.map((post: velogPost) => (
           <VelogPost key={post.url_slug} post={post} />
         ))
       ) : (

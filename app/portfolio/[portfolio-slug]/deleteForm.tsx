@@ -1,6 +1,6 @@
 "use client";
 
-import { deletePortfolio } from "@/app/actions/delete-portfolio.action";
+import { deletePortfolioAction } from "@/app/actions/delete-portfolio.action";
 import { useActionState } from "react";
 import style from "./page.module.css";
 
@@ -11,7 +11,7 @@ export default function DeleteForm({
   slug: string;
   thumbnail: string;
 }) {
-  const [, formAction, isPending] = useActionState(deletePortfolio, {
+  const [, formAction, isPending] = useActionState(deletePortfolioAction, {
     success: false,
     message: "",
   });
@@ -20,11 +20,7 @@ export default function DeleteForm({
     <form action={formAction} className={style.deleteForm}>
       <input type="hidden" name="slug" value={slug} />
       <input type="hidden" name="thumbnail" value={thumbnail} />
-      <button
-        type="submit"
-        disabled={isPending}
-        className={style.deleteButton}
-      >
+      <button type="submit" disabled={isPending} className={style.deleteButton}>
         {isPending ? "Deleting..." : "Delete"}
       </button>
     </form>

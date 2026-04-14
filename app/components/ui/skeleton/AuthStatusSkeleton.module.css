@@ -1,0 +1,21 @@
+.skeletonPill {
+  @apply inline-block rounded-full;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.48) 0%,
+    rgba(255, 255, 255, 0.86) 50%,
+    rgba(255, 255, 255, 0.48) 100%
+  );
+  background-size: 200% 100%;
+  animation: actionShimmer 1.2s ease-in-out infinite;
+}
+
+.skeletonPillMd {
+  width: 76px;
+  height: 28px;
+}
+
+.skeletonPillSm {
+  width: 66px;
+  height: 28px;
+}
