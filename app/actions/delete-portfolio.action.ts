@@ -1,9 +1,9 @@
 "use server";
 
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
-import { deleteFile } from "@/lib/update-file/deleteFile";
+import { deletePortfolio } from "@/lib/portfolio/deletePortfolio";
 
-export async function deletePortfolio(
+export async function deletePortfolioAction(
   _prevState: { success: boolean; message: string },
   formData: FormData,
 ): Promise<{ success: boolean; message: string }> {
@@ -20,7 +20,7 @@ export async function deletePortfolio(
   }
 
   try {
-    const deleteResult = await deleteFile(slug, thumbnail);
+    const deleteResult = await deletePortfolio(slug, thumbnail);
     if (!deleteResult.success) {
       return { success: false, message: deleteResult.message };
     }

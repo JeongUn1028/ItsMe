@@ -18,14 +18,12 @@ export async function editPortfolio(
   _prevState: { success: boolean; message: string },
   formData: FormData,
 ): Promise<{ success: boolean; message: string }> {
-  //TODO 포트폴리오 수정 기능
   const isLoggedIn = await getLoginStatus();
   if (!isLoggedIn) {
     return { success: false, message: "로그인이 필요합니다." };
   }
 
   try {
-    //TODO formData에서 필요한 데이터 추출 후 포트폴리오 수정 로직 구현
     const {
       title,
       slug,
@@ -120,7 +118,16 @@ export async function editPortfolio(
           message: "썸네일은 JPG 또는 PNG 형식의 이미지 파일이어야 합니다.",
         };
       }
-      await updateFile(`public/portfolio/${normalizedSlug}.jpg`, thumbnail);
+      const thumbnailResponse = await updateFile(
+        `public/portfolio/${normalizedSlug}.jpg`,
+        thumbnail,
+      );
+      if (!thumbnailResponse || !thumbnailResponse.success) {
+        return {
+          success: false,
+          message: "썸네일 업로드에 실패했습니다.",
+        };
+      }
     }
     const markdown = setMarkdownContent({
       thumbnailPath: `/public/portfolio/${slug.trim().toLowerCase()}.${thumbnail?.type === "image/png" ? "png" : "jpg"}`,

@@ -7,8 +7,8 @@ export default async function Header() {
       <Link href="/" className={style.title}>
         LEEJEONGUN.COM
       </Link>
-      <Link href="/admin" className={style.adminLink}>
-        Admin
+      <Link href="/login" className={style.adminLink}>
+        Login
       </Link>
       {/* <div>modeChanger</div> */}
     </div>

@@ -1,4 +1,4 @@
-import style from "./velog-posts-skeleton.module.css";
+import style from "./VelogPostsSkeleton.module.css";
 
 export default function VelogPostsSkeleton() {
   return (

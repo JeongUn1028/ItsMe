@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Portfolio } from "@/lib/portfolio/types";
+import { Portfolio } from "@/lib/types/portfilioTypes";
 import style from "./EditPortfolioForm.module.css";
 import { useActionState, useState } from "react";
 import Image from "next/image";
@@ -163,12 +163,12 @@ export default function EditPortfolioComponent({
               </label>
 
               <label className={style.fieldGroup}>
-                <span className={style.label}>사이즈 (예: 2,1)</span>
+                <span className={style.label}>카드 사이즈</span>
                 <input
                   className={style.input}
                   name="size"
                   defaultValue={portfolio.size.join(",")}
-                  placeholder="1,1"
+                  placeholder="예: 2,1"
                 />
               </label>
 

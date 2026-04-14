@@ -42,6 +42,11 @@
   @apply flex flex-wrap items-center gap-2;
 }
 
+.actionSkeletonGroup {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+
 .backLink {
   @apply w-fit rounded-full px-3 py-1 text-sm font-medium transition-colors;
   background: rgba(255, 255, 255, 0.58);
@@ -157,4 +162,14 @@
 .content :global(pre code) {
   @apply bg-transparent p-0;
   color: rgba(252, 246, 236, 0.95);
+}
+
+@keyframes actionShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }

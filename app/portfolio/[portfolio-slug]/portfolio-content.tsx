@@ -1,12 +1,13 @@
+import style from "./page.module.css";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import BackToHomeButton from "@/app/components/ui/back-to-home-button";
+import BackToHomeButton from "@/app/components/ui/BackToHomeBtn";
 import { useMDXComponents } from "@/mdx-components";
 import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
-import style from "./page.module.css";
-import { getLoginStatus } from "@/lib/auth/getLoginStatus";
-import DeleteForm from "./deleteForm";
+import { Suspense } from "react";
+import AuthStatus from "./AuthStatus";
+import AuthStatusSkeleton from "../../components/ui/skeleton/AuthStatusSkeleton";
 
 function getPortfolioOrNotFound(slug: string) {
   try {
@@ -25,7 +26,6 @@ export async function PortfolioContent({
 }) {
   const { "portfolio-slug": slug } = await params;
   const portfolio = getPortfolioOrNotFound(slug);
-  const isLogin = await getLoginStatus();
 
   return (
     <section className={isModal ? style.viewportModal : style.viewport}>
@@ -35,17 +35,9 @@ export async function PortfolioContent({
         <header className={style.header}>
           <div className={style.headerRow}>
             <BackToHomeButton className={style.backLink} />
-            {isLogin && (
-              <div className={style.actionGroup}>
-                <Link
-                  href={`/admin/edit/portfolio/${slug}`}
-                  className={style.editLink}
-                >
-                  {"Edit->"}
-                </Link>
-                <DeleteForm slug={slug} thumbnail={portfolio.thumbnail} />
-              </div>
-            )}
+            <Suspense fallback={<AuthStatusSkeleton />}>
+              <AuthStatus slug={slug} thumbnail={portfolio.thumbnail} />
+            </Suspense>
           </div>
 
           <h1 className={style.title}>{portfolio.title}</h1>

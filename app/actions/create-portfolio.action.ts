@@ -121,23 +121,23 @@ export async function createPortfolio(
 
     const normalizedCreatedAt = normalizeDate(createdAt);
 
-    //* 3. Image GitHub에 저장 (파일이 있는 경우)
-    if (thumbnail && thumbnail.size > 0) {
-      if (
-        !thumbnail.type ||
-        !["image/jpeg", "image/png"].includes(thumbnail.type)
-      ) {
-        return {
-          success: false,
-          message: "썸네일 이미지는 JPG 또는 PNG만 업로드할 수 있습니다.",
-        };
-      }
-      await updateFile(`public/portfolio/${normalizedSlug}.jpg`, thumbnail);
+    //* 3. Image 파일 체크
+    //* 3-1. (파일이 없는 경우 에러 반환)
+    if (!thumbnail || thumbnail.size === 0) {
+      return { success: false, message: "썸네일 이미지를 업로드해주세요." };
+    }
+    // * 3-2. (파일 형식 체크)
+    if (
+      !thumbnail.type ||
+      !["image/jpeg", "image/png"].includes(thumbnail.type)
+    ) {
+      return {
+        success: false,
+        message: "썸네일 이미지는 JPG 또는 PNG만 업로드할 수 있습니다.",
+      };
     }
 
-    // *4 Markdown 파일 생성 및 저장
-
-    //* Markdown 생성 및 저장
+    // *4 Markdown 파일 생성
     const markdown = setMarkdownContent({
       thumbnailPath: `/public/portfolio/${slug.trim().toLowerCase()}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
       size: sizeArray,
@@ -152,16 +152,19 @@ export async function createPortfolio(
     });
 
     //* gitHub에 업데이트
+    const response = await Promise.all([
+      updateFile(`public/portfolio/${normalizedSlug}.jpg`, thumbnail),
+      updateFile(`${normalizedSlug}.md`, markdown),
+    ]);
 
-    const gitHubResponse = await updateFile(`${normalizedSlug}.md`, markdown);
-    if (!gitHubResponse || !gitHubResponse.success) {
+    if (!response || response.some((res) => !res.success)) {
       return {
         success: false,
         message: "GitHub 업데이트에 실패했습니다.",
       };
     }
 
-    //* 캐시 재검증
+    //* 캐시 재검증이 필요하나 updateFile은 Vercel에서 재배포 후에 반영 되므로 반영은 재배포 후 될 예정
 
     revalidatePath("/");
     revalidatePath("/admin");
@@ -175,7 +178,6 @@ export async function createPortfolio(
     if (isRedirectError(error)) {
       throw error;
     }
-
     console.error("Create portfolio error:", error);
     return {
       success: false,

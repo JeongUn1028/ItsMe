@@ -1,6 +1,6 @@
 //TODO - 한번에 여러 파일 업데이트할 수 있도록 개선하기 (예: 포트폴리오 md + 이미지)
 //TODO - 업데이트 실패 시 롤백 메커니즘 고려 (예: md는 업데이트됐는데 이미지 업데이트 실패 시 md도 원래대로 돌리는 식)
-//TODO - 공통 업데이트 함수 만들기 (예: createPortfolio, submitResume 등에서 공통으로 GitHub 업데이트하는 부분을 updateFile로 대체)
+
 
 import { Octokit } from "octokit";
 import { getGithubSHA } from "./getGithubSHA";
@@ -61,7 +61,7 @@ export async function updateFile(fileName: string, content: object | string) {
       else if (typeof content === "object") {
         return Buffer.from(JSON.stringify(content, null, 2)).toString("base64");
       }
-      //* Markdown or plain string
+      //* Markdown
       else {
         return Buffer.from(content).toString("base64");
       }

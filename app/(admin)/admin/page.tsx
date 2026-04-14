@@ -1,8 +1,8 @@
 import style from "./page.module.css";
 import { getPortfolios } from "@/lib/portfolio/getPortfolios";
 import Resume from "../../components/home/resume/resume";
-import PortfolioCard from "../../components/portfolio/portfolio-card/portfolio-card";
-import { Portfolio } from "@/lib/portfolio/types";
+import PortfolioCard from "../../components/portfolio/portfolio-card/PortfolioCard";
+import { Portfolio } from "@/lib/types/portfilioTypes";
 import Link from "next/link";
 
 //* Admin Page

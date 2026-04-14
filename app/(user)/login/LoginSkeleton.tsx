@@ -1,6 +1,6 @@
 import style from "./page.module.css";
 
-export default function Loading() {
+export default function LoginSkeleton() {
   return (
     <main className={style.page}>
       <div className={style.shell}>

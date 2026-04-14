@@ -1,24 +1,21 @@
 import { Octokit } from "octokit";
-import { getGithubSHA } from "./getGithubSHA";
 
-// 일단 포트폴리오 전용으로 만들고 필요하면 이력서에도 적용하기
-// 파일명으로 한번에 md파일, 이미지 파일 삭제
-export async function deleteFile(fileName: string, thumbnail: string) {
-  if (!fileName || !thumbnail) {
+//TODO - 삭제 하는 로직만 두고 호출해서 삭제 시키도록 변경
+export async function deleteFiles(mdPath: string, imagePath: string) {
+  console.log(mdPath, imagePath);
+  if (!mdPath || !imagePath) {
     return {
       success: false,
-      message: "Missing fileName or thumbnail information",
+      message: "Missing file paths",
     };
   }
-
-  const thumbnailFileName = thumbnail.split("/").pop() ?? "";
 
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
   const TOKEN = process.env.NEXT_GITHUB_TOKEN_KEY;
-  const thumbnailPath = `public/portfolio/${thumbnailFileName}`;
-  const mdPath = `content/portfolio/${fileName}.md`;
+  const DELETE_PATHS = [`content/portfolio/${mdPath}.md`, `public${imagePath}`];
 
+  //* GitHub 환경 변수 체크
   if (!OWNER || !REPO || !TOKEN) {
     return {
       success: false,
@@ -31,39 +28,62 @@ export async function deleteFile(fileName: string, thumbnail: string) {
       auth: TOKEN,
     });
 
-    //* 1. 이미지 파일 삭제
-    const imageSha = await getGithubSHA(thumbnailPath);
-    await octokit.request(
-      `DELETE /repos/${OWNER}/${REPO}/contents/${thumbnailPath}`,
+    //* 1. 최신 커밋 트리의 SHA 값 가져오기
+    const SHA = await octokit.request(
+      `GET /repos/${OWNER}/${REPO}/commits/heads/main`,
       {
         owner: OWNER,
         repo: REPO,
-        path: thumbnailPath,
-        message: `chore(file): Delete thumbnail for ${fileName}`,
-        committer: {
-          name: "itsme-bot",
-          email: "wjddns363@naver.com",
-        },
-        sha: imageSha,
+        ref: "heads/main",
         headers: {
           "X-GitHub-Api-Version": "2026-03-10",
         },
       },
     );
 
-    //* 2. md 파일 삭제
-    const mdSha = await getGithubSHA(mdPath);
+    //* 2. 파일 삭제를 위한 새로운 트리 생성
+    const tree = DELETE_PATHS.map((path) => ({
+      path,
+      mode: "100644" as const,
+      type: "blob" as const,
+      sha: null, // 파일 삭제를 위해 SHA를 null로 설정
+    }));
 
-    await octokit.request(`DELETE /repos/${OWNER}/${REPO}/contents/${mdPath}`, {
+    //* 3. 깃허브 서버에 새로운 트리 생성
+    const newTree = await octokit.request(
+      `POST /repos/${OWNER}/${REPO}/git/trees`,
+      {
+        owner: OWNER,
+        repo: REPO,
+        base_tree: SHA.data.commit.tree.sha,
+        tree,
+        headers: {
+          "X-GitHub-Api-Version": "2026-03-10",
+        },
+      },
+    );
+
+    //* 4. 새로운 커밋 생성
+    const newCommit = await octokit.request(
+      `POST /repos/${OWNER}/${REPO}/git/commits`,
+      {
+        owner: OWNER,
+        repo: REPO,
+        message: `chore(file): Delete files for ${mdPath}`,
+        tree: newTree.data.sha,
+        parents: [SHA.data.sha],
+        committer: {
+          name: "itsme-bot",
+          email: "wjddns363@naver.com",
+        },
+      },
+    );
+
+    //* 5. 브랜치 업데이트
+    await octokit.request(`PATCH /repos/${OWNER}/${REPO}/git/refs/heads/main`, {
       owner: OWNER,
       repo: REPO,
-      path: mdPath,
-      message: `chore(file): Delete markdown file for ${fileName}`,
-      committer: {
-        name: "itsme-bot",
-        email: "wjddns363@naver.com",
-      },
-      sha: mdSha,
+      sha: newCommit.data.sha,
       headers: {
         "X-GitHub-Api-Version": "2026-03-10",
       },

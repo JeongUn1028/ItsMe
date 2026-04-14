@@ -22,21 +22,21 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "JEONGUN1028's Portfolio",
-    template: "%s | JEONGUN1028's Portfolio",
+    default: "JEONGUN's Portfolio",
+    template: "%s | JEONGUN's Portfolio",
   },
-  description: "itsme의 포트폴리오 사이트입니다.",
+  description: "이정운의 포트폴리오 사이트입니다.",
   openGraph: {
-    title: "JEONGUN1028's Portfolio",
-    description: "itsme의 포트폴리오 사이트입니다.",
+    title: "JEONGUN's Portfolio",
+    description: "이정운의 포트폴리오 사이트입니다.",
     url: siteUrl,
-    siteName: "JEONGUN1028's Portfolio",
+    siteName: "JEONGUN's Portfolio",
     images: [
       {
         url: "/profile.jpg",
         width: 1200,
         height: 630,
-        alt: "JEONGUN1028 portfolio preview",
+        alt: "JEONGUN portfolio preview",
       },
     ],
     locale: "ko_KR",
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "JEONGUN1028's Portfolio",
-    description: "itsme의 포트폴리오 사이트입니다.",
+    title: "JEONGUN's Portfolio",
+    description: "이정운의 포트폴리오 사이트입니다.",
     images: ["/profile.jpg"],
   },
 };

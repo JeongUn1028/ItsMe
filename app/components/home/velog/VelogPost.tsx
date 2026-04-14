@@ -1,16 +1,8 @@
 import Link from "next/link";
-import style from "./velog-post.module.css";
+import style from "./VelogPost.module.css";
+import { velogPost } from "@/lib/types/velogTypes";
 
-export default function VelogPost({
-  post,
-}: {
-  post: {
-    title: string;
-    tags: string[];
-    url_slug: string;
-    released_at: string;
-  };
-}) {
+export default function VelogPost({ post }: { post: velogPost }) {
   return (
     <Link
       href={`https://velog.io/@jeongun1028/${post.url_slug}`}
