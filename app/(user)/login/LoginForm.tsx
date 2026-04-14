@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 
 import LoginFormUI from "./LoginFormUI";
 import { Suspense } from "react";
-import LoginSkeleton from "./LoginSkeleton";
+import LoginSkeleton from "@/app/components/ui/skeleton/LoginSkeleton";
 
 function LoginFields() {
   const searchParams = useSearchParams();
