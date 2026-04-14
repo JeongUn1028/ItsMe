@@ -139,7 +139,7 @@ export async function createPortfolio(
 
     // *4 Markdown 파일 생성
     const markdown = setMarkdownContent({
-      thumbnailPath: `/public/portfolio/${slug.trim().toLowerCase()}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
+      thumbnailPath: `/public/portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
       size: sizeArray,
       status,
       title,
@@ -153,7 +153,7 @@ export async function createPortfolio(
 
     //* gitHub에 업데이트
     const response = await Promise.all([
-      updateFile(`public/portfolio/${normalizedSlug}.jpg`, thumbnail),
+      updateFile(`${normalizedSlug}.jpg`, thumbnail),
       updateFile(`${normalizedSlug}.md`, markdown),
     ]);
 

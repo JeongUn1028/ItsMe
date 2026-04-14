@@ -1,10 +1,9 @@
 //TODO - 한번에 여러 파일 업데이트할 수 있도록 개선하기 (예: 포트폴리오 md + 이미지)
-//TODO - 업데이트 실패 시 롤백 메커니즘 고려 (예: md는 업데이트됐는데 이미지 업데이트 실패 시 md도 원래대로 돌리는 식)
-
 
 import { Octokit } from "octokit";
 import { getGithubSHA } from "./getGithubSHA";
 
+//* fileName 을 받아서 filePath 로 변경, content를 받아서 GitHub API로 파일 업데이트 요청하는 함수
 export async function updateFile(fileName: string, content: object | string) {
   //* fileName: json, md, 파일명
   //* content: 업데이트할 내용

@@ -61,7 +61,7 @@ export async function submitResumeAction(
           message: "프로필 이미지는 jpg 또는 PNG만 업로드할 수 있습니다.",
         };
       }
-      await updateFile("public/resume/profile.jpg", imageFile);
+      await updateFile("profile.jpg", imageFile);
     }
 
     if (pdfFile && pdfFile.size > 0) {
@@ -71,7 +71,7 @@ export async function submitResumeAction(
           message: "이력서는 PDF 파일만 업로드할 수 있습니다.",
         };
       }
-      await updateFile("public/resume/resume.pdf", pdfFile);
+      await updateFile("resume.pdf", pdfFile);
     }
 
     //* 4. 새로운 데이터 생성 (기존 데이터는 무시)
@@ -83,7 +83,7 @@ export async function submitResumeAction(
     };
 
     //* 6. GitHub에 업데이트
-    const gitHubResult = await updateFile("content/resume.json", newData);
+    const gitHubResult = await updateFile("resume.json", newData);
     if (!gitHubResult.success) {
       return {
         success: false,

@@ -4,16 +4,16 @@ const octokit = new Octokit({
   auth: process.env.NEXT_GITHUB_TOKEN_KEY,
 });
 
-export const getGithubSHA = async (filePath: string): Promise<string> => {
+export const getGithubSHA = async (PATH: string): Promise<string> => {
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
 
   try {
     const sha = await octokit
-      .request(`GET /repos/${OWNER}/${REPO}/contents/${filePath}`, {
+      .request(`GET /repos/${OWNER}/${REPO}/contents/${PATH}`, {
         owner: OWNER,
         repo: REPO,
-        path: filePath,
+        path: PATH,
         headers: {
           "X-GitHub-Api-Version": "2026-03-10",
         },
