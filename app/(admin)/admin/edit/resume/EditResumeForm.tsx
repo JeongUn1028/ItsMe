@@ -5,7 +5,7 @@ import style from "./page.module.css";
 import { getResume } from "@/lib/resume/getResume";
 import { useActionState, useEffect, useState } from "react";
 import { submitResumeAction } from "@/app/actions/submit-resume.action";
-import { ImageUploadSection } from "./components/ImageUploadSection";
+import ImageUpload from "@/app/components/common/ImageUpload";
 import { DescriptionSection } from "./components/DescriptionSection";
 import { SkillsSection } from "./components/SkillsSection";
 import { PdfUploadSection } from "./components/PdfUploadSection";
@@ -19,12 +19,8 @@ export default function EditResumeForm() {
     pdfPath: string;
   }>({ description: "", skills: [], imagePath: "", pdfPath: "" });
 
-  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>("");
   const [selectedPdfFile, setSelectedPdfFile] = useState<File | null>(null);
-  const [imageHover, setImageHover] = useState(false);
   const [pdfHover, setPdfHover] = useState(false);
-  const allowedImageMimeTypes = ["image/jpeg", "image/png"];
 
   const [state, formAction, isPending] = useActionState(submitResumeAction, {
     success: null,
@@ -34,37 +30,7 @@ export default function EditResumeForm() {
   useEffect(() => {
     const { description, skills, imagePath, pdfPath } = getResume();
     setResume({ description, skills, imagePath, pdfPath });
-    setImagePreview(imagePath);
   }, []);
-
-  const handleImageSelect = (file: File | null) => {
-    if (file && allowedImageMimeTypes.includes(file.type)) {
-      setSelectedImageFile(file);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleImageDragLeave = () => {
-    setImageHover(false);
-  };
-
-  const handleImageDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setImageHover(true);
-  };
-
-  const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setImageHover(false);
-    const file = e.dataTransfer.files?.[0];
-    if (file && allowedImageMimeTypes.includes(file.type)) {
-      handleImageSelect(file);
-    }
-  };
 
   const handlePdfSelect = (file: File | null) => {
     if (file && file.type === "application/pdf") {
@@ -98,15 +64,7 @@ export default function EditResumeForm() {
 
       <form className={`${style.form} glass`} action={formAction}>
         {/* 이미지 업로드 섹션 */}
-        <ImageUploadSection
-          selectedImageFile={selectedImageFile}
-          imagePreview={imagePreview}
-          imageHover={imageHover}
-          onImageSelect={handleImageSelect}
-          onImageDragOver={handleImageDragOver}
-          onImageDragLeave={handleImageDragLeave}
-          onImageDrop={handleImageDrop}
-        />
+        <ImageUpload initialUrl={resume.imagePath} />
         {/* Description 섹션 */}
         <DescriptionSection description={resume.description} />
         {/* Skills 섹션 */}

@@ -1,5 +1,4 @@
 import style from "./page.module.css";
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import BackToHomeButton from "@/app/components/ui/BackToHomeBtn";
@@ -9,14 +8,6 @@ import { Suspense } from "react";
 import AuthStatus from "./AuthStatus";
 import AuthStatusSkeleton from "../../components/ui/skeleton/AuthStatusSkeleton";
 
-function getPortfolioOrNotFound(slug: string) {
-  try {
-    return getPortfolioData(slug);
-  } catch {
-    notFound();
-  }
-}
-
 export async function PortfolioContent({
   params,
   isModal = false,
@@ -25,7 +16,7 @@ export async function PortfolioContent({
   isModal?: boolean;
 }) {
   const { "portfolio-slug": slug } = await params;
-  const portfolio = getPortfolioOrNotFound(slug);
+  const portfolio = getPortfolioData(slug);
 
   return (
     <section className={isModal ? style.viewportModal : style.viewport}>

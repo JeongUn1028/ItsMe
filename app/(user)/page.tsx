@@ -2,7 +2,7 @@ import Contact from "../components/home/contact/contact";
 import Links from "../components/home/links/links";
 import Resume from "../components/home/resume/resume";
 import { VelogPosts } from "../components/home/velog/VelogPosts";
-import PortfolioCards from "../components/portfolio/PortfolioCards";
+import PortfolioCards from "../components/portfolio/portfolio-card/PortfolioCards";
 import PortfolioCardsSkeleton from "../components/ui/skeleton/PortfolioCardsSkeleton";
 import VelogPostsSkeleton from "../components/ui/skeleton/VelogPostsSkeleton";
 import style from "./page.module.css";

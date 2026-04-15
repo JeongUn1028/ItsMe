@@ -5,11 +5,6 @@ import { revalidatePath } from "next/cache";
 import { updateFile } from "@/lib/update-file/updateFile";
 import { setMarkdownContent } from "@/lib/portfolio/setMarkdownContent";
 
-export interface CreatePortfolioState {
-  success: boolean | null;
-  message: string;
-}
-
 function isRedirectError(error: unknown): boolean {
   return (
     typeof error === "object" &&
@@ -31,9 +26,9 @@ function normalizeDate(input: string) {
 
 //* 새 포트폴리오를 이미지와 함께 저장하고 md 문서를 생성합니다.
 export async function createPortfolio(
-  _prevState: CreatePortfolioState,
+  _prevState: { success: boolean | null; message: string },
   formData: FormData,
-): Promise<CreatePortfolioState> {
+): Promise<{ success: boolean | null; message: string }> {
   const isLoggedIn = await getLoginStatus();
   //* 1. 로그인 여부 확인
   if (!isLoggedIn) {

@@ -30,7 +30,7 @@ export async function submitResumeAction(
     //* 2. FormData에서 텍스트 데이터 추출
     const description = formData.get("description")?.toString() ?? "";
     const skillsInput = formData.get("skills")?.toString() ?? "";
-    const imageFile = formData.get("image") as File | null;
+    const imageFile = formData.get("thumbnail") as File | null;
     const pdfFile = formData.get("pdf") as File | null;
     const allowedImageMimeTypes = ["image/jpeg", "image/png"];
 
