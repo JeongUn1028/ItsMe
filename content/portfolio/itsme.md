@@ -1,5 +1,5 @@
 ---
-thumbnail: "/public/portfolio/itsme.jpg"
+thumbnail: "/public/portfolio/itsme.png"
 size: [2, 1]
 status: "published"
 title: "Next.js 기반 개인 포트폴리오 프로젝트"
@@ -9,15 +9,8 @@ githubLink: "https://github.com/JeongUn1028"
 velogLink: "https://velog.io/@jeongun1028/Next.js-%EA%B8%B0%EB%B0%98-Static-Portfolio-%EA%B5%AC%EC%B6%95"
 summary: "Markdown 기반 CMS를 하나의 프로젝트에서 구현한 Next.js 개인 포트폴리오 웹사이트입니다."
 ---
-# ItsMe — 개인 포트폴리오
-
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 
 🔗 **Live Demo**: [leejeongun.com](https://www.leejeongun.com)
-
----
 
 ## 📌 프로젝트 소개
 
@@ -45,7 +38,7 @@ ItsMe는 개인을 소개하고 프로젝트를 효과적으로 전달하기 위
 - **Content**: Markdown, MDX, gray-matter, next-mdx-remote
 - **Auth**: jose, JWT Cookie
 - **API**: octokit (GitHub Contents API)
-- **Test**: Vitest, Testing Library
+- **Test**: Vitest
 - **Deployment**: Vercel
 
 ---

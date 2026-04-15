@@ -148,7 +148,10 @@ export async function createPortfolio(
 
     //* gitHub에 업데이트
     const response = await Promise.all([
-      updateFile(`${normalizedSlug}.jpg`, thumbnail),
+      updateFile(
+        `${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
+        thumbnail,
+      ),
       updateFile(`${normalizedSlug}.md`, markdown),
     ]);
 

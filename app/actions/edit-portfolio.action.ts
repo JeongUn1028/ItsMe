@@ -121,7 +121,7 @@ export async function editPortfolio(
         };
       }
       const thumbnailResponse = await updateFile(
-        `public/portfolio/${normalizedSlug}.jpg`,
+        `public/portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
         thumbnail,
       );
       if (!thumbnailResponse || !thumbnailResponse.success) {

@@ -7,6 +7,7 @@ import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
 import { Suspense } from "react";
 import AuthStatus from "./AuthStatus";
 import AuthStatusSkeleton from "../../components/ui/skeleton/AuthStatusSkeleton";
+import Image from "next/image";
 
 export async function PortfolioContent({
   params,
@@ -54,7 +55,12 @@ export async function PortfolioContent({
               rel="noopener noreferrer"
               className={style.resourceLink}
             >
-              GitHub
+              <Image
+                src={"/links/github_logo_icon.png"}
+                alt="GitHub"
+                width={32}
+                height={32}
+              />
             </Link>
             <Link
               href={portfolio.velogLink}
@@ -62,7 +68,12 @@ export async function PortfolioContent({
               rel="noopener noreferrer"
               className={style.resourceLink}
             >
-              Velog
+              <Image
+                src={"/links/velog_logo_icon.svg"}
+                alt="Velog"
+                width={32}
+                height={32}
+              />
             </Link>
           </div>
         </header>
