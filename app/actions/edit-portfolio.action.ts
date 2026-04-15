@@ -121,7 +121,7 @@ export async function editPortfolio(
         };
       }
       const thumbnailResponse = await updateFile(
-        `public/portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
+        `${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
         thumbnail,
       );
       if (!thumbnailResponse || !thumbnailResponse.success) {
@@ -132,7 +132,7 @@ export async function editPortfolio(
       }
     }
     const markdown = setMarkdownContent({
-      thumbnailPath: `/public/portfolio/${slug.trim().toLowerCase()}.${thumbnail?.type === "image/png" ? "png" : "jpg"}`,
+      thumbnailPath: `portfolio/${slug.trim().toLowerCase()}.${thumbnail?.type === "image/png" ? "png" : "jpg"}`,
       size: sizeArray.map(Number),
       status,
       title,

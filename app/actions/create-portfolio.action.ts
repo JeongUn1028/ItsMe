@@ -134,7 +134,7 @@ export async function createPortfolio(
 
     // *4 Markdown 파일 생성
     const markdown = setMarkdownContent({
-      thumbnailPath: `/public/portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
+      thumbnailPath: `portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
       size: sizeArray,
       status,
       title,
