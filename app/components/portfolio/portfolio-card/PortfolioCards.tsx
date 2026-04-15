@@ -1,5 +1,5 @@
 import { getPortfolios } from "@/lib/portfolio/getPortfolios";
-import PortfolioCard from "./portfolio-card/PortfolioCard";
+import PortfolioCard from "./PortfolioCard";
 
 export default function PortfolioCards() {
   const portfolios = getPortfolios().filter(

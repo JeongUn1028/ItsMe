@@ -1,0 +1,87 @@
+@reference "../../globals.css";
+
+/* 컴포넌트 루트 — 하단 구분선과 여백 */
+.thumbnailSection {
+  @apply border-b pb-6;
+  border-color: rgba(130, 102, 64, 0.12);
+}
+
+/* 라벨 + 업로드 영역 세로 배치 */
+.fieldGroup {
+  @apply flex flex-col gap-1.5;
+}
+
+.label {
+  @apply text-sm font-semibold;
+  color: rgba(46, 33, 19, 0.88);
+}
+
+/* 드래그 앤 드롭 외곽 보더 영역 */
+.thumbnailUpload {
+  @apply rounded-lg border-2 border-dashed transition-all;
+  border-color: rgba(144, 114, 74, 0.24);
+  background: rgba(255, 250, 245, 0.5);
+}
+
+.thumbnailUpload[data-drag-over="true"] {
+  border-color: rgba(144, 114, 74, 0.5);
+  background: rgba(255, 245, 230, 0.8);
+}
+
+/* 프리뷰 이미지 */
+.thumbnailPreview {
+  @apply rounded-lg object-cover;
+  width: 300px;
+  height: 200px;
+}
+
+/* 프리뷰 / 빈 상태 공통 컨테이너 */
+.uploadArea {
+  @apply relative;
+}
+
+.previewContainer {
+  @apply relative flex items-center justify-center py-4;
+}
+
+/* 프리뷰 위 '변경' 버튼 */
+.changeButton {
+  @apply absolute bottom-4 right-4 cursor-pointer rounded-md px-3 py-1.5 text-xs font-medium text-white transition-colors;
+  background: rgba(78, 56, 31, 0.85);
+}
+
+.changeButton:hover {
+  background: rgba(78, 56, 31, 1);
+}
+
+/* 이미지 없을 때 안내 영역 */
+.emptyState {
+  @apply flex flex-col items-center justify-center gap-2 py-8;
+}
+
+.uploadIcon {
+  @apply text-4xl;
+}
+
+.uploadText {
+  @apply m-0 text-sm;
+  color: rgba(78, 56, 31, 0.7);
+}
+
+/* 파일 선택 유도 링크 스타일 */
+.uploadLink {
+  @apply cursor-pointer rounded-md px-3 py-1.5 text-sm font-medium transition-colors;
+  background: rgba(255, 200, 120, 0.3);
+  color: rgba(144, 114, 74, 0.9);
+  border: 1px solid rgba(255, 200, 120, 0.5);
+}
+
+.uploadLink:hover {
+  background: rgba(255, 200, 120, 0.5);
+  border-color: rgba(255, 200, 120, 0.8);
+}
+
+/* 실제 file input은 숨김 처리 */
+.fileInput {
+  @apply hidden;
+}

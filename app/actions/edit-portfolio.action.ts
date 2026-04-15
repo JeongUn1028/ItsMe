@@ -15,10 +15,12 @@ function normalizeDate(input: string) {
 }
 
 export async function editPortfolio(
-  _prevState: { success: boolean; message: string },
+  _prevState: { success: boolean | null; message: string },
   formData: FormData,
-): Promise<{ success: boolean; message: string }> {
+): Promise<{ success: boolean | null; message: string }> {
   const isLoggedIn = await getLoginStatus();
+
+  //* 1. 로그인 여부 확인
   if (!isLoggedIn) {
     return { success: false, message: "로그인이 필요합니다." };
   }

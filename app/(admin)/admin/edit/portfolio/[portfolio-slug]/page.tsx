@@ -1,13 +1,19 @@
-import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
 import EditPortfolioComponent from "./EditPortfolioForm";
+import { getPortfolios } from "@/lib/portfolio/getPortfolios";
+
+export async function generateStaticParams() {
+  const portfolios = getPortfolios();
+  return portfolios.map((portfolio) => ({
+    "portfolio-slug": portfolio.slug,
+  }));
+}
+
+export const dynamicParams = false;
 
 export default async function Page({
   params,
 }: {
   params: Promise<{ "portfolio-slug": string }>;
 }) {
-  const { "portfolio-slug": slug } = await params;
-  const portfolio = getPortfolioData(slug);
-
-  return <EditPortfolioComponent portfolio={portfolio} />;
+  return <EditPortfolioComponent params={params} />;
 }
