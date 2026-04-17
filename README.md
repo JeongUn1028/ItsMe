@@ -184,7 +184,20 @@ npm run dev
 - 포트폴리오 목록 생성 로직 검증
 - raw content / raw frontmatter 유틸 검증
 
-> 테스트 도구: **Vitest** + **Testing Library** + **jsdom**
+> 테스트 도구: **Vitest**
+
+---
+
+## ⚡ 성능
+
+Next.js Static Export, `next/image` 최적화, 폰트 서브셋 적용으로 Lighthouse 전 항목 100점을 달성했습니다.
+다만 콘텐츠 규모가 작아 수치 자체보다는 **최적화 습관과 구조적 접근**에 의미를 두었습니다.
+
+| Performance | Accessibility | Best Practices | SEO |
+|:-----------:|:-------------:|:--------------:|:---:|
+| 100 | 100 | 100 | 100 |
+
+> Lighthouse 측정 기준 (2026.04.17 / Chrome DevTools)
 
 ---
 
