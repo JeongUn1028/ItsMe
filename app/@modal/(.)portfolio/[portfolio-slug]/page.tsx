@@ -1,5 +1,13 @@
 import { Modal } from "@/app/components/ui/modal";
 import { PortfolioContent } from "@/app/portfolio/[portfolio-slug]/portfolio-content";
+import { getPortfolios } from "@/lib/portfolio/getPortfolios";
+
+export async function generateStaticParams() {
+  const portfolios = getPortfolios();
+  return portfolios.map((portfolio) => ({
+    "portfolio-slug": portfolio.slug,
+  }));
+}
 
 // 홈에서 /portfolio/[portfolio-slug]로 이동할 때 실제 페이지 대신 모달로 가로채는 라우트입니다.
 export default function PortfolioModalPage({
