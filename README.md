@@ -1,219 +1,259 @@
 # ItsMe — 개인 포트폴리오 웹사이트
 
-> **단순한 소개 페이지를 넘어, 인증·데이터·운영 흐름까지 직접 설계한 풀스택 포트폴리오 프로젝트입니다.**
+단순한 소개 페이지를 넘어,
+**인증 · 데이터 관리 · 운영 흐름까지 직접 설계한 풀스택 포트폴리오 프로젝트**입니다.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
-
-**🔗 Live Demo**: [leejeongun.com](https://www.leejeongun.com)
+> “기능을 구현하는 것”이 아니라
+> **“왜 그렇게 설계했는지를 설명할 수 있는 코드”**를 목표로 개발했습니다.
 
 ---
 
-## 📌 프로젝트 소개
+## 🔗 Live Demo
 
-`ItsMe`는 신입 프론트엔드 개발자로서 **"왜 이렇게 설계했는가"를 설명할 수 있는 코드**를 목표로 만든 개인 포트폴리오입니다.
+* https://leejeongun.com
 
-단순히 화면을 그리는 데 그치지 않고, 다음 두 가지를 핵심 목표로 삼았습니다.
+---
 
-- **사용자 경험**: 자연스럽고 읽기 편한 공개 포트폴리오 화면
-- **운영 가능성**: 저 혼자서도 콘텐츠를 지속적으로 수정·관리할 수 있는 구조
+## 📌 프로젝트 개요
 
-이를 위해 **공개 포트폴리오(User 영역)** 와 **콘텐츠 관리 시스템(Admin 영역)** 을 하나의 프로젝트 안에서 함께 구현했습니다.
+ItsMe는 다음 두 가지를 동시에 만족시키는 것을 목표로 설계했습니다.
+
+### 1. 사용자 경험
+
+* 자연스럽고 읽기 쉬운 포트폴리오 UI
+* 진입 경로에 따라 달라지는 UX 제공
+
+### 2. 운영 가능성
+
+* 별도 CMS 없이 콘텐츠를 직접 관리
+* 혼자서도 지속적으로 유지/운영 가능한 구조
+
+이를 위해 하나의 애플리케이션 안에
+**User 영역(공개 페이지)** 과 **Admin 영역(관리 시스템)** 을 함께 구성했습니다.
 
 ---
 
 ## ✨ 주요 기능
 
-### 👤 사용자(공개) 영역
-- 자기소개, 기술 스택, 링크, 연락처 조회
-- 포트폴리오 목록 및 상세 조회
-- **진입 경로에 따른 UX 분기**
-  - 목록에서 클릭 → 모달로 표시
-  - URL 직접 접근 → 독립 페이지로 표시
-- Velog 포스트 자동 연동
+### 👤 사용자 영역
 
-### 🔐 관리자(Admin) 영역
-- JWT 기반 로그인 / 로그아웃
-- Middleware를 통한 관리자 라우트 보호
-- 이력서 수정
-- 포트폴리오 생성 / 수정 / 삭제
-- Server Action 기반 폼 처리 및 즉각 피드백 (success / error)
+* 포트폴리오 목록 및 상세 조회
+* Velog 포스트 자동 연동
+* 진입 경로 기반 UX 분기
+
+  * 목록 → 모달
+  * URL 직접 접근 → 독립 페이지
+
+---
+
+### 🔐 관리자 영역
+
+* JWT 기반 로그인 / 로그아웃
+* Middleware 기반 라우트 보호
+* 포트폴리오 CRUD
+* Server Action 기반 폼 처리 및 피드백
 
 ---
 
 ## 🛠 기술 스택
 
-| 구분 | 사용 기술 |
-|------|----------|
-| Framework | Next.js 15, React 19 |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4, CSS Modules |
-| Content | Markdown, MDX, gray-matter, next-mdx-remote |
-| Auth | jose, JWT Cookie |
-| API | octokit (GitHub Contents API) |
-| Test | Vitest, Testing Library, jsdom |
+| 구분        | 기술                                |
+| --------- | --------------------------------- |
+| Framework | Next.js 15 (App Router), React 19 |
+| Language  | TypeScript                        |
+| Styling   | Tailwind CSS v4, CSS Modules      |
+| Auth      | JWT (jose), Cookie                |
+| Content   | Markdown, MDX                     |
+| API       | GitHub Contents API (octokit)     |
+| Test      | Vitest, Testing Library           |
 
 ---
 
-## 🧠 기술적 고민 포인트
+# 🧠 핵심 설계 및 의사결정
 
-### 1. 라우팅과 화면 경험을 함께 설계
+---
 
-같은 포트폴리오 데이터를 **진입 경로에 따라 다른 UX로 제공**합니다.
+## 1. 라우팅 기반 UX 설계
 
-- `(user)` / `(admin)` Route Group으로 관심사 분리
-- **Intercepting Route + Parallel Route**를 활용해 목록 진입 시 모달, URL 직접 접근 시 독립 페이지로 분기
-- Next.js App Router의 구조적 특성을 활용한 선언적 라우팅 설계
+### 선택
+
+* Intercepting Route + Parallel Route 활용
+
+### 이유
+
+* 상태 기반 모달이 아닌 **URL 기반 UI 상태 관리**
+* 새로고침 / 공유 시 동일 UX 유지
+
+### 구현 결과
+
+* 목록에서 진입 → 모달
+* URL 직접 접근 → 독립 페이지
+
+### 트레이드오프
+
+| 방식        | 장점           | 단점        |
+| --------- | ------------ | --------- |
+| 상태 기반 모달  | 구현 단순        | URL 공유 불가 |
+| 라우팅 기반 모달 | URL 일관성, SEO | 구조 복잡     |
+
+→ 구조 복잡도를 감수하고 **UX 일관성**을 선택
+
+---
+
+## 2. 인증 전략 설계
+
+### 선택
+
+* JWT + Cookie 기반 인증
+* Middleware를 통한 라우트 보호
+
+### 이유
+
+* 서버/클라이언트 모두 인증 상태 접근 가능
+* App Router 구조와 자연스럽게 결합
+* 별도 세션 저장소 없이 구현 가능
+
+### 고려한 대안
+
+| 방식           | 한계               |
+| ------------ | ---------------- |
+| localStorage | XSS 취약, 서버 접근 불가 |
+| Session 기반   | 추가 저장소 필요        |
+
+### 트레이드오프
+
+* refresh token 미구현 → 장기 세션 제한
+* middleware 기반 → 세밀한 권한 제어 한계
+
+→ 단순 관리자 시스템에 맞춰 **구현 복잡도 최소화 선택**
+
+---
+
+## 3. Server Action 기반 데이터 처리
+
+### 선택
+
+* API Route 대신 Server Action 사용
+
+### 이유
+
+* UI와 데이터 로직 co-location
+* 타입 안전성 확보
+* 클라이언트/서버 분리 최소화
+
+### 트레이드오프
+
+* 디버깅 난이도 증가
+* 캐싱/재사용 제약
+
+→ **개발 속도와 구조 단순성**을 우선
+
+---
+
+## 4. 콘텐츠 관리 전략
+
+### 선택
+
+* GitHub Contents API 기반 파일 관리
+* Markdown을 Single Source of Truth로 사용
+
+### 왜 DB를 사용하지 않았는가
+
+* 개인 프로젝트 → DB 운영 비용 불필요
+* Git 기반 버전 관리 가능
+* 배포 구조 단순화
+
+### 장점
+
+* 변경 이력 추적 (Git)
+* CMS 없이 콘텐츠 관리 가능
+* 정적 콘텐츠에 최적화
+
+### 트레이드오프
+
+* 트랜잭션 없음
+* API Rate Limit 존재
+* 동시 수정 충돌 가능성
+
+→ **운영 단순성 중심 설계**
+
+---
+
+## 5. 데이터 흐름
+
+```
+Admin 입력
+→ Server Action
+→ GitHub API
+→ Markdown 저장
+→ revalidatePath
+→ UI 즉시 반영
+```
+
+→ **즉시 반영되는 콘텐츠 시스템 구현**
+
+---
+
+## 6. 프로젝트 구조
 
 ```
 app/
-├── (user)/          # 공개 페이지 라우트 그룹
-├── (admin)/         # 관리자 페이지 라우트 그룹
-├── @modal/          # Parallel Route: 모달 인터셉트
-└── portfolio/       # 직접 접근 시 독립 상세 페이지
+├── (user)/        # 공개 영역
+├── (admin)/       # 관리자 영역
+├── @modal/        # 인터셉트 모달
+├── actions/       # Server Actions
+├── api/           # 인증 / 업로드
 ```
 
-### 2. 콘텐츠를 코드처럼 관리
-
-- `content/portfolio/*.md`를 **단일 소스(Single Source of Truth)** 로 사용
-- frontmatter + markdown 본문을 분리 파싱하여 UI에 적용
-- 생성·수정·삭제 후 `revalidatePath`로 화면 즉시 동기화
-- GitHub Contents API(octokit)를 통해 파일을 원격 저장소에서 직접 관리
-
-### 3. 관리자 작업 흐름 단순화
-
-- 작성/수정 폼 컴포넌트를 분리하여 재사용성 확보
-- 이미지·문서 업로드 및 유효성 검증 처리
-- success/error 상태 메시지로 작업 결과를 즉각 피드백
+→ Route Group 기반 **도메인 분리**
 
 ---
 
-## 📁 프로젝트 구조
+## 🧪 테스트 전략
 
-```
-.
-├── app
-│   ├── (user)/              # 공개 페이지 라우트 그룹
-│   ├── (admin)/             # 관리자 페이지 라우트 그룹
-│   ├── @modal/              # 상세 모달 인터셉트 라우트
-│   ├── actions/             # Server Actions
-│   ├── api/                 # 인증 / 업로드 route handlers
-│   ├── components/          # 공통 / 도메인 컴포넌트
-│   ├── login/               # 로그인 페이지
-│   └── portfolio/           # 직접 접근용 상세 페이지
-├── content
-│   ├── portfolio/           # 포트폴리오 Markdown 원본
-│   └── resume.json          # 이력서 원본
-├── lib
-│   ├── auth/                # 인증 유틸
-│   ├── portfolio/           # 파싱 / 조회 / 변환 유틸
-│   ├── resume/              # 이력서 처리 로직
-│   └── update-file/         # GitHub 파일 저장 / 삭제 유틸
-├── public/                  # 정적 자산
-└── __tests__/               # 단위 테스트
-```
+* 유틸 함수 단위 테스트 중심
+* Markdown 파싱 및 데이터 변환 검증
 
----
+### 한계
 
-## 🚀 실행 방법
+* UI 테스트 부족
+* E2E 테스트 미구현
 
-### 1. 저장소 클론
-
-```bash
-git clone https://github.com/JeongUn1028/ItsMe.git
-cd ItsMe
-```
-
-### 2. 패키지 설치
-
-```bash
-npm install
-```
-
-### 3. 환경 변수 설정
-
-프로젝트 루트에 `.env.local` 파일을 생성하고 아래 변수를 채워주세요.
-
-```env
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
-NEXT_PUBLIC_SITE=http://localhost:3000
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-
-# 관리자 로그인 검증
-NEXT_ID=admin-id
-NEXT_SECRET=admin-password
-
-# JWT 서명 / 검증
-JWT_SECRET_KEY=your-jwt-secret
-
-# GitHub Contents API (콘텐츠 저장 / 수정 / 삭제)
-NEXT_PUBLIC_GITHUB_CLIENT_ID=your-github-owner
-NEXT_PUBLIC_GITHUB_REPO=your-repo-name
-NEXT_GITHUB_TOKEN_KEY=your-github-token
-```
-
-### 4. 개발 서버 실행
-
-```bash
-npm run dev
-```
-
-브라우저에서 [http://localhost:3000](http://localhost:3000) 접속
-
----
-
-## 📜 스크립트
-
-| 명령어 | 설명 |
-|--------|------|
-| `npm run dev` | 개발 서버 실행 |
-| `npm run build` | 프로덕션 빌드 |
-| `npm run start` | 빌드된 앱 실행 |
-| `npm run lint` | ESLint 검사 |
-| `npm run test` | 단위 테스트 실행 |
-
----
-
-## 🧪 테스트
-
-유틸 레벨 단위 테스트를 중심으로 구성했습니다.
-
-- frontmatter 파싱 검증
-- Markdown 본문 추출 검증
-- 포트폴리오 목록 생성 로직 검증
-- raw content / raw frontmatter 유틸 검증
-
-> 테스트 도구: **Vitest**
+→ 추후 확장 예정
 
 ---
 
 ## ⚡ 성능
 
-Next.js Static Export, `next/image` 최적화, 폰트 서브셋 적용으로 Lighthouse 전 항목 100점을 달성했습니다.
-다만 콘텐츠 규모가 작아 수치 자체보다는 **최적화 습관과 구조적 접근**에 의미를 두었습니다.
+* Static Export 기반
+* 이미지 최적화
+* 폰트 서브셋 적용
 
-| Performance | Accessibility | Best Practices | SEO |
-|:-----------:|:-------------:|:--------------:|:---:|
-| 100 | 100 | 100 | 100 |
+→ Lighthouse 전 항목 100점
 
-> Lighthouse 측정 기준 (2026.04.17 / Chrome DevTools)
-
----
-
-## 🔮 앞으로 개선하고 싶은 점
-
-- [ ] 액션 / 업로드 플로우 통합 테스트 추가
-- [ ] UI 컴포넌트 테스트 확장 (Testing Library)
-- [ ] 파일 업데이트 유틸의 실패 시 롤백 전략 보강
-- [ ] 접근성(a11y) 개선
+> 수치 자체보다 **최적화 구조 설계 경험**에 의미
 
 ---
 
-## 💬 마무리
+## 🔮 개선 계획
 
-**"UI를 만들 줄 안다"** 를 보여주는 데서 그치지 않고, 인증 흐름·데이터 관리·운영 가능한 구조까지 직접 연결해보는 데 의미를 둔 프로젝트입니다.
-
-설계 의도를 설명할 수 있는 코드를 작성하는 것을 목표로 했으며, 앞으로도 기능 추가와 리팩터링을 통해 완성도를 높여갈 예정입니다.
+* refresh token 인증 구조 확장
+* UI / E2E 테스트 추가
+* 파일 업데이트 실패 시 롤백 처리
+* 접근성 개선
 
 ---
+
+## 💬 회고
+
+이 프로젝트는 단순 UI 구현을 넘어
+
+* 인증 흐름
+* 데이터 관리 전략
+* 운영 가능한 구조
+
+까지 직접 설계하고 연결하는 데 목적을 두었습니다.
+
+특히
+**“왜 이 기술을 선택했는가”와
+“그 선택의 한계는 무엇인가”를 설명할 수 있는 코드**를 지향했습니다.
