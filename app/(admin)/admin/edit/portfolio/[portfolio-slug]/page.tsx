@@ -1,4 +1,4 @@
-import EditPortfolioComponent from "./EditPortfolioForm";
+import EditPortfolioComponent from "../../../../../components/portfolio/EditPortfolioForm";
 import { getPortfolios } from "@/lib/portfolio/getPortfolios";
 
 export async function generateStaticParams() {

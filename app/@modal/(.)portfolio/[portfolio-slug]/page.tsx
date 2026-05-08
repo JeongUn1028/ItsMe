@@ -1,5 +1,5 @@
 import { Modal } from "@/app/components/ui/modal";
-import { PortfolioContent } from "@/app/portfolio/[portfolio-slug]/portfolio-content";
+import { PortfolioContent } from "@/app/components/portfolio/portfolio-slug/portfolio-content";
 import { getPortfolios } from "@/lib/portfolio/getPortfolios";
 
 export async function generateStaticParams() {

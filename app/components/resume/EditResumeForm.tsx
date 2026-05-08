@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import style from "./page.module.css";
+import style from "./resume.module.css";
 import { getResume } from "@/lib/resume/getResume";
 import { useActionState, useEffect, useState } from "react";
 import { submitResumeAction } from "@/app/actions/submit-resume.action";
 import ImageUpload from "@/app/components/common/ImageUpload";
-import { DescriptionSection } from "./components/DescriptionSection";
-import { SkillsSection } from "./components/SkillsSection";
-import { PdfUploadSection } from "./components/PdfUploadSection";
+import { DescriptionSection } from "./DescriptionSection";
+import { SkillsSection } from "./SkillsSection";
+import { PdfUploadSection } from "./PdfUploadSection";
 
 //* Resume Edit Page
 export default function EditResumeForm() {

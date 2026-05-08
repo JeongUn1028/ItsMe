@@ -4,20 +4,24 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 
+const ANIMATION_MS = 220;
+
 export const Modal = ({ children }: { children: React.ReactNode }) => {
-  const ANIMATION_MS = 220;
   const router = useRouter();
   const pathname = usePathname();
   // Portal 대상인 #modal-root가 브라우저에 마운트된 뒤에만 접근하기 위한 상태입니다.
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  // isVisible을 ref로도 추적하여 closeModal이 isVisible state에 의존하지 않도록 합니다.
+  const isVisibleRef = useRef(false);
   const closeTimerRef = useRef<number | null>(null);
 
   const closeModal = useCallback(() => {
-    if (!isVisible) {
+    if (!isVisibleRef.current) {
       return;
     }
 
+    isVisibleRef.current = false;
     setIsVisible(false);
 
     if (closeTimerRef.current) {
@@ -43,13 +47,14 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
 
       router.replace("/");
     }, ANIMATION_MS);
-  }, [ANIMATION_MS, isVisible, pathname, router]);
+  }, [pathname, router]);
 
   useEffect(() => {
     // 클라이언트에서만 portal 렌더링이 가능하므로 마운트 여부를 기록합니다.
     setIsMounted(true);
 
     const rafId = window.requestAnimationFrame(() => {
+      isVisibleRef.current = true;
       setIsVisible(true);
     });
 

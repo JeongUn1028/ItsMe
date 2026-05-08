@@ -1,4 +1,4 @@
-import style from "./page.module.css";
+import style from "./portfolio-slug.module.css";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import BackToHomeButton from "@/app/components/ui/BackToHomeBtn";
@@ -6,7 +6,7 @@ import { useMDXComponents } from "@/mdx-components";
 import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
 import { Suspense } from "react";
 import AuthStatus from "./AuthStatus";
-import AuthStatusSkeleton from "../../components/ui/skeleton/AuthStatusSkeleton";
+import AuthStatusSkeleton from "../../ui/skeleton/AuthStatusSkeleton";
 import Image from "next/image";
 
 export async function PortfolioContent({

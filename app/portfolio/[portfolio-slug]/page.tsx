@@ -1,5 +1,5 @@
 import { getPortfolios } from "@/lib/portfolio/getPortfolios";
-import { PortfolioContent } from "./portfolio-content";
+import { PortfolioContent } from "../../components/portfolio/portfolio-slug/portfolio-content";
 
 export async function generateStaticParams() {
   const portfolios = getPortfolios();

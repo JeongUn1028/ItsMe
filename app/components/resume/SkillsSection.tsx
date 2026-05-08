@@ -1,6 +1,6 @@
 "use client";
 
-import style from "../page.module.css";
+import style from "./resume.module.css";
 
 interface SkillsSectionProps {
   skills: string[];

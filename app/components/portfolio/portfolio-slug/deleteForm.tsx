@@ -2,7 +2,7 @@
 
 import { deletePortfolioAction } from "@/app/actions/delete-portfolio.action";
 import { useActionState } from "react";
-import style from "./page.module.css";
+import style from "./portfolio-slug.module.css";
 
 export default function DeleteForm({
   slug,

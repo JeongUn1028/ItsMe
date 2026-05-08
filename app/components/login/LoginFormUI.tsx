@@ -23,7 +23,7 @@ export default function LoginFormUI({
         <section className={style.intro}>
           <div className={style.eyebrow}>ADMIN ACCESS</div>
           <div>
-            <h1 className={style.headline}>Portfolio control room.</h1>
+            <h1 className={style.headline}>Portfolio Login Page.</h1>
             <p className={style.copy}>
               글 발행 상태와 포트폴리오 구성을 관리하기 위한 관리자
               로그인입니다. 개인 작업용 접근만 허용됩니다.

@@ -1,4 +1,4 @@
-@reference "../../../globals.css";
+@reference "../../globals.css";
 
 .viewport {
   @apply mx-auto w-full max-w-[1100px] px-4 pb-14 pt-8 sm:px-6;
@@ -13,6 +13,7 @@
     0 2px 10px rgba(94, 72, 34, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.92);
 }
+
 .header {
   @apply flex flex-col gap-3 border-b px-5 py-5 sm:px-8;
   border-color: rgba(130, 102, 64, 0.16);

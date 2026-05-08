@@ -1,7 +1,7 @@
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
 import Link from "next/link";
 import DeleteForm from "./deleteForm";
-import style from "./page.module.css";
+import style from "./portfolio-slug.module.css";
 
 export default async function AuthStatus({
   slug,
