@@ -1,6 +1,7 @@
 import { Modal } from "@/app/components/ui/modal";
 import { PortfolioContent } from "@/app/components/portfolio/portfolio-slug/portfolio-content";
 import { getPortfolios } from "@/lib/portfolio/getPortfolios";
+import { use } from "react";
 
 export async function generateStaticParams() {
   const portfolios = getPortfolios();
@@ -15,6 +16,7 @@ export default function PortfolioModalPage({
 }: {
   params: Promise<{ "portfolio-slug": string }>;
 }) {
+  use(params);
   return (
     // 실제 상세 페이지를 그대로 재사용하되, 모달 컨테이너 안에서 렌더링합니다.
     <Modal>

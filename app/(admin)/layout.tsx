@@ -2,7 +2,7 @@ import Link from "next/link";
 import style from "./layout.module.css";
 import LogoutButton from "../components/ui/LogoutBtn";
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
