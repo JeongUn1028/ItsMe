@@ -41,50 +41,75 @@ export async function updateFile(fileName: string, content: object | string) {
     };
   }
 
+  //* 파일 생성
+  const gitHubcontent = async (): Promise<string> => {
+    //* Image or PDF — File 체크를 object보다 먼저 해야 함 (File은 object)
+    if (content instanceof File) {
+      const arrayBuffer = await content.arrayBuffer();
+      return Buffer.from(arrayBuffer).toString("base64");
+    }
+    //* JSON
+    else if (typeof content === "object") {
+      return Buffer.from(JSON.stringify(content, null, 2)).toString("base64");
+    }
+    //* Markdown
+    else {
+      return Buffer.from(content).toString("base64");
+    }
+  };
+
+  //* 파일의 SHA 값 가져오기
   try {
     const octokit = new Octokit({
       auth: TOKEN,
     });
-    //* 파일의 SHA 값 가져오기
+
     const sha = await getGithubSHA(PATH);
+
     //* 파일 업데이트 요청
 
-    //* 1. content를 타입에 따라 적절히 변환
-    const gitHubcontent = async (): Promise<string> => {
-      //* Image or PDF — File 체크를 object보다 먼저 해야 함 (File은 object)
-      if (content instanceof File) {
-        const arrayBuffer = await content.arrayBuffer();
-        return Buffer.from(arrayBuffer).toString("base64");
-      }
-      //* JSON
-      else if (typeof content === "object") {
-        return Buffer.from(JSON.stringify(content, null, 2)).toString("base64");
-      }
-      //* Markdown
-      else {
-        return Buffer.from(content).toString("base64");
-      }
-    };
-
-    await octokit.request(`PUT /repos/${OWNER}/${REPO}/contents/${PATH}`, {
-      owner: OWNER,
-      repo: REPO,
-      path: PATH,
-      message: `chore(file): Update ${fileName} via API`,
-      committer: {
-        name: "itsme-bot",
-        email: "wjddns363@naver.com",
-      },
-      content: await gitHubcontent(),
-      sha,
-      headers: {
-        "X-GitHub-Api-Version": "2026-03-10",
-      },
-    });
-    return {
-      success: true,
-      message: "File updated successfully",
-    };
+    //* 1. 기존의 sha가 없는 경우 즉 파일이 존재하지 않는 경우, 새 파일을 생성하도록 처리
+    if (!sha) {
+      await octokit.request(`PUT /repos/${OWNER}/${REPO}/contents/${PATH}`, {
+        owner: OWNER,
+        repo: REPO,
+        path: PATH,
+        message: `chore(file): Update ${fileName} via API`,
+        committer: {
+          name: "itsme-bot",
+          email: "wjddns363@naver.com",
+        },
+        content: await gitHubcontent(),
+        headers: {
+          "X-GitHub-Api-Version": "2026-03-10",
+        },
+      });
+      return {
+        success: true,
+        message: "File created successfully",
+      };
+    } else {
+      //* 2. 기존의 sha가 있는 경우 즉 파일이 존재하는 경우, 해당 파일을 업데이트하도록 처리
+      await octokit.request(`PUT /repos/${OWNER}/${REPO}/contents/${PATH}`, {
+        owner: OWNER,
+        repo: REPO,
+        path: PATH,
+        message: `chore(file): Update ${fileName} via API`,
+        committer: {
+          name: "itsme-bot",
+          email: "wjddns363@naver.com",
+        },
+        content: await gitHubcontent(),
+        sha,
+        headers: {
+          "X-GitHub-Api-Version": "2026-03-10",
+        },
+      });
+      return {
+        success: true,
+        message: "File updated successfully",
+      };
+    }
   } catch (error) {
     console.error("Error updating file:", error);
     return {

@@ -1,7 +1,6 @@
 "use server";
 
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
-import { revalidatePath } from "next/cache";
 import { updateFile } from "@/lib/update-file/updateFile";
 import { setMarkdownContent } from "@/lib/portfolio/setMarkdownContent";
 
@@ -134,7 +133,7 @@ export async function createPortfolio(
 
     // *4 Markdown 파일 생성
     const markdown = setMarkdownContent({
-      thumbnailPath: `portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
+      thumbnailPath: `/portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
       size: sizeArray,
       status,
       title,
@@ -154,19 +153,14 @@ export async function createPortfolio(
       ),
       updateFile(`${normalizedSlug}.md`, markdown),
     ]);
-
-    if (!response || response.some((res) => !res.success)) {
+    console.log("GitHub update response:", response);
+    if (response.some((res) => res.success === false)) {
+      console.error("GitHub update failed:", response);
       return {
         success: false,
-        message: "GitHub 업데이트에 실패했습니다.",
+        message: "포트폴리오 저장 중 오류가 발생했습니다.",
       };
     }
-
-    //* 캐시 재검증이 필요하나 updateFile은 Vercel에서 재배포 후에 반영 되므로 반영은 재배포 후 될 예정
-
-    revalidatePath("/");
-    revalidatePath("/admin");
-    revalidatePath(`/portfolio/${normalizedSlug}`);
 
     return {
       success: true,

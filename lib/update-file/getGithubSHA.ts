@@ -4,9 +4,11 @@ const octokit = new Octokit({
   auth: process.env.NEXT_GITHUB_TOKEN_KEY,
 });
 
-export const getGithubSHA = async (PATH: string): Promise<string> => {
+export const getGithubSHA = async (PATH: string): Promise<string | null> => {
   const OWNER = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
   const REPO = process.env.NEXT_PUBLIC_GITHUB_REPO;
+
+  console.log("getGithubSHA called with PATH:", PATH);
 
   try {
     const sha = await octokit
@@ -22,6 +24,6 @@ export const getGithubSHA = async (PATH: string): Promise<string> => {
     return sha;
   } catch (error) {
     console.error("Error fetching GitHub SHA:", error);
-    throw error;
+    return null;
   }
 };

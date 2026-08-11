@@ -1,6 +1,5 @@
 import EditPortfolioComponent from "../../../../../components/portfolio/EditPortfolioForm";
 import { getPortfolios } from "@/lib/portfolio/getPortfolios";
-import { use } from "react";
 
 export async function generateStaticParams() {
   const portfolios = getPortfolios();
@@ -11,11 +10,11 @@ export async function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: Promise<{ "portfolio-slug": string }>;
 }) {
-  use(params);
-  return <EditPortfolioComponent params={params} />;
+  const resolvedParams = await params;
+  return <EditPortfolioComponent params={resolvedParams} />;
 }

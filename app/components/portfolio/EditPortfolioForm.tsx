@@ -3,12 +3,12 @@ import style from "./EditPortfolioForm.module.css";
 
 import PortfolioForm from "@/app/components/portfolio/PortfolioForm";
 
-export default async function EditPortfolioComponent({
+export default function EditPortfolioComponent({
   params,
 }: {
-  params: Promise<{ "portfolio-slug": string }>;
+  params: { "portfolio-slug": string };
 }) {
-  const { "portfolio-slug": slug } = await params;
+  const { "portfolio-slug": slug } = params;
   const portfolio = getPortfolioData(slug);
   return (
     <section className={style.viewport}>
