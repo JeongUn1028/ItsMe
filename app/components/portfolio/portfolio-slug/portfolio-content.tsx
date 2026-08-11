@@ -9,14 +9,14 @@ import AuthStatus from "./AuthStatus";
 import AuthStatusSkeleton from "../../ui/skeleton/AuthStatusSkeleton";
 import Image from "next/image";
 
-export async function PortfolioContent({
+export function PortfolioContent({
   params,
   isModal = false,
 }: {
-  params: Promise<{ "portfolio-slug": string }>;
+  params: { "portfolio-slug": string };
   isModal?: boolean;
 }) {
-  const { "portfolio-slug": slug } = await params;
+  const { "portfolio-slug": slug } = params;
   const portfolio = getPortfolioData(slug);
 
   return (
