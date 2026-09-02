@@ -4,15 +4,7 @@ import { getLoginStatus } from "@/lib/auth/getLoginStatus";
 import { setMarkdownContent } from "@/lib/portfolio/setMarkdownContent";
 import { updateFile } from "@/lib/update-file/updateFile";
 import { revalidatePath } from "next/cache";
-
-//* 입력된 날짜를 YYYY-MM-DD 형식으로 변환
-function normalizeDate(input: string) {
-  if (!input) {
-    return new Date().toISOString().slice(0, 10);
-  }
-
-  return input.slice(0, 10);
-}
+import { normalizeDate } from "@/lib/nomalizeDate";
 
 export async function editPortfolio(
   _prevState: { success: boolean | null; message: string },
@@ -132,7 +124,7 @@ export async function editPortfolio(
       }
     }
     const markdown = setMarkdownContent({
-      thumbnailPath: `portfolio/${slug.trim().toLowerCase()}.${thumbnail?.type === "image/png" ? "png" : "jpg"}`,
+      thumbnailPath: `/portfolio/${slug.trim().toLowerCase()}.${thumbnail?.type === "image/png" ? "png" : "jpg"}`,
       size: sizeArray.map(Number),
       status,
       title,

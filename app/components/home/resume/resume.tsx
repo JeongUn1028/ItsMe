@@ -24,14 +24,16 @@ export default function Resume() {
           />
         </div>
         <div className={style.textWrap}>
-          <p className={style.description}>{description}</p>
-          <ul className={style.skills}>
-            {skills.map((skill, index) => (
-              <li key={index} className={style.skill}>
-                {skill}
-              </li>
-            ))}
-          </ul>
+          <div className={style.description}>{description}</div>
+          <div className={style.skills}>
+            <ul>
+              {skills.map((skill, index) => (
+                <li key={index} className={style.skill}>
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className={style.actions}>
             <a
               href={pdfPath}

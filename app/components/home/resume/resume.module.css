@@ -13,7 +13,7 @@
 }
 
 .content {
-  @apply mt-4 flex min-h-0 flex-1 flex-col items-center justify-start gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6 xl:mt-0 xl:flex-col xl:items-center xl:justify-center xl:gap-5;
+  @apply mt-4 flex min-h-0 flex-1 flex-col items-center justify-start gap-5 sm:flex-row sm:items-stretch sm:justify-between sm:gap-6 xl:mt-0 xl:flex-col xl:items-center xl:justify-center xl:gap-5;
 }
 
 .imageWrap {
@@ -26,18 +26,23 @@
 }
 
 .textWrap {
-  @apply flex min-h-0 w-full max-w-[520px] flex-col items-center gap-[0.9rem] text-center sm:w-1/2 sm:items-center sm:text-center xl:w-full xl:items-center xl:text-center;
+  @apply flex min-h-0 w-full max-w-[520px] flex-1 flex-col items-center gap-[0.9rem] text-center sm:w-1/2 sm:items-center sm:text-center xl:w-full xl:items-center xl:text-center;
   overflow: hidden;
-  padding-right: 0.15rem;
 }
 
 .description {
-  @apply m-0 text-[0.88rem] leading-[1.7] sm:text-[0.93rem];
+  @apply min-h-0 w-full flex-1 overflow-y-auto pr-[0.15rem] text-[0.88rem] leading-[1.7] sm:text-[0.93rem];
   color: rgba(46, 35, 24, 0.9);
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .skills {
-  @apply m-0 mt-1 flex w-full max-w-[460px] list-none flex-wrap items-center justify-center gap-2 p-0;
+  @apply mt-1 w-full;
+}
+
+.skills > ul {
+  @apply m-0 flex w-full max-w-[460px] list-none flex-wrap items-center justify-center gap-2 p-0;
 }
 
 .skill {

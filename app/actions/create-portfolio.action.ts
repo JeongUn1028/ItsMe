@@ -3,6 +3,7 @@
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
 import { updateFile } from "@/lib/update-file/updateFile";
 import { setMarkdownContent } from "@/lib/portfolio/setMarkdownContent";
+import { normalizeDate } from "@/lib/nomalizeDate";
 
 function isRedirectError(error: unknown): boolean {
   return (
@@ -12,15 +13,6 @@ function isRedirectError(error: unknown): boolean {
     typeof (error as { digest?: unknown }).digest === "string" &&
     (error as { digest: string }).digest.startsWith("NEXT_REDIRECT")
   );
-}
-
-//* 입력된 날짜를 YYYY-MM-DD 형식으로 변환
-function normalizeDate(input: string) {
-  if (!input) {
-    return new Date().toISOString().slice(0, 10);
-  }
-
-  return input.slice(0, 10);
 }
 
 //* 새 포트폴리오를 이미지와 함께 저장하고 md 문서를 생성합니다.

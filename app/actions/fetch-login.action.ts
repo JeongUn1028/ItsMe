@@ -1,6 +1,7 @@
 "use server";
 
 import { SignJWT } from "jose";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -50,7 +51,9 @@ export async function fetchLoginAction(formData: FormData): Promise<void> {
       maxAge: 3600,
     });
   } catch (error) {
-    console.error("Login SeverAction error:", error);
+    if (isRedirectError(error)) {
+      console.error("Login SeverAction error:", error);
+    }
     redirect(
       `/login?error=server&redirect=${encodeURIComponent(safeRedirectPath)}`,
     );
