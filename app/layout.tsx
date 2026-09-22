@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -31,14 +31,7 @@ export const metadata: Metadata = {
     description: "이정운의 포트폴리오 사이트입니다.",
     url: siteUrl,
     siteName: "JEONGUN's Portfolio",
-    images: [
-      {
-        url: "/profile.jpg",
-        width: 1200,
-        height: 630,
-        alt: "JEONGUN portfolio preview",
-      },
-    ],
+    //* 이미지는 app/opengraph-image.png 파일 규약으로 자동 주입됩니다.
     locale: "ko_KR",
     type: "website",
   },
@@ -46,8 +39,15 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "JEONGUN's Portfolio",
     description: "이정운의 포트폴리오 사이트입니다.",
-    images: ["/profile.jpg"],
   },
+};
+
+//* iOS Safari: 상단 바를 페이지 배경색으로 물들이고, 노치/홈 인디케이터 영역까지 콘텐츠가 확장되도록 합니다.
+export const viewport: Viewport = {
+  themeColor: "#f6f0e4",
+  viewportFit: "cover",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

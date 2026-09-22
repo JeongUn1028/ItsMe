@@ -2,6 +2,9 @@ import Image from "next/image";
 import style from "./contact.module.css";
 import type { CSSProperties } from "react";
 
+const EMAIL = "wjddns363@naver.com";
+const PHONE = "010-9656-1295";
+
 export default function Contact() {
   return (
     <div
@@ -10,24 +13,25 @@ export default function Contact() {
     >
       <h2 className={style.title}>CONTACT</h2>
       <div className={style.content}>
-        <div className={style.row}>
+        {/* 탭하면 메일 앱 / 전화 앱이 열리도록 실제 링크로 둡니다. */}
+        <a href={`mailto:${EMAIL}`} className={style.row}>
           <Image
             src="/contact/email_icon.png"
-            alt="Email Icon"
+            alt=""
             width={18}
             height={18}
           />
-          :<div className={style.value}>wjddns363@naver.com</div>
-        </div>
-        <div className={style.row}>
+          <span className={style.value}>{EMAIL}</span>
+        </a>
+        <a href={`tel:${PHONE.replace(/-/g, "")}`} className={style.row}>
           <Image
             src="/contact/phone_icon.png"
-            alt="Phone Icon"
+            alt=""
             width={18}
             height={18}
           />
-          :<div className={style.value}>010-9656-1295</div>
-        </div>
+          <span className={style.value}>{PHONE}</span>
+        </a>
       </div>
     </div>
   );

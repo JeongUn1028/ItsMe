@@ -14,8 +14,24 @@
 }
 
 .row {
-  @apply flex h-full flex-row items-center justify-center gap-1;
+  @apply flex h-full flex-row items-center justify-center gap-2 rounded-full px-3 no-underline;
   color: #757575;
+  transition:
+    color var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.row:hover,
+.row:focus-visible {
+  color: var(--foreground);
+  background: rgba(255, 255, 255, 0.55);
+  transform: translateY(-1px);
+}
+
+.row:active {
+  transform: translateY(0);
+  transition-duration: var(--dur-fast);
 }
 
 .value {
