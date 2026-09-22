@@ -47,3 +47,6 @@ next-env.d.ts
 # playwright
 /test-results/
 /playwright-report/
+
+# claude code 개인 프로젝트 규칙
+/CLAUDE.md
