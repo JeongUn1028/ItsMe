@@ -1,8 +1,15 @@
 @reference "../../../globals.css";
 
 .card {
-  @apply flex h-full w-full overflow-hidden p-4 rounded-[10px] transition-all duration-200 ease-in-out hover:cursor-pointer;
+  @apply flex h-full w-full overflow-hidden p-4 rounded-[10px] text-inherit no-underline;
   gap: 0.8rem;
+  /* transition-all 대신 실제로 바뀌는 속성만 지정해 불필요한 리페인트를 줄입니다. */
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+  will-change: transform;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.38);
   backdrop-filter: blur(12px) saturate(120%);
@@ -12,15 +19,20 @@
     0 4px 12px rgba(40, 30, 18, 0.08);
 }
 
-.card:hover {
+.card:hover,
+.card:focus-visible {
   transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.52);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.56);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.58),
-    0 8px 20px rgba(40, 30, 18, 0.15);
+    0 10px 24px rgba(40, 30, 18, 0.16);
+}
+
+/* 클릭 순간 살짝 눌리는 느낌을 줍니다. */
+.card:active {
+  transform: translateY(-1px) scale(0.995);
+  transition-duration: var(--dur-fast);
 }
 
 .rowLayout {
@@ -46,6 +58,13 @@
 
 .thumbnail {
   @apply block h-full w-full object-cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+/* 카드 hover 시 썸네일만 아주 살짝 확대되어 깊이감을 줍니다. */
+.card:hover .thumbnail,
+.card:focus-visible .thumbnail {
+  transform: scale(1.04);
 }
 
 .info {

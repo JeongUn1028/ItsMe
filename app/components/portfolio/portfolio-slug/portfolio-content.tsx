@@ -22,7 +22,7 @@ export function PortfolioContent({
   return (
     <section className={isModal ? style.viewportModal : style.viewport}>
       <article
-        className={`${style.modal} ${isModal ? style.modalScrollable : ""}`}
+        className={`${style.modal} ${isModal ? style.modalScrollable : "fade-up"}`}
       >
         <header className={style.header}>
           <div className={style.headerRow}>

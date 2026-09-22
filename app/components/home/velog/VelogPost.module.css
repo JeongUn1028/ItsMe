@@ -2,18 +2,30 @@
 
 .container {
   @apply flex flex-col gap-1.5 rounded-xl px-3 py-2.5;
+  /* hover 에서 border 가 새로 생기면 1px 씩 밀리므로 항상 투명 border 를 둡니다. */
+  border: 1px solid transparent;
   transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
+    transform var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
 }
 
-.container:hover {
+.link {
+  @apply block rounded-xl text-inherit no-underline;
+}
+
+.link:hover .container,
+.link:focus-visible .container {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  box-shadow: 0 8px 24px rgba(40, 30, 18, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 8px 24px rgba(40, 30, 18, 0.14);
+}
+
+.link:active .container {
+  transform: translateY(0);
+  transition-duration: var(--dur-fast);
 }
 
 .title {

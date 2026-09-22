@@ -1,10 +1,12 @@
 import Image from "next/image";
 import style from "./contact.module.css";
+import type { CSSProperties } from "react";
 
 export default function Contact() {
   return (
     <div
-      className={`glass col-span-1 row-span-1 xl:col-start-2 xl:row-start-2 ${style.card}`}
+      className={`glass fade-up col-span-1 row-span-1 xl:col-start-2 xl:row-start-2 ${style.card}`}
+      style={{ "--i": 2 } as CSSProperties}
     >
       <h2 className={style.title}>CONTACT</h2>
       <div className={style.content}>

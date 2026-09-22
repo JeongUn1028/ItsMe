@@ -1,11 +1,13 @@
 import Link from "next/link";
 import style from "./links.module.css";
 import Image from "next/image";
+import type { CSSProperties } from "react";
 
 export default function Links() {
   return (
     <div
-      className={`glass col-span-1 row-span-1 xl:col-start-2 xl:row-start-1 ${style.card}`}
+      className={`glass fade-up col-span-1 row-span-1 xl:col-start-2 xl:row-start-1 ${style.card}`}
+      style={{ "--i": 1 } as CSSProperties}
     >
       <h1 className={style.title}>GIT/VELOG LINKS</h1>
       <div className={style.content}>
@@ -14,6 +16,7 @@ export default function Links() {
             href="https://github.com/JEONGUN1028"
             target="_blank"
             rel="noopener noreferrer"
+            className={style.iconLink}
           >
             <Image
               src="/links/github_logo_icon.png"
@@ -26,6 +29,7 @@ export default function Links() {
             href="https://velog.io/@jeongun1028"
             target="_blank"
             rel="noopener noreferrer"
+            className={style.iconLink}
           >
             <Image
               src="/links/velog_logo_icon.svg"

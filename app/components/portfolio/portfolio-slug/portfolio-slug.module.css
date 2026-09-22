@@ -46,24 +46,31 @@
   @apply flex flex-wrap items-center gap-2;
 }
 
-.backLink {
-  @apply w-fit rounded-full px-3 py-1 text-sm font-medium transition-colors;
-  background: rgba(255, 255, 255, 0.58);
-  color: rgba(46, 33, 19, 0.88);
-}
-
-.backLink:hover {
-  background: rgba(255, 255, 255, 0.8);
-}
-
+/* 상단 액션 버튼(뒤로가기 / 수정 / 삭제)이 같은 hover 리듬을 공유합니다. */
+.backLink,
 .editLink {
-  @apply w-fit rounded-full px-3 py-1 text-sm font-medium transition-colors;
+  @apply w-fit rounded-full px-3 py-1 text-sm font-medium;
   background: rgba(255, 255, 255, 0.58);
   color: rgba(46, 33, 19, 0.88);
+  transition:
+    background var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
 }
 
-.editLink:hover {
-  background: rgba(255, 255, 255, 0.8);
+.backLink:hover,
+.backLink:focus-visible,
+.editLink:hover,
+.editLink:focus-visible {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(94, 64, 42, 0.12);
+}
+
+.backLink:active,
+.editLink:active {
+  transform: translateY(0);
+  transition-duration: var(--dur-fast);
 }
 
 .deleteForm {
@@ -71,14 +78,26 @@
 }
 
 .deleteButton {
-  @apply w-fit rounded-full px-3 py-1 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+  @apply w-fit rounded-full px-3 py-1 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60;
   border: 1px solid rgba(179, 59, 59, 0.22);
   background: rgba(255, 238, 238, 0.92);
   color: rgba(142, 32, 32, 0.92);
+  transition:
+    background var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
 }
 
-.deleteButton:hover {
+.deleteButton:hover:not(:disabled),
+.deleteButton:focus-visible {
   background: rgba(255, 228, 228, 0.98);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(142, 32, 32, 0.12);
+}
+
+.deleteButton:active:not(:disabled) {
+  transform: translateY(0);
+  transition-duration: var(--dur-fast);
 }
 
 .title {
@@ -116,12 +135,22 @@
 }
 
 .resourceLink {
-  @apply inline-block transition-opacity;
+  @apply inline-flex rounded-full p-1;
   line-height: 0;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out);
 }
 
-.resourceLink:hover {
-  opacity: 0.7;
+.resourceLink:hover,
+.resourceLink:focus-visible {
+  transform: translateY(-2px) scale(1.06);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.resourceLink:active {
+  transform: scale(0.96);
+  transition-duration: var(--dur-fast);
 }
 
 .content {
@@ -159,14 +188,4 @@
 .content :global(pre code) {
   @apply bg-transparent p-0;
   color: rgba(252, 246, 236, 0.95);
-}
-
-@keyframes actionShimmer {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
 }

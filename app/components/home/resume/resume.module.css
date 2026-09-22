@@ -64,14 +64,38 @@
 }
 
 .resumeLink {
-  @apply inline-flex w-fit rounded-full px-3 py-1 text-[0.8rem] font-semibold transition-colors;
+  @apply inline-flex w-fit rounded-full px-3 py-1 text-[0.8rem] font-semibold;
   border: 1px solid rgba(144, 114, 74, 0.36);
   background: rgba(250, 241, 227, 0.78);
   color: rgba(78, 56, 31, 0.92);
+  transition:
+    background var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
 }
 
-.resumeLink:hover {
+.resumeLink:hover,
+.resumeLink:focus-visible {
   background: rgba(255, 248, 236, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(94, 64, 42, 0.12);
+}
+
+.resumeLink:active {
+  transform: translateY(0);
+  transition-duration: var(--dur-fast);
+}
+
+/* 데스크톱에서 사진 ↔ 소개글 전환 시 새로 보이는 쪽이 부드럽게 나타납니다. */
+@keyframes resumeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .linkText {
@@ -106,18 +130,34 @@
 
 @media (min-width: 1280px) {
   .toggleButton {
-    @apply mt-3 inline-flex w-fit self-center rounded-full px-3 py-1 text-[0.8rem] font-semibold transition-colors;
+    @apply mt-3 inline-flex w-fit self-center rounded-full px-3 py-1 text-[0.8rem] font-semibold;
     border: 1px solid rgba(144, 114, 74, 0.36);
     background: rgba(250, 241, 227, 0.78);
     color: rgba(78, 56, 31, 0.92);
+    transition:
+      background var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
   }
 
-  .toggleButton:hover {
+  .toggleButton:hover,
+  .toggleButton:focus-visible {
     background: rgba(255, 248, 236, 0.95);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(94, 64, 42, 0.12);
+  }
+
+  .toggleButton:active {
+    transform: translateY(0);
+    transition-duration: var(--dur-fast);
   }
 
   .desktopPhoto .textWrap {
     display: none;
+  }
+
+  .desktopPhoto .imageWrap {
+    animation: resumeFadeIn var(--dur-base) var(--ease-out) both;
   }
 
   .desktopDescription .imageWrap {
@@ -126,5 +166,6 @@
 
   .desktopDescription .textWrap {
     @apply mt-3 w-full gap-8 flex-col justify-between;
+    animation: resumeFadeIn var(--dur-base) var(--ease-out) both;
   }
 }

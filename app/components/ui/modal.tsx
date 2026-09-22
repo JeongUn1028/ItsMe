@@ -4,11 +4,21 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 
-const ANIMATION_MS = 220;
+const ANIMATION_MS = 240;
+const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+//* OS 의 모션 감소 설정이 켜져 있으면 애니메이션 없이 즉시 열고 닫습니다.
+const getAnimationMs = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? 0
+    : ANIMATION_MS;
 
 export const Modal = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const dialogRef = useRef<HTMLDivElement | null>(null);
+  const animationMsRef = useRef(ANIMATION_MS);
   // Portal 대상인 #modal-root가 브라우저에 마운트된 뒤에만 접근하기 위한 상태입니다.
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -46,16 +56,19 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
       }
 
       router.replace("/");
-    }, ANIMATION_MS);
+    }, animationMsRef.current);
   }, [pathname, router]);
 
   useEffect(() => {
     // 클라이언트에서만 portal 렌더링이 가능하므로 마운트 여부를 기록합니다.
     setIsMounted(true);
+    animationMsRef.current = getAnimationMs();
 
     const rafId = window.requestAnimationFrame(() => {
       isVisibleRef.current = true;
       setIsVisible(true);
+      // 스크린리더/키보드 사용자가 바로 모달 안에서 시작하도록 포커스를 옮깁니다.
+      dialogRef.current?.focus({ preventScroll: true });
     });
 
     return () => {
@@ -113,12 +126,15 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
           backdropFilter: "blur(10px)",
           WebkitBackdropFilter: "blur(10px)",
           opacity: isVisible ? 1 : 0,
-          transition: `opacity ${ANIMATION_MS}ms ease`,
+          transition: `opacity ${animationMsRef.current}ms ease`,
         }}
       />
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
+        aria-label="포트폴리오 상세"
+        tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
         style={{
           position: "fixed",
@@ -134,7 +150,8 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
           overscrollBehavior: "contain",
           borderRadius: "18px",
           opacity: isVisible ? 1 : 0,
-          transition: `transform ${ANIMATION_MS}ms cubic-bezier(0.22, 1, 0.36, 1), opacity ${ANIMATION_MS}ms ease`,
+          outline: "none",
+          transition: `transform ${animationMsRef.current}ms ${EASE_OUT}, opacity ${animationMsRef.current}ms ease`,
           willChange: "transform, opacity",
         }}
       >

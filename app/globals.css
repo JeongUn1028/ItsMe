@@ -7,6 +7,13 @@
   --glow-mint: rgba(150, 228, 209, 0.4);
   --glow-apricot: rgba(244, 182, 124, 0.32);
   --glow-cream: rgba(255, 247, 232, 0.9);
+  /* 모션 토큰: 모든 전환/애니메이션이 같은 리듬을 쓰도록 여기서만 정의합니다. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 520ms;
+  --focus-ring: rgba(94, 64, 42, 0.55);
   padding: 2rem;
 }
 
@@ -19,6 +26,7 @@
 
 html {
   min-height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -89,4 +97,46 @@ main {
   box-shadow:
     0 4px 24px rgba(180, 150, 100, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ---- 공통 인터랙션 ---- */
+
+/* 키보드 포커스만 링을 표시합니다 (마우스 클릭 시에는 표시하지 않음). */
+:where(a, button, [role="button"], input, select, textarea):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+/* 페이지 진입 시 카드가 아래에서 살짝 떠오르며 나타납니다.
+   --i 로 순서를 주면 60ms 간격으로 순차 등장합니다. */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+
+/* 사용자가 OS 에서 모션 감소를 켠 경우 모든 애니메이션/전환을 사실상 끕니다. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

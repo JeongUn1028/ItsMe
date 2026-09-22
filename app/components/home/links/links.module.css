@@ -17,6 +17,24 @@
   @apply flex h-full w-3/5 flex-row items-center justify-evenly;
 }
 
+.iconLink {
+  @apply inline-flex rounded-full p-2;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    background var(--dur-base) var(--ease-out);
+}
+
+.iconLink:hover,
+.iconLink:focus-visible {
+  transform: translateY(-2px) scale(1.08);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.iconLink:active {
+  transform: scale(0.96);
+  transition-duration: var(--dur-fast);
+}
+
 .account {
   @apply text-base;
   color: #757575;

@@ -7,8 +7,8 @@ export default function PortfolioCards() {
   );
   return (
     <>
-      {portfolios.map((portfolio) => (
-        <PortfolioCard key={portfolio.slug} {...portfolio} />
+      {portfolios.map((portfolio, index) => (
+        <PortfolioCard key={portfolio.slug} index={index} {...portfolio} />
       ))}
     </>
   );

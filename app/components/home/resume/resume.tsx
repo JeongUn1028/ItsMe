@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import style from "./resume.module.css";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { getResume } from "@/lib/resume/getResume";
 
 export default function Resume() {
@@ -9,7 +9,10 @@ export default function Resume() {
   const { description, skills, imagePath, pdfPath } = getResume();
 
   return (
-    <div className={`glass ${style.card}`}>
+    <div
+      className={`glass fade-up ${style.card}`}
+      style={{ "--i": 0 } as CSSProperties}
+    >
       <h1 className={style.title}>ABOUT ME/RESUME</h1>
       <div
         className={`${style.content} ${isShowingDescription ? style.desktopDescription : style.desktopPhoto}`}

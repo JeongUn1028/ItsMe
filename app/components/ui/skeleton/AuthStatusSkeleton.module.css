@@ -19,3 +19,13 @@
   width: 66px;
   height: 28px;
 }
+
+@keyframes actionShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}

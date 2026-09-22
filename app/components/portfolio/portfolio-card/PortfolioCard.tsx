@@ -1,12 +1,17 @@
-"use client";
-
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import type { CSSProperties } from "react";
 import type { Portfolio } from "@/lib/types/portfolioTypes";
 import { getSpanClasses } from "@/lib/portfolio/portfolio-card-span";
 import style from "./PortfolioCard.module.css";
-export default function PortfolioCard(portfolio: Portfolio) {
-  const { thumbnail, title, summary, tags, size } = portfolio;
+
+//* 홈 포트폴리오 카드. Link 를 사용해 키보드 접근과 prefetch 가 되도록 합니다.
+//* index 는 순차 등장 애니메이션의 지연 순서로만 쓰입니다.
+export default function PortfolioCard({
+  index = 0,
+  ...portfolio
+}: Portfolio & { index?: number }) {
+  const { thumbnail, title, summary, tags, size, slug } = portfolio;
 
   const {
     isRowLayout,
@@ -17,23 +22,20 @@ export default function PortfolioCard(portfolio: Portfolio) {
     tabletRowSpan,
     desktopRowSpan,
   } = getSpanClasses(size);
-  const router = useRouter();
-
-  const onClickCard = () => {
-    router.push(`/portfolio/${portfolio.slug}`);
-  };
 
   return (
-    <div
-      className={`glass ${style.card} ${mobileColSpan} ${mobileRowSpan} ${tabletColSpan} ${desktopColSpan} ${tabletRowSpan} ${desktopRowSpan} ${isRowLayout ? style.rowLayout : style.columnLayout}`}
-      onClick={onClickCard}
+    <Link
+      href={`/portfolio/${slug}`}
+      aria-label={`${title} 자세히 보기`}
+      className={`glass fade-up ${style.card} ${mobileColSpan} ${mobileRowSpan} ${tabletColSpan} ${desktopColSpan} ${tabletRowSpan} ${desktopRowSpan} ${isRowLayout ? style.rowLayout : style.columnLayout}`}
+      style={{ "--i": index } as CSSProperties}
     >
       <div
         className={`${style.thumbnailWrap} ${isRowLayout ? style.thumbnailWrapRow : style.thumbnailWrapColumn}`}
       >
         <Image
           src={thumbnail}
-          alt={title}
+          alt=""
           width={500}
           height={300}
           sizes="(max-width: 639px) 100vw, (max-width: 1279px) 50vw, 33vw"
@@ -44,13 +46,13 @@ export default function PortfolioCard(portfolio: Portfolio) {
         <h2 className={style.title}>{title}</h2>
         <p className={style.summary}>{summary}</p>
         <ul className={style.tags}>
-          {tags.map((tag, index) => (
-            <li key={index} className={style.tag}>
+          {tags.map((tag) => (
+            <li key={tag} className={style.tag}>
               {tag}
             </li>
           ))}
         </ul>
       </div>
-    </div>
+    </Link>
   );
 }

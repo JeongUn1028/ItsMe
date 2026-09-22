@@ -6,8 +6,9 @@ export default function VelogPost({ post }: { post: velogPost }) {
   return (
     <Link
       href={`https://velog.io/@jeongun1028/${post.url_slug}`}
-      key={post.title}
       target="_blank"
+      rel="noopener noreferrer"
+      className={style.link}
     >
       <div className={style.container}>
         <h2 className={style.title}>{post.title}</h2>
