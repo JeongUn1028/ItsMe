@@ -60,8 +60,21 @@ ItsMe는 개인 포트폴리오를 소개하는 동시에, 콘텐츠를 직접 �
 | Styling | Tailwind CSS v4, CSS Modules |
 | Auth | JWT (`jose`), Cookie |
 | Content | Markdown, MDX |
-| API | GitHub Contents API (`octokit`) |
+| API | GitHub Git Data API (`octokit`) |
 | Test | Vitest, Testing Library |
+
+---
+
+## ⚙️ 로컬 실행
+
+```bash
+cp .env.example .env.local   # 값 채우기
+node scripts/hash-password.mjs '<관리자 비밀번호>'   # → ADMIN_PASSWORD_HASH
+npm install
+npm run dev
+```
+
+필요한 환경 변수는 `.env.example`에 설명과 함께 정리되어 있습니다.
 
 ---
 
@@ -105,6 +118,7 @@ ItsMe는 개인 포트폴리오를 소개하는 동시에, 콘텐츠를 직접 �
 
 - JWT + Cookie 기반 인증
 - Middleware를 통한 관리자 라우트 보호
+- 관리자 비밀번호는 `scrypt` 해시로 저장하고 `timingSafeEqual`로 비교
 
 ### 이유
 
@@ -133,8 +147,12 @@ ItsMe는 개인 포트폴리오를 소개하는 동시에, 콘텐츠를 직접 �
 ### 선택
 
 - Server Action 기반 데이터 처리
-- GitHub Contents API 기반 파일 관리
+- GitHub Git Data API(Trees/Commits) 기반 파일 관리
 - Markdown을 Single Source of Truth로 사용
+
+### 파일 변경을 하나의 커밋으로 묶은 이유
+
+포트폴리오 하나는 md 문서와 썸네일 이미지 두 파일로 구성됩니다. 파일마다 Contents API를 호출하면 중간에 실패했을 때 한쪽만 반영되는 상태가 생길 수 있어, Git Data API로 blob → tree → commit → ref 순서로 처리해 **모든 변경이 단일 커밋으로 원자적으로 반영**되도록 했습니다. 생성·수정·삭제가 모두 같은 `commitFiles()` 함수를 사용합니다.
 
 ### 왜 DB나 CMS를 사용하지 않았는가
 
@@ -157,9 +175,9 @@ Admin 입력
     ↓
 Server Action
     ↓
-GitHub Contents API
+GitHub Git Data API
     ↓
-Markdown 저장 및 Commit
+md + 이미지를 단일 Commit 으로 저장
     ↓
 콘텐츠 갱신
     ↓

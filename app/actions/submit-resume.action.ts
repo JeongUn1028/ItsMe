@@ -2,7 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
-import { updateFile } from "@/lib/update-file/updateFile";
+import { commitFiles, type FileChange } from "@/lib/github/commitFiles";
+import {
+  publicFilePath,
+  RESUME_IMAGE_URL,
+  RESUME_JSON_PATH,
+  RESUME_PDF_URL,
+} from "@/lib/github/contentPaths";
 
 interface ResumeState {
   success: boolean | null;
@@ -16,91 +22,72 @@ interface ResumeData {
   pdfPath: string;
 }
 
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+
 export async function submitResumeAction(
   _prevState: ResumeState,
   formData: FormData,
 ): Promise<ResumeState> {
   //* 1. 로그인 여부 확인
-  const isLoggedIn = await getLoginStatus();
-  if (!isLoggedIn) {
+  if (!(await getLoginStatus())) {
     return { success: false, message: "로그인이 필요합니다." };
   }
 
-  try {
-    //* 2. FormData에서 텍스트 데이터 추출
-    const description = formData.get("description")?.toString() ?? "";
-    const skillsInput = formData.get("skills")?.toString() ?? "";
-    const imageFile = formData.get("thumbnail") as File | null;
-    const pdfFile = formData.get("pdf") as File | null;
-    const allowedImageMimeTypes = ["image/jpeg", "image/png"];
+  //* 2. FormData 추출
+  const description = formData.get("description")?.toString().trim() ?? "";
+  const skillsInput = formData.get("skills")?.toString() ?? "";
+  const imageFile = formData.get("thumbnail");
+  const pdfFile = formData.get("pdf");
 
-    if (!description || !skillsInput) {
-      return { success: false, message: "모든 필드를 입력해주세요." };
-    }
-
-    const skills = skillsInput
-      .split(",")
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
-
-    if (skills.length === 0) {
-      return {
-        success: false,
-        message: "최소 1개 이상의 기술을 입력해주세요.",
-      };
-    }
-
-    //* 3. 파일 저장 (있는 경우만)
-    const imagePath = "/resume/profile.jpg";
-    const pdfPath = "/resume/resume.pdf";
-
-    if (imageFile && imageFile.size > 0) {
-      if (!allowedImageMimeTypes.includes(imageFile.type)) {
-        return {
-          success: false,
-          message: "프로필 이미지는 jpg 또는 PNG만 업로드할 수 있습니다.",
-        };
-      }
-      await updateFile("profile.jpg", imageFile);
-    }
-
-    if (pdfFile && pdfFile.size > 0) {
-      if (!pdfFile.type || pdfFile.type !== "application/pdf") {
-        return {
-          success: false,
-          message: "이력서는 PDF 파일만 업로드할 수 있습니다.",
-        };
-      }
-      await updateFile("resume.pdf", pdfFile);
-    }
-
-    //* 4. 새로운 데이터 생성 (기존 데이터는 무시)
-    const newData: ResumeData = {
-      description,
-      skills,
-      imagePath,
-      pdfPath,
-    };
-
-    //* 6. GitHub에 업데이트
-    const gitHubResult = await updateFile("resume.json", newData);
-    if (!gitHubResult.success) {
-      return {
-        success: false,
-        message: gitHubResult.message || "GitHub 업데이트에 실패했습니다.",
-      };
-    }
-
-    //* 7. 캐시 재검증
-    revalidatePath("/");
-    revalidatePath("/admin");
-
-    return { success: true, message: "레주메가 저장되었습니다." };
-  } catch (error) {
-    console.error("Resume update error:", error);
-    return {
-      success: false,
-      message: "저장 중 오류가 발생했습니다.",
-    };
+  if (!description || !skillsInput) {
+    return { success: false, message: "모든 필드를 입력해주세요." };
   }
+
+  const skills = skillsInput
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  if (skills.length === 0) {
+    return { success: false, message: "최소 1개 이상의 기술을 입력해주세요." };
+  }
+
+  //* 3. 파일 검증 (업로드된 경우에만)
+  const changes: FileChange[] = [];
+
+  if (imageFile instanceof File && imageFile.size > 0) {
+    if (!ALLOWED_IMAGE_TYPES.includes(imageFile.type)) {
+      return {
+        success: false,
+        message: "프로필 이미지는 JPG 또는 PNG만 업로드할 수 있습니다.",
+      };
+    }
+    changes.push({ path: publicFilePath(RESUME_IMAGE_URL), content: imageFile });
+  }
+
+  if (pdfFile instanceof File && pdfFile.size > 0) {
+    if (pdfFile.type !== "application/pdf") {
+      return { success: false, message: "이력서는 PDF 파일만 업로드할 수 있습니다." };
+    }
+    changes.push({ path: publicFilePath(RESUME_PDF_URL), content: pdfFile });
+  }
+
+  const newData: ResumeData = {
+    description,
+    skills,
+    imagePath: RESUME_IMAGE_URL,
+    pdfPath: RESUME_PDF_URL,
+  };
+  changes.push({ path: RESUME_JSON_PATH, content: newData });
+
+  //* 4. 이미지/PDF/JSON 을 한 커밋으로 반영
+  const result = await commitFiles(changes, "chore(file): Update resume via API");
+  if (!result.success) {
+    return { success: false, message: "GitHub 업데이트에 실패했습니다." };
+  }
+
+  //* 5. 캐시 재검증
+  revalidatePath("/");
+  revalidatePath("/admin");
+
+  return { success: true, message: "레주메가 저장되었습니다." };
 }

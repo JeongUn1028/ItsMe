@@ -1,171 +1,57 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
-import { updateFile } from "@/lib/update-file/updateFile";
+import { commitFiles } from "@/lib/github/commitFiles";
+import {
+  portfolioMarkdownPath,
+  portfolioThumbnailUrl,
+  publicFilePath,
+} from "@/lib/github/contentPaths";
+import { parsePortfolioForm } from "@/lib/portfolio/parsePortfolioForm";
 import { setMarkdownContent } from "@/lib/portfolio/setMarkdownContent";
-import { normalizeDate } from "@/lib/nomalizeDate";
 
-function isRedirectError(error: unknown): boolean {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "digest" in error &&
-    typeof (error as { digest?: unknown }).digest === "string" &&
-    (error as { digest: string }).digest.startsWith("NEXT_REDIRECT")
-  );
-}
+type ActionState = { success: boolean | null; message: string };
 
-//* 새 포트폴리오를 이미지와 함께 저장하고 md 문서를 생성합니다.
+//* 새 포트폴리오의 md 문서와 썸네일을 한 커밋으로 GitHub 에 저장합니다.
 export async function createPortfolio(
-  _prevState: { success: boolean | null; message: string },
+  _prevState: ActionState,
   formData: FormData,
-): Promise<{ success: boolean | null; message: string }> {
-  const isLoggedIn = await getLoginStatus();
+): Promise<ActionState> {
   //* 1. 로그인 여부 확인
-  if (!isLoggedIn) {
+  if (!(await getLoginStatus())) {
     return { success: false, message: "로그인이 필요합니다." };
   }
 
-  try {
-    //* 2. FormData에서 데이터 추출
-    const {
-      title,
-      slug,
-      createdAt,
-      thumbnail,
-      status,
-      githubLink,
-      velogLink,
-      summary,
-      contents,
-      size,
-      tags,
-    } = {
-      title: formData.get("title")?.toString() ?? "",
-      slug: formData.get("slug")?.toString() ?? "",
-      thumbnail: formData.get("thumbnail") as File | null,
-      status: formData.get("status")?.toString() ?? "draft",
-      size: formData.get("size")?.toString() ?? "",
-      tags: formData.get("tags")?.toString() ?? "",
-      githubLink: formData.get("githubLink")?.toString() ?? "",
-      velogLink: formData.get("velogLink")?.toString() ?? "",
-      createdAt: formData.get("createdAt")?.toString() ?? "",
-      summary: formData.get("summary")?.toString() ?? "",
-      contents: formData.get("contents")?.toString() ?? "",
-    };
-
-    if (
-      !title ||
-      !slug ||
-      !summary ||
-      !contents ||
-      !thumbnail ||
-      !githubLink ||
-      !velogLink ||
-      !size ||
-      !tags
-    ) {
-      return { success: false, message: "필수 필드를 입력해주세요." };
-    }
-
-    const normalizedSlug = slug.trim().toLowerCase();
-    if (!/^[a-z0-9-]+$/.test(normalizedSlug)) {
-      return {
-        success: false,
-        message:
-          "프로젝트 명은 영문 소문자, 숫자, 하이픈(-)만 사용할 수 있습니다.",
-      };
-    }
-
-    const tagsArray = tags
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag.length > 0);
-
-    if (tagsArray.length === 0) {
-      return { success: false, message: "태그를 1개 이상 입력해주세요." };
-    }
-
-    const sizeArray = size
-      .split(",")
-      .map((s) => parseInt(s.trim()))
-      .filter((n) => !isNaN(n) && n > 0);
-
-    if (sizeArray.length !== 2) {
-      return {
-        success: false,
-        message: "카드 사이즈는 2,1 처럼 두 개의 숫자로 입력해주세요.",
-      };
-    }
-
-    if (sizeArray.some((n) => n < 1 || n > 3)) {
-      return {
-        success: false,
-        message: "카드 사이즈 값은 1~3 사이여야 합니다.",
-      };
-    }
-
-    const normalizedCreatedAt = normalizeDate(createdAt);
-
-    //* 3. Image 파일 체크
-    //* 3-1. (파일이 없는 경우 에러 반환)
-    if (!thumbnail || thumbnail.size === 0) {
-      return { success: false, message: "썸네일 이미지를 업로드해주세요." };
-    }
-    // * 3-2. (파일 형식 체크)
-    if (
-      !thumbnail.type ||
-      !["image/jpeg", "image/png"].includes(thumbnail.type)
-    ) {
-      return {
-        success: false,
-        message: "썸네일 이미지는 JPG 또는 PNG만 업로드할 수 있습니다.",
-      };
-    }
-
-    // *4 Markdown 파일 생성
-    const markdown = setMarkdownContent({
-      thumbnailPath: `/portfolio/${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
-      size: sizeArray,
-      status,
-      title,
-      tags: tagsArray,
-      createdAt: normalizedCreatedAt,
-      githubLink,
-      velogLink,
-      summary,
-      contents,
-    });
-
-    //* gitHub에 업데이트
-    const response = await Promise.all([
-      updateFile(
-        `${normalizedSlug}.${thumbnail.type === "image/png" ? "png" : "jpg"}`,
-        thumbnail,
-      ),
-      updateFile(`${normalizedSlug}.md`, markdown),
-    ]);
-    console.log("GitHub update response:", response);
-    if (response.some((res) => res.success === false)) {
-      console.error("GitHub update failed:", response);
-      return {
-        success: false,
-        message: "포트폴리오 저장 중 오류가 발생했습니다.",
-      };
-    }
-
-    return {
-      success: true,
-      message: "포트폴리오가 성공적으로 생성되었습니다.",
-    };
-  } catch (error) {
-    if (isRedirectError(error)) {
-      throw error;
-    }
-    console.error("Create portfolio error:", error);
-    return {
-      success: false,
-      message: "포트폴리오 저장 중 오류가 발생했습니다.",
-    };
+  //* 2. 폼 검증
+  const parsed = parsePortfolioForm(formData, { requireThumbnail: true });
+  if (!parsed.ok) {
+    return { success: false, message: parsed.message };
   }
+  const { thumbnail, slug, ...fields } = parsed.values;
+  //* requireThumbnail: true 이므로 여기서 thumbnail 은 항상 존재합니다.
+  if (!thumbnail) {
+    return { success: false, message: "썸네일 이미지를 업로드해주세요." };
+  }
+
+  //* 3. Markdown 생성
+  const thumbnailUrl = portfolioThumbnailUrl(slug, thumbnail.type);
+  const markdown = setMarkdownContent({ ...fields, thumbnailPath: thumbnailUrl });
+
+  //* 4. 썸네일 + md 를 하나의 커밋으로 반영 (하나만 반영되는 상태를 막기 위해)
+  const result = await commitFiles(
+    [
+      { path: publicFilePath(thumbnailUrl), content: thumbnail },
+      { path: portfolioMarkdownPath(slug), content: markdown },
+    ],
+    `chore(file): Create portfolio ${slug} via API`,
+  );
+  if (!result.success) {
+    return { success: false, message: "포트폴리오 저장 중 오류가 발생했습니다." };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/admin");
+
+  return { success: true, message: "포트폴리오가 성공적으로 생성되었습니다." };
 }

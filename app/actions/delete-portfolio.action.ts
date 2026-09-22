@@ -1,7 +1,12 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { getLoginStatus } from "@/lib/auth/getLoginStatus";
-import { deletePortfolio } from "@/lib/portfolio/deletePortfolio";
+import { commitFiles } from "@/lib/github/commitFiles";
+import {
+  portfolioMarkdownPath,
+  publicFilePath,
+} from "@/lib/github/contentPaths";
 
 export async function deletePortfolioAction(
   _prevState: { success: boolean; message: string },
@@ -19,18 +24,21 @@ export async function deletePortfolioAction(
     return { success: false, message: "로그인이 필요합니다." };
   }
 
-  try {
-    const deleteResult = await deletePortfolio(slug, thumbnail);
-    if (!deleteResult.success) {
-      return { success: false, message: deleteResult.message };
-    }
+  //* md 파일과 썸네일을 한 커밋으로 함께 삭제합니다.
+  const result = await commitFiles(
+    [
+      { path: portfolioMarkdownPath(slug), delete: true },
+      { path: publicFilePath(thumbnail), delete: true },
+    ],
+    `chore(file): Delete portfolio ${slug} via API`,
+  );
 
-    return {
-      success: true,
-      message: "포트폴리오가 성공적으로 삭제되었습니다.",
-    };
-  } catch (error) {
-    console.error("포트폴리오 삭제 중 오류:", error);
+  if (!result.success) {
     return { success: false, message: "포트폴리오 삭제에 실패했습니다." };
   }
+
+  revalidatePath("/");
+  revalidatePath("/admin");
+
+  return { success: true, message: "포트폴리오가 성공적으로 삭제되었습니다." };
 }
