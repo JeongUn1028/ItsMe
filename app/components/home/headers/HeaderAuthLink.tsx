@@ -10,7 +10,6 @@ export default function HeaderAuthLink() {
   useEffect(() => {
     const fetchLoginStatus = async () => {
       const status = await fetch("/api/login/status").then((res) => res.json());
-      console.log(status);
       setIsLoggedIn(status.isLoggedIn);
     };
 

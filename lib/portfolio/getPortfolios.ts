@@ -1,9 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { getSlugFromFileName } from "./getSlugFromFileName";
-import { getRawFrontmatter } from "./getRawFrontmatter";
-import type { Portfolio } from "../types/portfilioTypes";
-import { getRawContents } from "./getRawContents";
+import { parseMarkdownFile } from "./parseMarkdownFile";
+import type { Portfolio } from "../types/portfolioTypes";
 
 const DEFAULT_PORTFOLIO_DIRECTORY = path.join(
   process.cwd(),
@@ -21,24 +20,23 @@ export const getPortfolios = (
     .filter((fileName) => fileName.endsWith(".md"));
 
   //* 각 md 파일에서 frontmatter와 contents를 읽어서 프로젝트 객체로 변환
-  const portfolio: Portfolio[] = fileNames.map((fileName) => {
-    const filePath = path.join(portfolioDirectory, fileName);
-    const rawFrontMatterData = getRawFrontmatter(filePath);
-    const rawContents = getRawContents(filePath);
+  return fileNames.map((fileName) => {
+    const { frontmatter, contents } = parseMarkdownFile(
+      path.join(portfolioDirectory, fileName),
+    );
 
     return {
       slug: getSlugFromFileName(fileName),
-      thumbnail: rawFrontMatterData.thumbnail ?? "",
-      size: rawFrontMatterData.size ?? [1, 1],
-      status: rawFrontMatterData.status ?? "draft",
-      title: rawFrontMatterData.title ?? "",
-      tags: rawFrontMatterData.tags ?? [],
-      createdAt: rawFrontMatterData.createdAt ?? "",
-      githubLink: rawFrontMatterData.githubLink ?? "",
-      velogLink: rawFrontMatterData.velogLink ?? "",
-      summary: rawFrontMatterData.summary ?? "",
-      contents: rawContents,
+      thumbnail: frontmatter.thumbnail ?? "",
+      size: frontmatter.size ?? [1, 1],
+      status: frontmatter.status ?? "draft",
+      title: frontmatter.title ?? "",
+      tags: frontmatter.tags ?? [],
+      createdAt: frontmatter.createdAt ?? "",
+      githubLink: frontmatter.githubLink ?? "",
+      velogLink: frontmatter.velogLink ?? "",
+      summary: frontmatter.summary ?? "",
+      contents,
     };
   });
-  return portfolio;
 };

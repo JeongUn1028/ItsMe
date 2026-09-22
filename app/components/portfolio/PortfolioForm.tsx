@@ -2,7 +2,7 @@
 import style from "./PortfolioForm.module.css";
 import { createPortfolio } from "@/app/actions/create-portfolio.action";
 import { editPortfolio } from "@/app/actions/edit-portfolio.action";
-import { Portfolio } from "@/lib/types/portfilioTypes";
+import { Portfolio } from "@/lib/types/portfolioTypes";
 import Link from "next/link";
 import { useActionState } from "react";
 import ImageUpload from "../common/ImageUpload";
@@ -25,6 +25,12 @@ export default function PortfolioForm({
     <form className={style.form} action={formAction}>
       <div className={style.metaSection}>
         <ImageUpload initialUrl={portfolio ? portfolio.thumbnail : undefined} />
+        {/* 수정 시 새 썸네일을 올리지 않으면 서버에서 이 경로를 그대로 유지합니다. */}
+        <input
+          type="hidden"
+          name="existingThumbnail"
+          value={portfolio?.thumbnail ?? ""}
+        />
         <div className={style.grid}>
           {/* 제목 */}
           <label className={style.fieldGroup}>

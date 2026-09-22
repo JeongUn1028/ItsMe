@@ -2,7 +2,7 @@ import {
   Portfolio,
   SpanSize,
   TabletSpanSize,
-} from "@/lib/types/portfilioTypes";
+} from "@/lib/types/portfolioTypes";
 
 const desktopColSpanMap: Record<SpanSize, string> = {
   1: "xl:col-span-1",

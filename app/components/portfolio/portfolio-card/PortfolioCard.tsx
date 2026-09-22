@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import type { Portfolio } from "@/lib/types/portfilioTypes";
+import type { Portfolio } from "@/lib/types/portfolioTypes";
 import { getSpanClasses } from "@/lib/portfolio/portfolio-card-span";
 import style from "./PortfolioCard.module.css";
 export default function PortfolioCard(portfolio: Portfolio) {
