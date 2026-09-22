@@ -1,0 +1,33 @@
+import { expect, test } from "@playwright/test";
+import { gotoHome } from "./helpers";
+
+test("포트폴리오 카드는 키보드로 열고 Esc 로 닫을 수 있다", async ({
+  page,
+}) => {
+  await gotoHome(page);
+
+  const card = page.locator('a[href^="/portfolio/"]').first();
+  const href = await card.getAttribute("href");
+  await card.focus();
+  await page.keyboard.press("Enter");
+
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
+  await expect(page).toHaveURL(new RegExp(`${href}$`));
+  //* 열린 직후 포커스가 다이얼로그 안으로 이동해야 합니다.
+  await expect(dialog).toBeFocused();
+
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(page).toHaveURL(/\/$/);
+});
+
+test("URL 로 직접 진입하면 모달이 아닌 페이지로 렌더된다", async ({
+  page,
+}) => {
+  await page.goto("/portfolio/itsme");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { level: 1, name: /포트폴리오/ }),
+  ).toBeVisible();
+});

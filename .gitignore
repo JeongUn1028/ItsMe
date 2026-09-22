@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+/.next-dev/
 /out/
 
 # production
@@ -42,3 +43,7 @@ next-env.d.ts
 
 # claude code 개인 설정
 .claude/settings.local.json
+
+# playwright
+/test-results/
+/playwright-report/
