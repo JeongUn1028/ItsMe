@@ -15,7 +15,7 @@
 
 .row {
   @apply flex h-full flex-row items-center justify-center gap-2 rounded-full px-3 no-underline;
-  color: #757575;
+  color: var(--text-3);
   transition:
     color var(--dur-base) var(--ease-out),
     background var(--dur-base) var(--ease-out),

@@ -17,7 +17,7 @@ export default function HeaderAuthLink() {
   }, []);
 
   return (
-    <Link href={isLoggedIn ? "/admin" : "/login"} className={style.adminLink}>
+    <Link href={isLoggedIn ? "/admin" : "/login"} className={`pill pill-neutral ${style.adminLink}`}>
       {isLoggedIn ? "Admin" : "Login"}
     </Link>
   );

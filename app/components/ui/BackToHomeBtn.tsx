@@ -10,7 +10,11 @@ export default function BackToHomeButton({
   const router = useRouter();
 
   return (
-    <button type="button" className={className} onClick={() => router.back()}>
+    <button
+      type="button"
+      className={`pill pill-neutral ${className ?? ""}`}
+      onClick={() => router.back()}
+    >
       {"<- Back to Home"}
     </button>
   );

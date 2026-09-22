@@ -66,11 +66,20 @@ export default function LogoutButton() {
         <div
           role="status"
           aria-live="polite"
-          className={`fixed right-4 top-4 z-50 rounded-xl border px-4 py-3 text-sm font-medium shadow-lg backdrop-blur ${
+          className="fixed right-4 top-4 z-50 rounded-[var(--radius-md)] border px-4 py-3 text-sm font-medium shadow-lg backdrop-blur"
+          style={
             toast.type === "success"
-              ? "border-emerald-200 bg-emerald-50/95 text-emerald-900"
-              : "border-rose-200 bg-rose-50/95 text-rose-900"
-          }`}
+              ? {
+                  background: "var(--success-bg)",
+                  borderColor: "var(--success-border)",
+                  color: "var(--success-fg)",
+                }
+              : {
+                  background: "var(--danger-bg)",
+                  borderColor: "var(--danger-border)",
+                  color: "var(--danger-fg)",
+                }
+          }
         >
           {toast.message}
         </div>

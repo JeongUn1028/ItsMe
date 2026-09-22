@@ -23,6 +23,7 @@ export default function Resume() {
             alt="profile image"
             width={220}
             height={220}
+            priority
             className={style.image}
           />
         </div>
@@ -42,7 +43,7 @@ export default function Resume() {
               href={pdfPath}
               target="_blank"
               rel="noopener noreferrer"
-              className={style.resumeLink}
+              className={`pill ${style.resumeLink}`}
             >
               Resume PDF 보기
             </a>
@@ -51,10 +52,16 @@ export default function Resume() {
       </div>
       <button
         type="button"
-        className={style.toggleButton}
+        className={`pill ${style.toggleButton}`}
         onClick={() => setIsShowingDescription((prev) => !prev)}
       >
-        {isShowingDescription ? "사진 보기" : "소개글 보기"}
+        {/* 데스크톱: 사진 ↔ 소개글 전환 / 모바일: 소개글 접기 ↔ 더 보기. 라벨은 CSS 로 화면 크기에 맞게 골라 보여줍니다. */}
+        <span className={style.labelDesktop}>
+          {isShowingDescription ? "사진 보기" : "소개글 보기"}
+        </span>
+        <span className={style.labelMobile}>
+          {isShowingDescription ? "접기" : "더 보기"}
+        </span>
       </button>
     </div>
   );

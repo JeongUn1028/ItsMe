@@ -1,32 +1,18 @@
 @reference "../../../globals.css";
 
 .container {
-  @apply mx-auto flex w-full max-w-[1600px] flex-row items-center justify-between gap-3 p-4;
+  @apply mx-auto flex w-full max-w-[1600px] flex-row items-center justify-between gap-3 pb-4;
 }
 
 .title {
-  @apply min-w-0 text-[1.75rem] font-bold leading-none sm:text-4xl;
-  word-break: break-word;
+  @apply min-w-0 font-bold leading-none;
+  /* 좁은 화면에서 도메인이 두 줄로 꺾이지 않도록 뷰포트에 비례 */
+  font-size: clamp(1.25rem, 5.5vw, 2.25rem);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .adminLink {
-  @apply rounded-full px-3 py-1 text-sm font-medium;
-  background: rgba(255, 255, 255, 0.58);
-  color: rgba(46, 33, 19, 0.88);
-  transition:
-    background var(--dur-base) var(--ease-out),
-    transform var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out);
-}
-
-.adminLink:hover,
-.adminLink:focus-visible {
-  background: rgba(255, 255, 255, 0.85);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(94, 64, 42, 0.12);
-}
-
-.adminLink:active {
-  transform: translateY(0);
-  transition-duration: var(--dur-fast);
+  @apply px-3 py-1 text-sm;
+  font-weight: 500;
 }

@@ -1,4 +1,4 @@
-import style from "./WritePortfolioForm.module.css";
+import style from "./PortfolioFormPanel.module.css";
 import PortfolioForm from "@/app/components/portfolio/PortfolioForm";
 
 export default function WritePortfolioForm() {

@@ -1,9 +1,9 @@
 @reference "../../../globals.css";
 
 .card {
-  @apply flex h-full w-full overflow-hidden p-4 rounded-[10px] text-inherit no-underline;
+  @apply flex h-full w-full overflow-hidden p-4 rounded-[var(--radius-sm)] text-inherit no-underline;
   gap: 0.8rem;
-  /* transition-all 대신 실제로 바뀌는 속성만 지정해 불필요한 리페인트를 줄입니다. */
+  /* transition 대신 실제로 바뀌는 속성만 지정해 불필요한 리페인트를 줄입니다. */
   transition:
     transform var(--dur-base) var(--ease-out),
     background var(--dur-base) var(--ease-out),
@@ -44,7 +44,7 @@
 }
 
 .thumbnailWrap {
-  @apply w-full shrink-0 overflow-hidden rounded-[10px];
+  @apply w-full shrink-0 overflow-hidden rounded-[var(--radius-sm)];
   flex-basis: 52%;
 }
 

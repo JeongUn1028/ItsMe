@@ -15,14 +15,17 @@ describe("Resume", () => {
     expect(pdfLink.getAttribute("href")).toMatch(/\.pdf$/);
   });
 
-  test("토글 버튼을 누르면 라벨이 사진 보기 / 소개글 보기로 바뀐다", () => {
+  test("토글 버튼은 데스크톱/모바일 라벨을 모두 갖고, 누르면 둘 다 바뀐다", () => {
+    //* jsdom 에는 미디어쿼리가 없어 두 라벨이 모두 DOM 에 존재합니다. (실제 화면에서는 CSS 가 하나만 보여줌)
     render(<Resume />);
 
-    const button = screen.getByRole("button", { name: "소개글 보기" });
-    fireEvent.click(button);
-    expect(screen.getByRole("button", { name: "사진 보기" })).toBeDefined();
+    const button = screen.getByRole("button");
+    expect(button.textContent).toBe("소개글 보기더 보기");
 
     fireEvent.click(button);
-    expect(screen.getByRole("button", { name: "소개글 보기" })).toBeDefined();
+    expect(button.textContent).toBe("사진 보기접기");
+
+    fireEvent.click(button);
+    expect(button.textContent).toBe("소개글 보기더 보기");
   });
 });

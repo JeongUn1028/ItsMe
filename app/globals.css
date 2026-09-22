@@ -1,12 +1,61 @@
 @import "tailwindcss";
 
 :root {
+  /* ---- 색상 토큰 ----
+     컴포넌트 CSS 는 리터럴 색 대신 이 토큰만 사용합니다.
+     (다크 모드는 이 블록의 값만 바꿔서 구현합니다.) */
   --background: #f6f0e4;
   --foreground: #1d160f;
   --background-soft: rgba(255, 255, 255, 0.72);
+
+  /* 텍스트 계층: 1 = 본문/제목, 2 = 보조, 3 = 캡션/메타 */
+  --text-1: var(--foreground);
+  --text-2: rgba(46, 35, 24, 0.86);
+  --text-3: rgba(79, 60, 36, 0.62);
+
+  /* 글래스 머티리얼 */
+  --glass-bg: rgba(255, 255, 255, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.68);
+  --glass-highlight: rgba(255, 255, 255, 0.8);
+  --glass-shadow: rgba(180, 150, 100, 0.1);
+  --surface: rgb(255, 248, 240); /* 모달/패널처럼 불투명한 면 */
+  --separator: rgba(130, 102, 64, 0.14);
+
+  /* 캡슐 버튼 (따뜻한 톤 / 중립 톤) */
+  --pill-border: rgba(144, 114, 74, 0.36);
+  --pill-bg: rgba(250, 241, 227, 0.78);
+  --pill-bg-hover: rgba(255, 248, 236, 0.95);
+  --pill-fg: rgba(78, 56, 31, 0.92);
+  --pill-neutral-bg: rgba(255, 255, 255, 0.58);
+  --pill-neutral-bg-hover: rgba(255, 255, 255, 0.85);
+  --pill-neutral-fg: rgba(46, 33, 19, 0.88);
+
+  /* 입력 필드 */
+  --field-bg: rgba(255, 255, 255, 0.82);
+  --field-fg: rgba(46, 35, 24, 0.9);
+
+  /* 상태 색 (성공/위험) — 관리자 알림, 토스트, 삭제 버튼이 공유 */
+  --success-bg: rgba(230, 249, 238, 0.85);
+  --success-border: rgba(44, 128, 84, 0.32);
+  --success-fg: rgba(29, 98, 63, 0.95);
+  --danger-bg: rgba(255, 238, 238, 0.92);
+  --danger-border: rgba(179, 59, 59, 0.28);
+  --danger-fg: rgba(142, 32, 32, 0.92);
+
   --glow-mint: rgba(150, 228, 209, 0.4);
   --glow-apricot: rgba(244, 182, 124, 0.32);
   --glow-cream: rgba(255, 247, 232, 0.9);
+
+  /* ---- 형태 토큰 ---- */
+  --radius-sm: 12px; /* 썸네일, 입력 필드 */
+  --radius-md: 16px; /* 리스트 아이템, 작은 카드 */
+  --radius-lg: 20px; /* 글래스 카드, 모달 */
+  --radius-xl: 28px; /* 히어로 패널 */
+  --shadow-pill: 0 6px 14px rgba(94, 64, 42, 0.12);
+
+  /* 페이지 좌우 여백: 모바일에서 화면을 너무 많이 잃지 않도록 뷰포트에 비례 */
+  --page-gutter: clamp(0.75rem, 3vw, 2rem);
+
   /* 모션 토큰: 모든 전환/애니메이션이 같은 리듬을 쓰도록 여기서만 정의합니다. */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -14,14 +63,14 @@
   --dur-base: 240ms;
   --dur-slow: 520ms;
   --focus-ring: rgba(94, 64, 42, 0.55);
-  padding: 2rem;
 }
 
-/* viewport-fit=cover 로 노치/홈 인디케이터 영역까지 그리므로, 콘텐츠는 safe-area 안쪽에 둡니다. */
+/* 페이지 여백 + safe-area (viewport-fit=cover 로 노치/홈 인디케이터 영역까지 그리므로) */
 body {
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: var(--page-gutter);
+  padding-bottom: calc(var(--page-gutter) + env(safe-area-inset-bottom));
+  padding-left: calc(var(--page-gutter) + env(safe-area-inset-left));
+  padding-right: calc(var(--page-gutter) + env(safe-area-inset-right));
 }
 
 @theme inline {
@@ -96,14 +145,101 @@ main {
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.42);
+  background: var(--glass-bg);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
   box-shadow:
-    0 4px 24px rgba(180, 150, 100, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 4px 24px var(--glass-shadow),
+    inset 0 1px 0 var(--glass-highlight);
+}
+
+/* ---- 공통 컴포넌트 ---- */
+
+/* 캡슐 버튼/링크. 색은 토큰, 크기는 사용하는 쪽에서 padding/font-size 로 조절합니다. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  border-radius: 999px;
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  color: var(--pill-fg);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.pill:hover:not(:disabled),
+.pill:focus-visible {
+  background: var(--pill-bg-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-pill);
+}
+
+.pill:active:not(:disabled) {
+  transform: translateY(0);
+  transition-duration: var(--dur-fast);
+}
+
+.pill:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pill-neutral {
+  border-color: transparent;
+  background: var(--pill-neutral-bg);
+  color: var(--pill-neutral-fg);
+}
+
+.pill-neutral:hover:not(:disabled),
+.pill-neutral:focus-visible {
+  background: var(--pill-neutral-bg-hover);
+}
+
+.pill-danger {
+  border-color: var(--danger-border);
+  background: var(--danger-bg);
+  color: var(--danger-fg);
+}
+
+.pill-danger:hover:not(:disabled),
+.pill-danger:focus-visible {
+  background: var(--danger-bg);
+  box-shadow: 0 6px 14px rgba(142, 32, 32, 0.12);
+}
+
+/* 스켈레톤 쉬머. CSS Modules 는 @keyframes 이름을 파일별로 스코프하므로 전역에 한 번만 둡니다. */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.72),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(100%);
+  }
 }
 
 /* ---- 공통 인터랙션 ---- */

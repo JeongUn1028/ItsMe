@@ -9,8 +9,8 @@
 }
 
 .modal {
-  @apply mx-auto w-full max-w-[860px] overflow-hidden rounded-[18px];
-  background: rgb(255, 248, 240);
+  @apply mx-auto w-full max-w-[860px] overflow-hidden rounded-[var(--radius-lg)];
+  background: var(--surface);
   border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow:
     0 20px 52px rgba(94, 72, 34, 0.12),
@@ -26,7 +26,7 @@
 
 .header {
   @apply flex flex-col gap-4 border-b px-5 py-5 sm:px-8;
-  border-color: rgba(130, 102, 64, 0.16);
+  border-color: var(--separator);
   background: linear-gradient(
     180deg,
     rgb(255, 255, 255) 0%,
@@ -42,62 +42,11 @@
   @apply flex flex-wrap items-center gap-2;
 }
 
-.actionSkeletonGroup {
-  @apply flex flex-wrap items-center gap-2;
-}
-
-/* 상단 액션 버튼(뒤로가기 / 수정 / 삭제)이 같은 hover 리듬을 공유합니다. */
+/* 상단 액션 버튼은 전역 .pill 을 사용하고, 여기서는 크기만 정합니다. */
 .backLink,
-.editLink {
-  @apply w-fit rounded-full px-3 py-1 text-sm font-medium;
-  background: rgba(255, 255, 255, 0.58);
-  color: rgba(46, 33, 19, 0.88);
-  transition:
-    background var(--dur-base) var(--ease-out),
-    transform var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out);
-}
-
-.backLink:hover,
-.backLink:focus-visible,
-.editLink:hover,
-.editLink:focus-visible {
-  background: rgba(255, 255, 255, 0.85);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(94, 64, 42, 0.12);
-}
-
-.backLink:active,
-.editLink:active {
-  transform: translateY(0);
-  transition-duration: var(--dur-fast);
-}
-
-.deleteForm {
-  @apply contents;
-}
-
+.editLink,
 .deleteButton {
-  @apply w-fit rounded-full px-3 py-1 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60;
-  border: 1px solid rgba(179, 59, 59, 0.22);
-  background: rgba(255, 238, 238, 0.92);
-  color: rgba(142, 32, 32, 0.92);
-  transition:
-    background var(--dur-base) var(--ease-out),
-    transform var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out);
-}
-
-.deleteButton:hover:not(:disabled),
-.deleteButton:focus-visible {
-  background: rgba(255, 228, 228, 0.98);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(142, 32, 32, 0.12);
-}
-
-.deleteButton:active:not(:disabled) {
-  transform: translateY(0);
-  transition-duration: var(--dur-fast);
+  @apply px-3 py-1 text-sm;
 }
 
 .title {
@@ -123,7 +72,7 @@
 
 .meta {
   @apply text-xs font-medium;
-  color: rgba(70, 55, 40, 0.74);
+  color: var(--text-3);
 }
 
 .divider {

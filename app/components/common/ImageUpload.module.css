@@ -3,7 +3,7 @@
 /* 컴포넌트 루트 — 하단 구분선과 여백 */
 .thumbnailSection {
   @apply border-b pb-6;
-  border-color: rgba(130, 102, 64, 0.12);
+  border-color: var(--separator);
 }
 
 /* 라벨 + 업로드 영역 세로 배치 */
@@ -13,7 +13,7 @@
 
 .label {
   @apply text-sm font-semibold;
-  color: rgba(46, 33, 19, 0.88);
+  color: var(--pill-neutral-fg);
 }
 
 /* 드래그 앤 드롭 외곽 보더 영역 */

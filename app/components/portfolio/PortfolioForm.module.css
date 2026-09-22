@@ -7,7 +7,7 @@
 /* 메타데이터 섹션 */
 .metaSection {
   @apply border-b pb-6;
-  border-color: rgba(130, 102, 64, 0.12);
+  border-color: var(--separator);
 }
 
 /* 콘텐츠 섹션 */
@@ -25,13 +25,13 @@
 
 .label {
   @apply text-sm font-semibold;
-  color: rgba(46, 33, 19, 0.88);
+  color: var(--pill-neutral-fg);
 }
 
 .input {
   @apply w-full rounded-md border-0 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-offset-0;
-  background: rgba(255, 255, 255, 0.82);
-  color: rgba(46, 35, 24, 0.9);
+  background: var(--field-bg);
+  color: var(--field-fg);
   border-color: transparent;
 }
 
@@ -42,8 +42,8 @@
 
 .select {
   @apply w-full rounded-md border-0 px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-offset-0;
-  background: rgba(255, 255, 255, 0.82);
-  color: rgba(46, 35, 24, 0.9);
+  background: var(--field-bg);
+  color: var(--field-fg);
   cursor: pointer;
   appearance: none;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -60,13 +60,13 @@
 
 .select option {
   background: rgba(255, 248, 240, 1);
-  color: rgba(46, 35, 24, 0.9);
+  color: var(--field-fg);
 }
 
 .textarea {
   @apply min-h-24 w-full rounded-md border-0 px-3 py-2 text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-offset-0;
-  background: rgba(255, 255, 255, 0.82);
-  color: rgba(46, 35, 24, 0.9);
+  background: var(--field-bg);
+  color: var(--field-fg);
 }
 
 .contentsArea {
@@ -75,12 +75,12 @@
 
 .actions {
   @apply mt-8 flex flex-wrap items-center gap-2 border-t pt-6;
-  border-color: rgba(130, 102, 64, 0.12);
+  border-color: var(--separator);
 }
 
 .primaryButton {
   @apply inline-flex w-fit items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition-colors;
-  border: 1px solid rgba(144, 114, 74, 0.36);
+  border: 1px solid var(--pill-border);
   background: rgba(250, 241, 227, 0.92);
   color: rgba(78, 56, 31, 0.96);
 }
@@ -113,7 +113,7 @@
 }
 
 .cancelLink:hover {
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--field-bg);
 }
 
 .messageWrap {
@@ -130,25 +130,25 @@
 }
 
 .successMessage {
-  background: rgba(230, 249, 238, 0.75);
-  border-color: rgba(44, 128, 84, 0.32);
-  color: rgba(29, 98, 63, 0.95);
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: var(--success-fg);
 }
 
 .successMessage .messageIcon {
-  background: rgba(44, 128, 84, 0.16);
-  color: rgba(29, 98, 63, 0.95);
+  background: var(--success-border);
+  color: var(--success-fg);
 }
 
 .errorMessage {
-  background: rgba(255, 241, 236, 0.8);
-  border-color: rgba(178, 85, 63, 0.34);
-  color: rgba(132, 50, 31, 0.95);
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-fg);
 }
 
 .errorMessage .messageIcon {
-  background: rgba(178, 85, 63, 0.16);
-  color: rgba(132, 50, 31, 0.95);
+  background: var(--danger-border);
+  color: var(--danger-fg);
 }
 
 @media (max-width: 640px) {

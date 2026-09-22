@@ -12,21 +12,6 @@
   @apply text-xl font-semibold;
 }
 
-.subtitle {
-  @apply text-sm text-gray-600;
-}
-
-.backLink {
-  @apply inline-flex items-center justify-center rounded-full px-3 py-1 text-[0.8rem] font-semibold transition-colors;
-  border: 1px solid rgba(144, 114, 74, 0.36);
-  background: rgba(250, 241, 227, 0.78);
-  color: rgba(78, 56, 31, 0.92);
-}
-
-.backLink:hover {
-  background: rgba(255, 248, 236, 0.95);
-}
-
 .form {
   @apply col-span-1 flex h-full w-full flex-col gap-6 p-6;
 }
@@ -35,22 +20,18 @@
   @apply flex flex-col gap-2;
 }
 
-.fieldHeader {
-  @apply flex items-center justify-between;
-}
-
 .label {
   @apply text-sm font-semibold;
 }
 
 .textarea {
-  @apply min-h-24 w-full rounded-md border-0 px-3 py-2 font-sans text-sm bg-white backdrop-blur focus:outline-none focus:ring-1 focus:ring-offset-0;
-  color: rgba(46, 35, 24, 0.9);
+  @apply min-h-24 w-full rounded-md border-0 px-3 py-2 font-sans text-sm focus:outline-none focus:ring-1 focus:ring-offset-0;
+  color: var(--field-fg);
 }
 
 .input {
-  @apply w-full rounded-md border-0 px-3 py-2 font-sans text-sm bg-white backdrop-blur focus:outline-none focus:ring-1 focus:ring-offset-0;
-  color: rgba(46, 35, 24, 0.9);
+  @apply w-full rounded-md border-0 px-3 py-2 font-sans text-sm focus:outline-none focus:ring-1 focus:ring-offset-0;
+  color: var(--field-fg);
 }
 
 .hint {
@@ -63,24 +44,24 @@
 
 .saveButton {
   @apply inline-flex w-fit rounded-full px-3 py-1 text-[0.8rem] font-semibold transition-colors;
-  border: 1px solid rgba(144, 114, 74, 0.36);
-  background: rgba(250, 241, 227, 0.78);
-  color: rgba(78, 56, 31, 0.92);
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  color: var(--pill-fg);
 }
 
 .saveButton:hover {
-  background: rgba(255, 248, 236, 0.95);
+  background: var(--pill-bg-hover);
 }
 
 .cancelLink {
   @apply inline-flex w-fit rounded-full px-3 py-1 text-[0.8rem] font-semibold transition-colors;
-  border: 1px solid rgba(144, 114, 74, 0.36);
-  background: rgba(250, 241, 227, 0.78);
-  color: rgba(78, 56, 31, 0.92);
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  color: var(--pill-fg);
 }
 
 .cancelLink:hover {
-  background: rgba(255, 248, 236, 0.95);
+  background: var(--pill-bg-hover);
 }
 
 .alert {
@@ -88,15 +69,15 @@
 }
 
 .alertSuccess {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: rgba(22, 101, 52, 0.92);
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-fg);
 }
 
 .alertError {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: rgba(127, 29, 29, 0.92);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  color: var(--danger-fg);
 }
 
 .uploadSection {
@@ -104,7 +85,7 @@
 }
 
 .uploadArea {
-  @apply relative w-full overflow-hidden rounded-lg border-2 border-dashed transition-all min-h-[200px] flex items-center justify-center;
+  @apply relative w-full overflow-hidden rounded-lg border-2 border-dashed transition min-h-[200px] flex items-center justify-center;
   border-color: rgba(144, 114, 74, 0.3);
   background: rgba(255, 248, 236, 0.4);
 }
@@ -138,40 +119,13 @@
 
 .uploadButton {
   @apply inline-flex rounded-full px-3 py-1.5 text-[0.8rem] font-semibold transition-colors cursor-pointer;
-  border: 1px solid rgba(144, 114, 74, 0.36);
-  background: rgba(250, 241, 227, 0.78);
-  color: rgba(78, 56, 31, 0.92);
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  color: var(--pill-fg);
 }
 
 .uploadButton:hover {
-  background: rgba(255, 248, 236, 0.95);
-}
-
-.fileName {
-  @apply text-xs font-medium flex items-center gap-1;
-  color: rgba(78, 56, 31, 0.8);
-}
-
-.imageUploadWrapper {
-  @apply flex gap-6 items-start;
-}
-
-.uploadAreaWrapper {
-  @apply flex-1 flex flex-col gap-3;
-}
-
-.previewContainer {
-  @apply relative flex-shrink-0 overflow-hidden rounded-lg;
-  width: 200px;
-  height: 200px;
-  border: 1px solid rgba(144, 114, 74, 0.2);
-  background: rgba(255, 248, 236, 0.5);
-}
-
-.previewImage {
-  @apply object-cover;
-  width: 200px;
-  height: 200px;
+  background: var(--pill-bg-hover);
 }
 
 .pdfPreview {
@@ -202,35 +156,15 @@
   color: rgba(78, 56, 31, 0.6);
 }
 
-.pdfActions {
-  @apply flex gap-2;
-}
-
 .pdfButton {
   @apply inline-flex rounded-full px-2 py-1 text-[0.75rem] font-semibold transition-colors cursor-pointer;
-  border: 1px solid rgba(144, 114, 74, 0.36);
-  background: rgba(250, 241, 227, 0.78);
-  color: rgba(78, 56, 31, 0.92);
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  color: var(--pill-fg);
 }
 
 .pdfButton:hover {
-  background: rgba(255, 248, 236, 0.95);
-}
-
-.currentPdfLink {
-  @apply text-[0.75rem] font-semibold transition-colors;
-  color: rgba(78, 56, 31, 0.92);
-  border-bottom: 1px solid rgba(78, 56, 31, 0.3);
-}
-
-.currentPdfLink:hover {
-  color: rgba(78, 56, 31, 1);
-  border-bottom-color: rgba(78, 56, 31, 0.6);
-}
-
-.noFile {
-  @apply text-xs;
-  color: rgba(78, 56, 31, 0.5);
+  background: var(--pill-bg-hover);
 }
 
 @media (max-width: 768px) {

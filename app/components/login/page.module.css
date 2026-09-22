@@ -9,7 +9,7 @@
 }
 
 .intro {
-  @apply hidden flex-col justify-between rounded-[28px] p-8 lg:flex;
+  @apply hidden flex-col justify-between rounded-[var(--radius-xl)] p-8 lg:flex;
   background:
     linear-gradient(
       150deg,
@@ -29,7 +29,7 @@
 
 .eyebrow {
   @apply text-[0.72rem] font-semibold tracking-[0.28em] uppercase;
-  color: rgba(79, 59, 39, 0.62);
+  color: var(--text-3);
 }
 
 .headline {
@@ -38,12 +38,12 @@
 
 .copy {
   @apply max-w-md text-[0.98rem] leading-7;
-  color: rgba(61, 43, 25, 0.74);
+  color: var(--text-2);
 }
 
 .meta {
   @apply flex items-center gap-3 text-sm;
-  color: rgba(61, 43, 25, 0.58);
+  color: var(--text-3);
 }
 
 .dot {
@@ -65,7 +65,7 @@
 
 .description {
   @apply text-[0.95rem] leading-6;
-  color: rgba(61, 43, 25, 0.7);
+  color: var(--text-2);
 }
 
 .form {
@@ -78,7 +78,7 @@
 
 .label {
   @apply text-[0.78rem] font-semibold tracking-[0.18em] uppercase;
-  color: rgba(79, 59, 39, 0.58);
+  color: var(--text-3);
 }
 
 .input {
@@ -109,7 +109,7 @@
 
 .hint {
   @apply text-sm leading-6;
-  color: rgba(61, 43, 25, 0.56);
+  color: var(--text-3);
 }
 
 .accent {
@@ -122,7 +122,10 @@
 }
 
 .errorMessage {
-  @apply mt-4 rounded-md bg-red-50 p-4 text-sm text-red-800;
+  @apply mt-4 rounded-[var(--radius-sm)] p-4 text-sm;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  color: var(--danger-fg);
 }
 
 .skeletonCard {
@@ -131,14 +134,7 @@
 
 .skeletonLine {
   @apply rounded-xl;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.34) 0%,
-    rgba(255, 255, 255, 0.72) 50%,
-    rgba(255, 255, 255, 0.34) 100%
-  );
-  background-size: 200% 100%;
-  animation: loginShimmer 1.2s ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .skeletonLabel {
@@ -155,16 +151,6 @@
 
 .skeletonHint {
   @apply h-4 w-3/4 rounded-lg;
-}
-
-@keyframes loginShimmer {
-  0% {
-    background-position: 200% 0;
-  }
-
-  100% {
-    background-position: -200% 0;
-  }
 }
 
 @media (max-width: 1023px) {

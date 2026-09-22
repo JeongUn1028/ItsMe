@@ -50,12 +50,12 @@
 
 .dateContainer p {
   @apply text-xs;
-  color: rgba(79, 60, 36, 0.64);
+  color: var(--text-3);
 }
 
 @media (min-width: 640px) {
   .container {
-    @apply gap-2 px-4 py-3;
+    @apply gap-1.5 px-4 py-2.5;
   }
 
   .tag {
@@ -65,6 +65,6 @@
   }
 
   .dateContainer {
-    @apply mt-1;
+    @apply mt-0.5;
   }
 }

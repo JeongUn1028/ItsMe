@@ -1,4 +1,4 @@
-import style from "./LoginSkeleton.module.css";
+import style from "../../login/page.module.css";
 
 export default function LoginSkeleton() {
   return (
@@ -23,38 +23,38 @@ export default function LoginSkeleton() {
           <div className={style.accent}></div>
           <div className={style.cardHeader}>
             <div
-              className={`${style.skeletonLine} ${style.skeletonLabel}`}
+              className={`shimmer ${style.skeletonLine} ${style.skeletonLabel}`}
             ></div>
             <div
-              className={`${style.skeletonLine} ${style.skeletonInput}`}
+              className={`shimmer ${style.skeletonLine} ${style.skeletonInput}`}
             ></div>
           </div>
 
           <div className={style.form}>
             <div className={style.field}>
               <div
-                className={`${style.skeletonLine} ${style.skeletonLabel}`}
+                className={`shimmer ${style.skeletonLine} ${style.skeletonLabel}`}
               ></div>
               <div
-                className={`${style.skeletonLine} ${style.skeletonInput}`}
+                className={`shimmer ${style.skeletonLine} ${style.skeletonInput}`}
               ></div>
             </div>
 
             <div className={style.field}>
               <div
-                className={`${style.skeletonLine} ${style.skeletonLabel}`}
+                className={`shimmer ${style.skeletonLine} ${style.skeletonLabel}`}
               ></div>
               <div
-                className={`${style.skeletonLine} ${style.skeletonInput}`}
+                className={`shimmer ${style.skeletonLine} ${style.skeletonInput}`}
               ></div>
             </div>
 
             <div
-              className={`${style.skeletonLine} ${style.skeletonButton}`}
+              className={`shimmer ${style.skeletonLine} ${style.skeletonButton}`}
             ></div>
           </div>
 
-          <div className={`${style.skeletonLine} ${style.skeletonHint}`}></div>
+          <div className={`shimmer ${style.skeletonLine} ${style.skeletonHint}`}></div>
         </section>
       </div>
     </main>

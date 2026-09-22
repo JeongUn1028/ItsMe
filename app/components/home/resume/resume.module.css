@@ -12,6 +12,15 @@
   @apply hidden;
 }
 
+/* 토글 라벨: 기본(모바일)은 접기/더 보기, 데스크톱은 사진/소개글 */
+.labelDesktop {
+  @apply hidden;
+}
+
+.labelMobile {
+  @apply inline;
+}
+
 .content {
   @apply mt-4 flex min-h-0 flex-1 flex-col items-center justify-start gap-5 sm:flex-row sm:items-stretch sm:justify-between sm:gap-6 xl:mt-0 xl:flex-col xl:items-center xl:justify-center xl:gap-5;
 }
@@ -21,7 +30,7 @@
 }
 
 .image {
-  @apply h-auto rounded-[14px] object-cover sm:w-[62%] sm:max-w-[260px] xl:w-[44%] xl:max-w-[190px];
+  @apply h-auto rounded-[var(--radius-md)] object-cover sm:w-[62%] sm:max-w-[260px] xl:w-[44%] xl:max-w-[190px];
   width: min(calc(100vw - 48px), 180px);
 }
 
@@ -32,7 +41,7 @@
 
 .description {
   @apply min-h-0 w-full flex-1 overflow-y-auto pr-[0.15rem] text-[0.88rem] leading-[1.7] sm:text-[0.93rem];
-  color: rgba(46, 35, 24, 0.9);
+  color: var(--field-fg);
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
 }
@@ -55,7 +64,7 @@
       transparent 60%
     ),
     rgba(249, 239, 223, 0.82);
-  color: rgba(78, 56, 31, 0.92);
+  color: var(--pill-fg);
   letter-spacing: 0.01em;
 }
 
@@ -64,26 +73,7 @@
 }
 
 .resumeLink {
-  @apply inline-flex w-fit rounded-full px-3 py-1 text-[0.8rem] font-semibold;
-  border: 1px solid rgba(144, 114, 74, 0.36);
-  background: rgba(250, 241, 227, 0.78);
-  color: rgba(78, 56, 31, 0.92);
-  transition:
-    background var(--dur-base) var(--ease-out),
-    transform var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out);
-}
-
-.resumeLink:hover,
-.resumeLink:focus-visible {
-  background: rgba(255, 248, 236, 0.95);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(94, 64, 42, 0.12);
-}
-
-.resumeLink:active {
-  transform: translateY(0);
-  transition-duration: var(--dur-fast);
+  @apply px-3 py-1 text-[0.8rem];
 }
 
 /* 데스크톱에서 사진 ↔ 소개글 전환 시 새로 보이는 쪽이 부드럽게 나타납니다. */
@@ -96,10 +86,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.linkText {
-  @apply m-0 text-[0.76rem] leading-[1.45] opacity-[0.72];
 }
 
 @media (max-width: 639px) {
@@ -126,30 +112,39 @@
   .textWrap {
     @apply max-w-full px-2;
   }
+
+  /* 모바일: 긴 소개글은 5줄로 접고, 버튼으로 펼칩니다. */
+  .description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    overflow: hidden;
+    flex: none;
+  }
+
+  .desktopDescription .description {
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
+  }
+
+  .toggleButton {
+    @apply mt-3 inline-flex self-center px-3 py-1 text-[0.8rem];
+  }
 }
 
 @media (min-width: 1280px) {
   .toggleButton {
-    @apply mt-3 inline-flex w-fit self-center rounded-full px-3 py-1 text-[0.8rem] font-semibold;
-    border: 1px solid rgba(144, 114, 74, 0.36);
-    background: rgba(250, 241, 227, 0.78);
-    color: rgba(78, 56, 31, 0.92);
-    transition:
-      background var(--dur-base) var(--ease-out),
-      transform var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out);
+    @apply mt-3 inline-flex self-center px-3 py-1 text-[0.8rem];
   }
 
-  .toggleButton:hover,
-  .toggleButton:focus-visible {
-    background: rgba(255, 248, 236, 0.95);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(94, 64, 42, 0.12);
+  .labelDesktop {
+    @apply inline;
   }
 
-  .toggleButton:active {
-    transform: translateY(0);
-    transition-duration: var(--dur-fast);
+  .labelMobile {
+    @apply hidden;
   }
 
   .desktopPhoto .textWrap {

@@ -20,7 +20,7 @@ export default function DeleteForm({
     <form action={formAction} className={style.deleteForm}>
       <input type="hidden" name="slug" value={slug} />
       <input type="hidden" name="thumbnail" value={thumbnail} />
-      <button type="submit" disabled={isPending} className={style.deleteButton}>
+      <button type="submit" disabled={isPending} className={`pill pill-danger ${style.deleteButton}`}>
         {isPending ? "Deleting..." : "Delete"}
       </button>
     </form>

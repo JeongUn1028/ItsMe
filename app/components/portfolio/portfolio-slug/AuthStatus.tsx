@@ -14,7 +14,7 @@ export default async function AuthStatus({
   return (
     isLoggedIn && (
       <div className={style.actionGroup}>
-        <Link href={`/admin/edit/portfolio/${slug}`} className={style.editLink}>
+        <Link href={`/admin/edit/portfolio/${slug}`} className={`pill pill-neutral ${style.editLink}`}>
           {"Edit->"}
         </Link>
         <DeleteForm slug={slug} thumbnail={thumbnail} />

@@ -1,5 +1,5 @@
 import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
-import style from "./EditPortfolioForm.module.css";
+import style from "./PortfolioFormPanel.module.css";
 
 import PortfolioForm from "@/app/components/portfolio/PortfolioForm";
 

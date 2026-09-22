@@ -31,18 +31,18 @@ export default function PortfolioCardsSkeleton() {
             className={`glass ${cardStyle.card} ${mobileColSpan} ${mobileRowSpan} ${tabletColSpan} ${desktopColSpan} ${tabletRowSpan} ${desktopRowSpan} ${isRowLayout ? cardStyle.rowLayout : cardStyle.columnLayout} ${style.skeletonCard}`}
           >
             <div
-              className={`${cardStyle.thumbnailWrap} ${isRowLayout ? cardStyle.thumbnailWrapRow : cardStyle.thumbnailWrapColumn} ${style.thumbnailSkeleton}`}
+              className={`${cardStyle.thumbnailWrap} ${isRowLayout ? cardStyle.thumbnailWrapRow : cardStyle.thumbnailWrapColumn} ${style.thumbnailSkeleton} shimmer`}
             />
             <div
               className={`${cardStyle.info} ${isRowLayout ? cardStyle.infoRow : ""}`}
             >
-              <div className={`${style.bar} ${style.titleBar}`} />
-              <div className={`${style.bar} ${style.summaryBar}`} />
-              <div className={`${style.bar} ${style.summaryBarShort}`} />
+              <div className={`shimmer ${style.bar} ${style.titleBar}`} />
+              <div className={`shimmer ${style.bar} ${style.summaryBar}`} />
+              <div className={`shimmer ${style.bar} ${style.summaryBarShort}`} />
               <div className={style.tags}>
-                <div className={`${style.bar} ${style.tagBar}`} />
-                <div className={`${style.bar} ${style.tagBarShort}`} />
-                <div className={`${style.bar} ${style.tagBarTiny}`} />
+                <div className={`shimmer ${style.bar} ${style.tagBar}`} />
+                <div className={`shimmer ${style.bar} ${style.tagBarShort}`} />
+                <div className={`shimmer ${style.bar} ${style.tagBarTiny}`} />
               </div>
             </div>
           </div>
