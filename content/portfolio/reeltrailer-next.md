@@ -2,131 +2,86 @@
 thumbnail: "/portfolio/reeltrailer-next.png"
 size: [2, 1]
 status: "published"
-title: "여러 OTT를 한곳에서 ReelTrailer 프로젝트"
-tags: ["Next.js", "TypeScript", "Prisma", "Supabase"]
+title: "ReelTrailer — 국내 OTT 통합 탐색 서비스"
+tags: ["Next.js 16", "TypeScript", "Prisma", "PostgreSQL", "TanStack Query", "Vercel Cron"]
 createdAt: "2026-08-31"
 githubLink: "https://github.com/JeongUn1028/reeltrailer-next"
 velogLink: "https://velog.io/@jeongun1028/series/ReelTrailer"
-summary: "TMDB 데이터를 기반으로 영화와 TV 프로그램을 탐색하고, 국내 구독형 OTT(Netflix, Disney+, Tving, Watcha, Wavve)의 실시간 콘텐츠 및 예고편을 탐색하는 풀스택 웹 서비스입니다.
-
-기존 React 기반 CSR 구조를 Next.js 16 App Router 아키텍처로 전면 마이그레이션하여, Intercepting Routes 기반의 상세 모달, Suspense 스트리밍 렌더링, SEO 최적화, 그리고 Vercel Serverless & Supabase 환경에서의 DB 커넥션 및 Latency 최적화를 달성했습니다."
+summary: "TMDB 데이터로 영화·TV를 탐색하고 Netflix, Disney+, Tving, Watcha, Wavve 중 어디서 볼 수 있는지 보여주는 풀스택 서비스입니다. React CSR 버전을 Next.js App Router로 전면 재구축해 Lighthouse 성능 91→100, SEO 92→100을 달성했고, 서버리스 환경의 DB 커넥션·리전 지연 문제를 직접 해결했습니다."
 ---
 
-# ReelTrailer
+🔗 **Live**: [reeltrailer.vercel.app](https://reeltrailer.vercel.app/) · **Code**: [github.com/JeongUn1028/reeltrailer-next](https://github.com/JeongUn1028/reeltrailer-next) · **회고 시리즈**: [Velog](https://velog.io/@jeongun1028/series/ReelTrailer)
 
-<br />
-배포 링크: **[ReelTrailer! 클릭](https://reeltrailer.vercel.app/)**<br/><br/>
+## 무엇을 만들었나
 
-> TMDB 데이터를 기반으로 영화와 TV 프로그램을 탐색하고, 국내 구독형 OTT(Netflix, Disney+, Tving, Watcha, Wavve)의 실시간 콘텐츠 및 예고편을 탐색하는 풀스택 웹 서비스입니다. <br />
-> 기존 React 기반 CSR 구조를 Next.js 16 App Router 아키텍처로 전면 마이그레이션하여, Intercepting Routes 기반의 상세 모달, Suspense 스트리밍 렌더링, SEO 최적화, 그리고 Vercel Serverless & Supabase 환경에서의 DB 커넥션 및 Latency 최적화를 달성했습니다.
+"이 영화, 어느 OTT에 있지?"를 한 화면에서 답해 주는 서비스입니다. TMDB 데이터를 매일 동기화해 **국내 구독형 OTT 5곳의 제공 여부**와 예고편을 함께 보여줍니다.
 
----
+- **예고편 쇼케이스** — 인기 영화 예고편 플레이어 + 재생 목록 (YouTube 임베드)
+- **OTT별 탐색** — `/netflix`, `/disney-plus`, `/tving`, `/watcha`, `/wavve`
+- **추천 목록** — 신작 / 영화 / TV / 장르별, 전체·영화·TV 토글, 인기순·최신순·평점순 정렬, `/browse` 에서 페이지네이션
+- **통합 검색** — 제목·원제 검색, 자동완성, 최근 검색어, 결과 유형 탭
+- **상세** — backdrop 히어로, 예고편, OTT 바로가기, 비슷한 콘텐츠. 카드에서 열면 모달, URL로 열면 페이지 (같은 UI 재사용)
+- **자동 동기화** — Vercel Cron이 매일 TMDB 콘텐츠·예고편·제공자 정보를 갱신하고, 제공 종료 콘텐츠 정리 → 캐시 무효화 → 웹훅 알림까지 수행
+- **SEO** — 동적 metadata, Open Graph, `sitemap.ts`, `robots.ts`
 
-## 📊 마이그레이션 성과 (Lighthouse 성능 비교)
+## 기술 스택
 
-기존 React (CSR) 환경 대비 Next.js App Router 전환 및 서버리스 최적화 후 달성한 지표입니다.
+- **Framework** Next.js 16 App Router, React 19, TypeScript
+- **Data** PostgreSQL + Prisma 6, TanStack Query 5 (클라이언트 데이터)
+- **UI** CSS Modules, Tailwind CSS 4
+- **External** TMDB API, YouTube Embed
+- **Infra** Vercel(서울 리전), Vercel Cron, Supabase, Speed Insights
+- **Quality** ESLint 9, Vitest
 
-- **성능**: 91점 ➔ **100점** (+9점)  
-  _주요 원인_: Direct DB Fetching 및 Suspense 기반 점진적 스트리밍 렌더링 적용
-- **접근성**: 85점 ➔ **98점** (+13점)  
-  _주요 원인_: WAI-ARIA 기반 모달 접근성 보완 및 시맨틱 HTML 구조 적용
-- **권장 사항**: 65점 ➔ **77점** (+12점)  
-  _주요 원인_: iFrame 쿠키 설정 강화
-- **검색 엔진 최적화(SEO)**: 92점 ➔ **100점** (+8점)  
-  _주요 원인_: 동적 Metadata, OpenGraph, `sitemap.ts`, `robots.ts` 구축
+## 왜 다시 만들었나
 
----
+첫 버전은 React CSR로 만든 [ReelTrailer-React](https://github.com/JeongUn1028/ReelTrailer-React) 였습니다. 데이터 페칭이 클라이언트에 몰려 첫 화면이 느렸고, 검색 엔진에 내용이 노출되지 않았습니다. Next.js App Router로 **전면 재구축**하면서 렌더링 전략, 데이터 계층, 배포 환경을 처음부터 다시 설계했습니다.
 
-## 🛠️ 프로덕션 배포 트러블슈팅
+**Lighthouse (재구축 전 → 후)**
 
-Vercel 서버리스 프로덕션 환경 배포 과정에서 직면한 3가지 핵심 문제와 해결 방안입니다.
+- 성능 91 → **100** — 서버 컴포넌트에서 직접 DB 조회 + Suspense 스트리밍
+- 접근성 85 → **98** — 모달 WAI-ARIA 보완, 시맨틱 구조
+- SEO 92 → **100** — 동적 Metadata, OG, sitemap, robots
+- 권장 사항 65 → **77** — iframe 쿠키 설정 강화
 
-### 1. DB Connection Timeout
+## 핵심 설계
 
-- **문제 상황**: `Prisma P2024` 커넥션 풀 타임아웃 발생
-- **원인 분석**: 한 요청 내 `Promise.all`로 병렬 DB 쿼리를 호출하여 서버리스 커넥션 한도 초과
-- **해결 방안**:
-  - DB 쿼리 단일 순차 실행 구조로 로직 리팩토링
-  - Supabase Transaction Pooler (`pgbouncer=true`) 연동
+### 콘텐츠는 하루에 한 번만 바뀐다 → 카탈로그를 메모리에서 처리
 
-### 2. SSR URL Parsing Error
+콘텐츠 변경은 Cron이 도는 하루 한 번뿐입니다. 그래서 요청마다 조건별 쿼리를 날리는 대신, `getCatalog()` 가 영화·TV 전체를 **쿼리 2개로 읽어 Next Data Cache(`unstable_cache`, 태그 `contents`)에 저장**하고, 필터·정렬·페이지네이션은 순수 함수로 메모리에서 처리합니다. 동기화가 끝나면 `revalidateTag("contents")` 로 한 번에 무효화합니다. 검색만 `pg_trgm` 인덱스로 DB를 직접 조회합니다.
 
-- **문제 상황**: SSR / Build 환경에서 `ERR_INVALID_URL` 파싱 실패
-- **원인 분석**:
-  - 클라이언트 컴포넌트에 Node 코어 모듈(`url`) 번들 오염
-  - Node.js SSR 실행 시 상대경로 fetch 기준점 누락
-- **해결 방안**:
-  - Node 코어 모듈 import 구문 제거
-  - Base URL을 환경변수(`NEXT_PUBLIC_API_URL`)로 명시 관리
+### 서버/클라이언트 데이터 경계
 
-### 3. Network Latency
+추천 목록·상세·사이트맵은 서버 컴포넌트에서 카탈로그를 씁니다. 사용자 상호작용이 잦은 예고편 쇼케이스와 검색 자동완성만 클라이언트 컴포넌트로 두고 TanStack Query로 API를 호출하며, OTT slug를 쿼리 키에 포함해 5분 fresh · 10분 GC로 관리합니다.
 
-- **문제 상황**: 배포 환경에서 상세 모달 로딩 속도 지연
-- **원인 분석**: Vercel Function 리전(미국 `iad1`)과 Supabase DB 리전(서울 `ap-northeast-2`) 불일치로 인한 RTT 지연
-- **해결 방안**: `vercel.json` 및 Route Handler 전역 배포 리전을 서울(`icn1`)로 지정하여 지리적 Latency 단축
+### 같은 TMDB ID가 영화와 TV에 동시에 존재한다
 
----
+`Movie` 와 `TvShow` 는 별도 모델이지만 화면에서는 `mediaType` 으로 통합합니다. ID만으로는 구분할 수 없어 상세 URL을 `/program/{id}?kind=movie|tvshow` 로 설계했습니다.
 
-## ✨ 주요 기능
+## 프로덕션에서 만난 문제
 
-- **인기 영화 예고편**: YouTube API 연동 임베드 재생 및 캐러셀 UI
-- **OTT 플랫폼 필터링**: Netflix, Disney+, Tving, Watcha, Wavve별 콘텐츠 필터링
-- **다중 추천 목록**: 영화, TV 프로그램, 장르별 추천 데이터 제공
-- **통합 검색**: 제목 기반 영화·TV 대소문자 구분 없는 통합 검색
-- **상세 정보 & 라우팅**: 포스터, 원제, 줄거리, 평점, 공개 연도, 장르, 제공 OTT 정보를 담은 상세 화면 (일반 상세 페이지와 Intercepting Route 모달의 UI 재사용)
-- **점진적 UX**: Suspense 기반 검색창·캐러셀·추천 목록 스켈레톤 및 예외 404 처리
-- **자동 동기화**: Vercel Cron을 통한 TMDB 콘텐츠, 예고편, 국내 OTT 제공 정보 일일 배치 동기화
-- **SEO & 관측 가능성**: Open Graph 메타데이터, `robots.txt`, `sitemap.xml`, Vercel Speed Insights 적용
+### 1. Prisma `P2024` — 커넥션 풀 타임아웃
 
----
+한 요청 안에서 `Promise.all` 로 DB 쿼리를 병렬 호출하자 서버리스 커넥션 한도를 넘었습니다. 쿼리를 순차 실행 구조로 바꾸고 Supabase Transaction Pooler(`pgbouncer=true`)를 연결해 해결했습니다. 이 경험이 위의 "카탈로그를 쿼리 2개로" 설계로 이어졌습니다.
 
-## 🗺️ 화면과 라우팅
+### 2. `ERR_INVALID_URL` — SSR에서만 터지는 fetch
 
-- **`/`** : 전체 콘텐츠 홈, 예고편 캐러셀, 추천 목록
-- **`/netflix`** : Netflix 필터 페이지
-- **`/disney-plus`** : Disney+ 필터 페이지
-- **`/tving`** : Tving 필터 페이지
-- **`/watcha`** : Watcha 필터 페이지
-- **`/wavve`** : Wavve 필터 페이지
-- **`/search?q={query}`** : 제목 통합 검색 결과
-- **`/program/{programId}?kind=movie`** : 영화 상세 페이지
-- **`/program/{programId}?kind=tvshow`** : TV 프로그램 상세 페이지
+클라이언트 컴포넌트에 Node 코어 모듈(`url`)이 번들에 섞여 들어갔고, SSR에서 상대경로 fetch의 기준점이 없었습니다. 코어 모듈 import를 제거하고 기준 URL을 환경변수로 명시했습니다.
 
-> 콘텐츠 카드를 통해 상세 화면으로 이동할 때는 Next.js Intercepting Routes가 상세 UI를 모달로 표시합니다. URL에 직접 접근하거나 새로고침하면 동일한 UI가 독립 페이지로 표시됩니다.
+### 3. 상세 모달이 느리다 — 리전 불일치
 
-```mermaid
-flowchart TD
-	A[홈] --> B[OTT 필터]
-	A --> C[장르 추천]
-	A --> D[통합 검색]
-	B --> E[콘텐츠 카드]
-	C --> E
-	D --> E
-	E --> F[상세 모달 또는 상세 페이지]
+Vercel Function은 미국 `iad1`, DB는 서울이었습니다. 요청마다 태평양을 건너던 RTT를 `vercel.json` 과 Route Handler의 리전을 서울 `icn1` 로 지정해 없앴습니다.
 
-| 경로                               | 설명                                     |
-| :--------------------------------- | :--------------------------------------- |
-| `/`                                | 전체 콘텐츠 홈, 예고편 캐러셀, 추천 목록 |
-| `/netflix`                         | Netflix 필터 페이지                      |
-| `/disney-plus`                     | Disney+ 필터 페이지                      |
-| `/tving`                           | Tving 필터 페이지                        |
-| `/watcha`                          | Watcha 필터 페이지                       |
-| `/wavve`                           | Wavve 필터 페이지                        |
-| `/search?q={query}`                | 제목 통합 검색 결과                      |
-| `/program/{programId}?kind=movie`  | 영화 상세 페이지                         |
-| `/program/{programId}?kind=tvshow` | TV 프로그램 상세 페이지                  |
+## 화면과 라우팅
 
-> 콘텐츠 카드를 통해 상세 화면으로 이동할 때는 Next.js Intercepting Routes가 상세 UI를 모달로 표시합니다. URL에 직접 접근하거나 새로고침하면 동일한 UI가 독립 페이지로 표시됩니다.
+- `/` 홈 — 쇼케이스 + 추천 목록
+- `/netflix` `/disney-plus` `/tving` `/watcha` `/wavve` — OTT 필터
+- `/browse?ott=&kind=&genre=&sort=&page=` — 조건별 전체 목록
+- `/search?q=&type=` — 통합 검색
+- `/program/{id}?kind=movie|tvshow` — 상세 (카드에서 진입 시 모달)
 
-```
-
-```mermaid
-flowchart TD
-	A[홈] --> B[OTT 필터]
-	A --> C[장르 추천]
-	A --> D[통합 검색]
-	B --> E[콘텐츠 카드]
-	C --> E
-	D --> E
-	E --> F[상세 모달 또는 상세 페이지]
+```text
+홈 ─┬─ OTT 필터 ─┐
+    ├─ 장르 추천 ─┼─ 콘텐츠 카드 ─ 상세 모달 / 상세 페이지
+    └─ 통합 검색 ─┘
 ```

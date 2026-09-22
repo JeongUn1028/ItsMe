@@ -102,7 +102,36 @@
 .content :global(h1),
 .content :global(h2),
 .content :global(h3) {
-  @apply mt-7 font-semibold first:mt-0;
+  @apply font-semibold first:mt-0;
+  color: var(--text-1);
+}
+
+/* 본문 헤딩 계층: h2 = 섹션, h3 = 소제목 */
+.content :global(h2) {
+  @apply mt-9 mb-3 text-xl sm:text-2xl;
+}
+
+.content :global(h3) {
+  @apply mt-6 mb-2 text-base sm:text-lg;
+}
+
+.content :global(ul) {
+  list-style: disc;
+}
+
+.content :global(ol) {
+  list-style: decimal;
+}
+
+.content :global(li) {
+  @apply my-1;
+}
+
+.content :global(li::marker) {
+  color: var(--text-3);
+}
+
+.content :global(strong) {
   color: var(--text-1);
 }
 

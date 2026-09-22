@@ -103,7 +103,7 @@ export default function PortfolioForm({
 
           {/* Velog 링크 */}
           <label className={style.fieldGroup}>
-            <span className={style.label}>Velog 링크</span>
+            <span className={style.label}>Velog 링크 (선택)</span>
             <input
               className={style.input}
               name="velogLink"

@@ -44,13 +44,13 @@ export function parsePortfolioForm(
   const thumbnail =
     rawThumbnail instanceof File && rawThumbnail.size > 0 ? rawThumbnail : null;
 
+  //* velogLink 는 선택 (글을 안 쓴 프로젝트도 있음)
   if (
     !title ||
     !slug ||
     !summary ||
     !contents.trim() ||
     !githubLink ||
-    !velogLink ||
     !size ||
     !tags
   ) {

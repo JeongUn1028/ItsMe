@@ -63,19 +63,21 @@ export function PortfolioContent({
                 height={32}
               />
             </Link>
-            <Link
-              href={portfolio.velogLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={style.resourceLink}
-            >
-              <Image
-                src={"/links/velog_logo_icon.svg"}
-                alt="Velog"
-                width={32}
-                height={32}
-              />
-            </Link>
+            {portfolio.velogLink && (
+              <Link
+                href={portfolio.velogLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={style.resourceLink}
+              >
+                <Image
+                  src={"/links/velog_logo_icon.svg"}
+                  alt="Velog"
+                  width={32}
+                  height={32}
+                />
+              </Link>
+            )}
           </div>
         </header>
 

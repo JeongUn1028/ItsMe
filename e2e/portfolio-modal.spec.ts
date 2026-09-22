@@ -31,3 +31,14 @@ test("URL 로 직접 진입하면 모달이 아닌 페이지로 렌더된다", a
     page.getByRole("heading", { level: 1, name: /포트폴리오/ }),
   ).toBeVisible();
 });
+
+test("Velog 글이 없는 포트폴리오는 Velog 아이콘을 표시하지 않는다", async ({
+  page,
+}) => {
+  await page.goto("/portfolio/one-bite-books");
+  await page.waitForSelector("article");
+  await expect(page.locator('article header a[href*="github.com"]')).toHaveCount(1);
+  await expect(page.locator('article header a[href*="velog.io"]')).toHaveCount(0);
+  //* 빈 href 링크가 남아 있으면 안 됩니다.
+  await expect(page.locator('article a[href=""]')).toHaveCount(0);
+});

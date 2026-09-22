@@ -59,6 +59,14 @@ describe("parsePortfolioForm", () => {
     });
   });
 
+  it("Velog 링크는 선택 항목이다", () => {
+    const result = parsePortfolioForm(buildFormData({ velogLink: "" }, pngFile), {
+      requireThumbnail: true,
+    });
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.values.velogLink).toBe("");
+  });
+
   it("수정 모드에서는 썸네일이 없어도 통과한다", () => {
     const result = parsePortfolioForm(buildFormData(), {
       requireThumbnail: false,
