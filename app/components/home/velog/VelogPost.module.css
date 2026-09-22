@@ -18,9 +18,9 @@
 .link:hover .container,
 .link:focus-visible .container {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.32);
-  box-shadow: 0 8px 24px rgba(40, 30, 18, 0.14);
+  background: var(--background-soft);
+  border-color: var(--glass-border);
+  box-shadow: 0 8px 24px var(--glass-shadow);
 }
 
 .link:active .container {
@@ -30,7 +30,7 @@
 
 .title {
   @apply line-clamp-1 text-[0.95rem] font-semibold leading-snug sm:line-clamp-2 sm:text-lg;
-  color: rgba(34, 24, 14, 0.92);
+  color: var(--text-1);
 }
 
 .tag {
@@ -40,8 +40,7 @@
 }
 
 .tag p {
-  @apply rounded-full border border-white/70 bg-white/55 px-2 py-0.5 text-[0.72rem] font-medium;
-  color: rgba(68, 49, 26, 0.86);
+  @apply px-2 py-0.5 text-[0.72rem] font-medium;
 }
 
 .dateContainer {

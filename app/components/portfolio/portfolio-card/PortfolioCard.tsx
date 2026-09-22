@@ -47,7 +47,7 @@ export default function PortfolioCard({
         <p className={style.summary}>{summary}</p>
         <ul className={style.tags}>
           {tags.map((tag) => (
-            <li key={tag} className={style.tag}>
+            <li key={tag} className={`chip ${style.tag}`}>
               {tag}
             </li>
           ))}

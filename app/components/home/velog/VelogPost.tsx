@@ -14,7 +14,9 @@ export default function VelogPost({ post }: { post: velogPost }) {
         <h2 className={style.title}>{post.title}</h2>
         <div className={style.tag}>
           {post.tags.map((tag) => (
-            <p key={tag}>{tag}</p>
+            <p key={tag} className="chip">
+              {tag}
+            </p>
           ))}
         </div>
         <div className={style.dateContainer}>

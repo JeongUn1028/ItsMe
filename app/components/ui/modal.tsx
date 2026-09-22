@@ -67,8 +67,6 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
     const rafId = window.requestAnimationFrame(() => {
       isVisibleRef.current = true;
       setIsVisible(true);
-      // 스크린리더/키보드 사용자가 바로 모달 안에서 시작하도록 포커스를 옮깁니다.
-      dialogRef.current?.focus({ preventScroll: true });
     });
 
     return () => {
@@ -103,6 +101,18 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
     };
   }, [isMounted, closeModal]);
 
+  // 스크린리더/키보드 사용자가 바로 모달 안에서 시작하도록 포커스를 옮깁니다.
+  // 포털이 실제로 그려진 뒤(isMounted 이후 렌더)에야 dialogRef 가 채워지므로 별도 effect 로 둡니다.
+  useEffect(() => {
+    if (!isMounted) {
+      return;
+    }
+    const el = dialogRef.current;
+    if (el && document.activeElement !== el) {
+      el.focus({ preventScroll: true });
+    }
+  }, [isMounted]);
+
   if (!isMounted) {
     return null;
   }
@@ -122,7 +132,7 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
           position: "fixed",
           inset: 0,
           zIndex: 999,
-          background: "rgba(15, 12, 8, 0.18)",
+          background: "var(--scrim)",
           backdropFilter: "blur(10px)",
           WebkitBackdropFilter: "blur(10px)",
           opacity: isVisible ? 1 : 0,

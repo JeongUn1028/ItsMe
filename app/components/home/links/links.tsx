@@ -20,6 +20,7 @@ export default function Links() {
           >
             <Image
               src="/links/github_logo_icon.png"
+            className="dark-invert"
               alt="GitHub"
               width={32}
               height={32}

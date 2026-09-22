@@ -27,7 +27,7 @@
 .iconLink:hover,
 .iconLink:focus-visible {
   transform: translateY(-2px) scale(1.08);
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--pill-neutral-bg);
 }
 
 .iconLink:active {

@@ -15,6 +15,14 @@
   white-space: nowrap;
 }
 
+.actions {
+  @apply flex items-center gap-2;
+}
+
+.themeToggle {
+  @apply h-8 w-8 px-0 text-base;
+}
+
 .content {
   @apply w-full;
 }

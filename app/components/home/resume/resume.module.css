@@ -41,7 +41,7 @@
 
 .description {
   @apply min-h-0 w-full flex-1 overflow-y-auto pr-[0.15rem] text-[0.88rem] leading-[1.7] sm:text-[0.93rem];
-  color: var(--field-fg);
+  color: var(--text-2);
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
 }
@@ -55,16 +55,7 @@
 }
 
 .skill {
-  @apply rounded-full px-3 py-1 text-[0.76rem] font-medium;
-  border: 1px solid rgba(144, 114, 74, 0.34);
-  background:
-    radial-gradient(
-      circle at 20% 20%,
-      rgba(255, 255, 255, 0.7),
-      transparent 60%
-    ),
-    rgba(249, 239, 223, 0.82);
-  color: var(--pill-fg);
+  @apply px-3 py-1 text-[0.76rem] font-medium;
   letter-spacing: 0.01em;
 }
 

@@ -42,9 +42,26 @@
   --danger-border: rgba(179, 59, 59, 0.28);
   --danger-fg: rgba(142, 32, 32, 0.92);
 
+  /* 칩(태그) — 카드 위에 얹히는 작은 캡슐 */
+  --chip-bg: rgba(255, 255, 255, 0.5);
+  --chip-border: rgba(255, 255, 255, 0.7);
+  --chip-fg: rgba(68, 49, 26, 0.88);
+
+  /* 모달 뒤 배경 가림막 */
+  --scrim: rgba(15, 12, 8, 0.18);
+
+  /* 페이지 배경 */
   --glow-mint: rgba(150, 228, 209, 0.4);
   --glow-apricot: rgba(244, 182, 124, 0.32);
   --glow-cream: rgba(255, 247, 232, 0.9);
+  --bg-spot-1: rgba(255, 255, 255, 0.95);
+  --bg-spot-2: rgba(255, 255, 255, 0.55);
+  --bg-spot-3: rgba(255, 238, 211, 0.7);
+  --bg-gradient: linear-gradient(180deg, #f9f4ea 0%, #f4edde 54%, #f2e8d7 100%);
+  --bg-grid-line: rgba(255, 255, 255, 0.14);
+  --bg-grid-opacity: 0.28;
+
+  color-scheme: light;
 
   /* ---- 형태 토큰 ---- */
   --radius-sm: 12px; /* 썸네일, 입력 필드 */
@@ -63,6 +80,111 @@
   --dur-base: 240ms;
   --dur-slow: 520ms;
   --focus-ring: rgba(94, 64, 42, 0.55);
+}
+
+/* ---- 다크 테마 ----
+   같은 토큰을 어두운 값으로만 바꿉니다. 시스템이 다크이거나(사용자가 라이트를 고르지 않은 경우)
+   사용자가 직접 다크를 고른 경우 두 가지 모두에 적용됩니다. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --dark: 1;
+  }
+}
+
+:root[data-theme="dark"] {
+  --dark: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #15110d;
+    --foreground: #f3ece2;
+    --background-soft: rgba(255, 255, 255, 0.06);
+    --text-2: rgba(243, 236, 226, 0.82);
+    --text-3: rgba(243, 236, 226, 0.56);
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-highlight: rgba(255, 255, 255, 0.16);
+    --glass-shadow: rgba(0, 0, 0, 0.35);
+    --surface: #1f1914;
+    --separator: rgba(255, 255, 255, 0.1);
+    --pill-border: rgba(255, 255, 255, 0.16);
+    --pill-bg: rgba(255, 255, 255, 0.08);
+    --pill-bg-hover: rgba(255, 255, 255, 0.16);
+    --pill-fg: rgba(243, 236, 226, 0.92);
+    --pill-neutral-bg: rgba(255, 255, 255, 0.1);
+    --pill-neutral-bg-hover: rgba(255, 255, 255, 0.18);
+    --pill-neutral-fg: rgba(243, 236, 226, 0.9);
+    --field-bg: rgba(255, 255, 255, 0.08);
+    --field-fg: rgba(243, 236, 226, 0.92);
+    --success-bg: rgba(44, 128, 84, 0.22);
+    --success-border: rgba(96, 200, 140, 0.4);
+    --success-fg: rgba(170, 236, 196, 0.95);
+    --danger-bg: rgba(179, 59, 59, 0.22);
+    --danger-border: rgba(240, 120, 120, 0.4);
+    --danger-fg: rgba(255, 180, 180, 0.95);
+    --chip-bg: rgba(255, 255, 255, 0.1);
+    --chip-border: rgba(255, 255, 255, 0.16);
+    --chip-fg: rgba(243, 236, 226, 0.86);
+    --scrim: rgba(0, 0, 0, 0.5);
+    --glow-mint: rgba(80, 160, 140, 0.22);
+    --glow-apricot: rgba(200, 120, 70, 0.18);
+    --glow-cream: rgba(90, 70, 50, 0.35);
+    --bg-spot-1: rgba(255, 255, 255, 0.06);
+    --bg-spot-2: rgba(255, 255, 255, 0.03);
+    --bg-spot-3: rgba(120, 90, 60, 0.18);
+    --bg-gradient: linear-gradient(180deg, #1a1511 0%, #15110d 54%, #120e0b 100%);
+    --bg-grid-line: rgba(255, 255, 255, 0.05);
+    --bg-grid-opacity: 0.35;
+    --shadow-pill: 0 6px 14px rgba(0, 0, 0, 0.35);
+    --focus-ring: rgba(243, 236, 226, 0.7);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #15110d;
+  --foreground: #f3ece2;
+  --background-soft: rgba(255, 255, 255, 0.06);
+  --text-2: rgba(243, 236, 226, 0.82);
+  --text-3: rgba(243, 236, 226, 0.56);
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-highlight: rgba(255, 255, 255, 0.16);
+  --glass-shadow: rgba(0, 0, 0, 0.35);
+  --surface: #1f1914;
+  --separator: rgba(255, 255, 255, 0.1);
+  --pill-border: rgba(255, 255, 255, 0.16);
+  --pill-bg: rgba(255, 255, 255, 0.08);
+  --pill-bg-hover: rgba(255, 255, 255, 0.16);
+  --pill-fg: rgba(243, 236, 226, 0.92);
+  --pill-neutral-bg: rgba(255, 255, 255, 0.1);
+  --pill-neutral-bg-hover: rgba(255, 255, 255, 0.18);
+  --pill-neutral-fg: rgba(243, 236, 226, 0.9);
+  --field-bg: rgba(255, 255, 255, 0.08);
+  --field-fg: rgba(243, 236, 226, 0.92);
+  --success-bg: rgba(44, 128, 84, 0.22);
+  --success-border: rgba(96, 200, 140, 0.4);
+  --success-fg: rgba(170, 236, 196, 0.95);
+  --danger-bg: rgba(179, 59, 59, 0.22);
+  --danger-border: rgba(240, 120, 120, 0.4);
+  --danger-fg: rgba(255, 180, 180, 0.95);
+  --chip-bg: rgba(255, 255, 255, 0.1);
+  --chip-border: rgba(255, 255, 255, 0.16);
+  --chip-fg: rgba(243, 236, 226, 0.86);
+  --scrim: rgba(0, 0, 0, 0.5);
+  --glow-mint: rgba(80, 160, 140, 0.22);
+  --glow-apricot: rgba(200, 120, 70, 0.18);
+  --glow-cream: rgba(90, 70, 50, 0.35);
+  --bg-spot-1: rgba(255, 255, 255, 0.06);
+  --bg-spot-2: rgba(255, 255, 255, 0.03);
+  --bg-spot-3: rgba(120, 90, 60, 0.18);
+  --bg-gradient: linear-gradient(180deg, #1a1511 0%, #15110d 54%, #120e0b 100%);
+  --bg-grid-line: rgba(255, 255, 255, 0.05);
+  --bg-grid-opacity: 0.35;
+  --shadow-pill: 0 6px 14px rgba(0, 0, 0, 0.35);
+  --focus-ring: rgba(243, 236, 226, 0.7);
+  color-scheme: dark;
 }
 
 /* 페이지 여백 + safe-area (viewport-fit=cover 로 노치/홈 인디케이터 영역까지 그리므로) */
@@ -94,18 +216,14 @@ body {
   background-image:
     radial-gradient(
       circle at 12% 18%,
-      rgba(255, 255, 255, 0.95) 0,
-      rgba(255, 255, 255, 0.55) 18%,
+      var(--bg-spot-1) 0,
+      var(--bg-spot-2) 18%,
       transparent 42%
     ),
     radial-gradient(circle at 88% 14%, var(--glow-mint) 0, transparent 20%),
     radial-gradient(circle at 82% 82%, var(--glow-apricot) 0, transparent 26%),
-    radial-gradient(
-      circle at 20% 88%,
-      rgba(255, 238, 211, 0.7) 0,
-      transparent 24%
-    ),
-    linear-gradient(180deg, #f9f4ea 0%, #f4edde 54%, #f2e8d7 100%);
+    radial-gradient(circle at 20% 88%, var(--bg-spot-3) 0, transparent 24%),
+    var(--bg-gradient);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
@@ -116,11 +234,11 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    linear-gradient(var(--bg-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bg-grid-line) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: radial-gradient(circle at center, black 34%, transparent 88%);
-  opacity: 0.28;
+  opacity: var(--bg-grid-opacity);
 }
 
 body::after {
@@ -130,11 +248,7 @@ body::after {
   pointer-events: none;
   background:
     radial-gradient(circle at top right, var(--glow-cream), transparent 24%),
-    radial-gradient(
-      circle at bottom left,
-      rgba(255, 241, 217, 0.78),
-      transparent 22%
-    );
+    radial-gradient(circle at bottom left, var(--bg-spot-3), transparent 22%);
   filter: blur(28px);
   opacity: 0.8;
 }
@@ -214,6 +328,34 @@ main {
 .pill-danger:focus-visible {
   background: var(--danger-bg);
   box-shadow: 0 6px 14px rgba(142, 32, 32, 0.12);
+}
+
+/* 태그/칩 */
+.chip {
+  border-radius: 999px;
+  border: 1px solid var(--chip-border);
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+}
+
+/* 검정 단색 PNG 아이콘은 다크 모드에서 보이지 않으므로 반전합니다. (SVG 아이콘으로 교체 전까지의 임시 처리) */
+:root[data-theme="dark"] .dark-invert {
+  filter: invert(1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .dark-invert {
+    filter: invert(1);
+  }
+}
+
+/* iOS "투명도 감소" 설정: 블러를 끄고 카드를 불투명하게 그립니다. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--surface);
+  }
 }
 
 /* 스켈레톤 쉬머. CSS Modules 는 @keyframes 이름을 파일별로 스코프하므로 전역에 한 번만 둡니다. */

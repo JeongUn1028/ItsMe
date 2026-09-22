@@ -1,0 +1,86 @@
+import { expect, test } from "@playwright/test";
+import { gotoHome } from "./helpers";
+
+//* 배경색의 상대 밝기 (0 = 검정, 1 = 흰색)
+async function bodyLuminance(page: import("@playwright/test").Page) {
+  return page.evaluate(() => {
+    const rgb = getComputedStyle(document.body).backgroundColor.match(/\d+/g)!;
+    const [r, g, b] = rgb.map(Number);
+    return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  });
+}
+
+test.describe("다크 모드", () => {
+  test("시스템이 다크면 다크로 렌더된다", async ({ browser }) => {
+    const ctx = await browser.newContext({ colorScheme: "dark" });
+    const page = await ctx.newPage();
+    await gotoHome(page);
+    expect(await bodyLuminance(page)).toBeLessThan(0.2);
+    //* 브라우저 폼 컨트롤/스크롤바도 다크로
+    expect(
+      await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme),
+    ).toContain("dark");
+    await ctx.close();
+  });
+
+  test("토글로 바꾼 테마는 새로고침 후에도 유지된다", async ({ page }) => {
+    await gotoHome(page);
+    expect(await bodyLuminance(page)).toBeGreaterThan(0.8);
+
+    const toggle = page.getByRole("button", { name: /테마/ });
+    await toggle.click(); // system → dark
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    expect(await bodyLuminance(page)).toBeLessThan(0.2);
+    //* Safari 상단 바 색도 함께 바뀌어야 합니다.
+    const themeColor = await page
+      .locator('meta[name="theme-color"]')
+      .first()
+      .getAttribute("content");
+    expect(themeColor).not.toBe("#f6f0e4");
+
+    await page.reload();
+    await page.locator('a[href^="/portfolio/"]').first().waitFor();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    expect(await bodyLuminance(page)).toBeLessThan(0.2);
+
+    await page.getByRole("button", { name: /테마/ }).click(); // dark → light
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    expect(await bodyLuminance(page)).toBeGreaterThan(0.8);
+  });
+
+  test("다크 모드에서 어두운 아이콘은 반전되어 보인다", async ({ browser }) => {
+    const ctx = await browser.newContext({ colorScheme: "dark" });
+    const page = await ctx.newPage();
+    await gotoHome(page);
+    const filter = await page
+      .locator('img[alt="GitHub"]')
+      .first()
+      .evaluate((el) => getComputedStyle(el).filter);
+    expect(filter).toContain("invert");
+    await ctx.close();
+  });
+});
+
+test.describe("투명도 감소 설정", () => {
+  test("prefers-reduced-transparency 에서는 blur 없이 불투명한 카드로 렌더된다", async ({
+    page,
+  }) => {
+    //* Playwright 의 emulateMedia 에 아직 없는 기능이라 CDP 로 직접 설정합니다.
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setEmulatedMedia", {
+      features: [{ name: "prefers-reduced-transparency", value: "reduce" }],
+    });
+    await gotoHome(page);
+
+    const { backdrop, alpha } = await page
+      .locator(".glass")
+      .first()
+      .evaluate((el) => {
+        const cs = getComputedStyle(el);
+        const m = cs.backgroundColor.match(/[\d.]+/g)!;
+        return { backdrop: cs.backdropFilter, alpha: m[3] === undefined ? 1 : Number(m[3]) };
+      });
+    expect(backdrop).toBe("none");
+    expect(alpha).toBeGreaterThan(0.9);
+  });
+});

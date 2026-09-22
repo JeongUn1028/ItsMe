@@ -37,7 +37,7 @@ export function PortfolioContent({
 
           <div className={style.metaRow}>
             {portfolio.tags.map((tag) => (
-              <span key={tag} className={style.tag}>
+              <span key={tag} className={`chip ${style.tag}`}>
                 #{tag}
               </span>
             ))}
@@ -57,6 +57,7 @@ export function PortfolioContent({
             >
               <Image
                 src={"/links/github_logo_icon.png"}
+            className="dark-invert"
                 alt="GitHub"
                 width={32}
                 height={32}

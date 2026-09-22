@@ -10,23 +10,23 @@
     border-color var(--dur-base) var(--ease-out),
     box-shadow var(--dur-base) var(--ease-out);
   will-change: transform;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: var(--background-soft);
+  border: 1px solid var(--glass-border);
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.48),
-    0 4px 12px rgba(40, 30, 18, 0.08);
+    inset 0 1px 0 var(--glass-highlight),
+    0 4px 12px var(--glass-shadow);
 }
 
 .card:hover,
 .card:focus-visible {
   transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.56);
+  background: var(--glass-bg);
+  border-color: var(--glass-highlight);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.58),
-    0 10px 24px rgba(40, 30, 18, 0.16);
+    inset 0 1px 0 var(--glass-highlight),
+    0 10px 24px var(--glass-shadow);
 }
 
 /* 클릭 순간 살짝 눌리는 느낌을 줍니다. */
@@ -93,7 +93,7 @@
 }
 
 .tag {
-  @apply rounded-full border border-white/65 bg-white/45 px-2 text-[0.75rem];
+  @apply px-2 text-[0.75rem];
   padding-top: 0.15rem;
   padding-bottom: 0.15rem;
 }

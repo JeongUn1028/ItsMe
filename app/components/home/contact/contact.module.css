@@ -25,7 +25,7 @@
 .row:hover,
 .row:focus-visible {
   color: var(--foreground);
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--pill-neutral-bg);
   transform: translateY(-1px);
 }
 

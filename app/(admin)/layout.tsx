@@ -1,6 +1,7 @@
 import Link from "next/link";
 import style from "./layout.module.css";
 import LogoutButton from "../components/ui/LogoutBtn";
+import ThemeToggle from "../components/ui/ThemeToggle";
 
 export default function AdminLayout({
   children,
@@ -13,8 +14,10 @@ export default function AdminLayout({
         <Link href="/" className={style.title}>
           LEEJEONGUN.COM
         </Link>
-        <LogoutButton />
-        {/* <div>modeChanger</div> */}
+        <div className={style.actions}>
+          <ThemeToggle className={style.themeToggle} />
+          <LogoutButton />
+        </div>
       </header>
       <main className={style.content}>{children}</main>
     </div>

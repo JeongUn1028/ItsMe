@@ -17,6 +17,7 @@ export default function Contact() {
         <a href={`mailto:${EMAIL}`} className={style.row}>
           <Image
             src="/contact/email_icon.png"
+            className="dark-invert"
             alt=""
             width={18}
             height={18}
@@ -26,6 +27,7 @@ export default function Contact() {
         <a href={`tel:${PHONE.replace(/-/g, "")}`} className={style.row}>
           <Image
             src="/contact/phone_icon.png"
+            className="dark-invert"
             alt=""
             width={18}
             height={18}

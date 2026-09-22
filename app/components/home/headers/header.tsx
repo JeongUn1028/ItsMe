@@ -1,6 +1,7 @@
 import style from "./header.module.css";
 import Link from "next/link";
 import HeaderAuthLink from "./HeaderAuthLink";
+import ThemeToggle from "@/app/components/ui/ThemeToggle";
 
 export default function Header() {
   return (
@@ -8,8 +9,10 @@ export default function Header() {
       <Link href="/" className={style.title}>
         LEEJEONGUN.COM
       </Link>
-      <HeaderAuthLink />
-      {/* <div>modeChanger</div> */}
+      <div className={style.actions}>
+        <ThemeToggle className={style.themeToggle} />
+        <HeaderAuthLink />
+      </div>
     </div>
   );
 }

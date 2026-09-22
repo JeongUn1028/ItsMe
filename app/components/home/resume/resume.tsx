@@ -32,7 +32,7 @@ export default function Resume() {
           <div className={style.skills}>
             <ul>
               {skills.map((skill, index) => (
-                <li key={index} className={style.skill}>
+                <li key={index} className={`chip ${style.skill}`}>
                   {skill}
                 </li>
               ))}

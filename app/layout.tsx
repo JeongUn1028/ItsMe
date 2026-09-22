@@ -44,7 +44,10 @@ export const metadata: Metadata = {
 
 //* iOS Safari: 상단 바를 페이지 배경색으로 물들이고, 노치/홈 인디케이터 영역까지 콘텐츠가 확장되도록 합니다.
 export const viewport: Viewport = {
-  themeColor: "#f6f0e4",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f0e4" },
+    { media: "(prefers-color-scheme: dark)", color: "#15110d" },
+  ],
   viewportFit: "cover",
   width: "device-width",
   initialScale: 1,
@@ -58,7 +61,16 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    //* data-theme 은 아래 스크립트가 클라이언트에서 넣으므로 서버 HTML 과 달라도 경고하지 않도록 합니다.
+    <html lang="ko" suppressHydrationWarning>
+      <head>
+        {/* 저장된 테마를 첫 페인트 전에 적용해 라이트→다크 깜빡임(FOUC)을 막습니다. ThemeToggle.applyTheme 과 같은 규칙. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
