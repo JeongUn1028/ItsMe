@@ -4,20 +4,21 @@ import { describe, expect, it } from "vitest";
 
 import { getRawFrontmatter } from "@/lib/portfolio/getRawFrontmatter";
 
+const fixturePath = path.join(
+  process.cwd(),
+  "__tests__",
+  "fixtures",
+  "portfolio",
+  "sample-project.md",
+);
+
 describe("getRawFrontmatter", () => {
   it("마크다운 파일의 경로를 입력받아 frontmatter를 파싱해서 반환한다", () => {
-    const filePath = path.join(
-      process.cwd(),
-      "content",
-      "projects",
-      "sample-project.md",
-    );
-
-    const frontmatter = getRawFrontmatter(filePath);
+    const frontmatter = getRawFrontmatter(fixturePath);
 
     expect(frontmatter).toMatchObject({
       thumbnail: "images/portfolio.png",
-      size: [1, 4],
+      size: [1, 2],
       status: "published",
       title: "Next.js 기반 개인 포트폴리오 프로젝트",
       tags: ["Next.js", "TypeScript", "TDD"],
