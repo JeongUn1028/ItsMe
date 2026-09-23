@@ -4,24 +4,20 @@ import { SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { verifyAdminCredentials } from "@/lib/auth/verifyAdminCredentials";
+import { parseLoginForm } from "@/lib/auth/parseLoginForm";
 
 const TOKEN_TTL_SECONDS = 60 * 60;
 
 export async function fetchLoginAction(formData: FormData): Promise<void> {
-  const username = formData.get("username")?.toString() ?? "";
-  const password = formData.get("password")?.toString() ?? "";
-  const redirectPath = formData.get("redirect")?.toString() ?? "/admin";
-  //* 외부 도메인으로의 open redirect 를 막기 위해 내부 경로만 허용합니다.
-  const safeRedirectPath =
-    redirectPath.startsWith("/") && !redirectPath.startsWith("//")
-      ? redirectPath
-      : "/admin";
+  const parsed = parseLoginForm(formData);
+  const safeRedirectPath = parsed.redirectTo;
   const loginUrl = (error: string) =>
     `/login?error=${error}&redirect=${encodeURIComponent(safeRedirectPath)}`;
 
-  if (!username || !password) {
+  if (!parsed.ok) {
     redirect(loginUrl("missing"));
   }
+  const { username, password } = parsed.values;
 
   //* redirect()는 내부적으로 throw 하므로 try 블록 밖에서 호출해야 catch 에 잡히지 않습니다.
   let isValid = false;
