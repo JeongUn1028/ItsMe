@@ -56,12 +56,22 @@ describe("ThemeToggle", () => {
   test("theme-color 메타 태그를 현재 테마 색으로 갱신한다", () => {
     const meta = document.createElement("meta");
     meta.name = "theme-color";
-    meta.content = "#f6f0e4";
+    //* 서버가 채워둔 값을 흉내 낸 자리표시자. 팔레트 값을 하드코딩하지 않아야
+    //* 색을 바꿔도 이 테스트가 의미를 유지한다.
+    meta.content = "#000000";
     document.head.appendChild(meta);
 
     render(<ThemeToggle />);
-    fireEvent.click(screen.getByRole("button")); // → dark
-    expect(meta.content).not.toBe("#f6f0e4");
+    const button = screen.getByRole("button");
+
+    fireEvent.click(button); // → dark
+    const darkColor = meta.content;
+    expect(darkColor).toMatch(/^#[0-9a-f]{6}$/i);
+    expect(darkColor).not.toBe("#000000");
+
+    fireEvent.click(button); // → light
+    expect(meta.content).toMatch(/^#[0-9a-f]{6}$/i);
+    expect(meta.content).not.toBe(darkColor);
 
     meta.remove();
   });

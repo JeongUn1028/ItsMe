@@ -4,35 +4,35 @@
   /* ---- 색상 토큰 ----
      컴포넌트 CSS 는 리터럴 색 대신 이 토큰만 사용합니다.
      (다크 모드는 이 블록의 값만 바꿔서 구현합니다.) */
-  --background: #f6f0e4;
-  --foreground: #1d160f;
-  --background-soft: rgba(255, 255, 255, 0.72);
+  --background: #f7f6f4;
+  --foreground: #16161a;
+  --background-soft: rgba(255, 255, 255, 0.7);
 
   /* 텍스트 계층: 1 = 본문/제목, 2 = 보조, 3 = 캡션/메타 */
   --text-1: var(--foreground);
-  --text-2: rgba(46, 35, 24, 0.86);
-  --text-3: rgba(79, 60, 36, 0.62);
+  --text-2: rgba(22, 22, 26, 0.78);
+  --text-3: rgba(22, 22, 26, 0.6);
 
   /* 글래스 머티리얼 */
-  --glass-bg: rgba(255, 255, 255, 0.42);
-  --glass-border: rgba(255, 255, 255, 0.68);
-  --glass-highlight: rgba(255, 255, 255, 0.8);
-  --glass-shadow: rgba(180, 150, 100, 0.1);
-  --surface: rgb(255, 248, 240); /* 모달/패널처럼 불투명한 면 */
-  --separator: rgba(130, 102, 64, 0.14);
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-border: rgba(255, 255, 255, 0.72);
+  --glass-highlight: rgba(255, 255, 255, 0.85);
+  --glass-shadow: rgba(20, 20, 26, 0.06);
+  --surface: #fdfdfc; /* 모달/패널처럼 불투명한 면 */
+  --separator: rgba(22, 22, 26, 0.1);
 
   /* 캡슐 버튼 (따뜻한 톤 / 중립 톤) */
-  --pill-border: rgba(144, 114, 74, 0.36);
-  --pill-bg: rgba(250, 241, 227, 0.78);
-  --pill-bg-hover: rgba(255, 248, 236, 0.95);
-  --pill-fg: rgba(78, 56, 31, 0.92);
-  --pill-neutral-bg: rgba(255, 255, 255, 0.58);
-  --pill-neutral-bg-hover: rgba(255, 255, 255, 0.85);
-  --pill-neutral-fg: rgba(46, 33, 19, 0.88);
+  --pill-border: rgba(45, 122, 107, 0.34);
+  --pill-bg: rgba(210, 238, 231, 0.55);
+  --pill-bg-hover: rgba(210, 238, 231, 0.85);
+  --pill-fg: rgba(18, 74, 64, 0.95);
+  --pill-neutral-bg: rgba(22, 22, 26, 0.05);
+  --pill-neutral-bg-hover: rgba(22, 22, 26, 0.1);
+  --pill-neutral-fg: rgba(22, 22, 26, 0.82);
 
   /* 입력 필드 */
-  --field-bg: rgba(255, 255, 255, 0.82);
-  --field-fg: rgba(46, 35, 24, 0.9);
+  --field-bg: rgba(255, 255, 255, 0.9);
+  --field-fg: rgba(22, 22, 26, 0.9);
 
   /* 상태 색 (성공/위험) — 관리자 알림, 토스트, 삭제 버튼이 공유 */
   --success-bg: rgba(230, 249, 238, 0.85);
@@ -43,23 +43,23 @@
   --danger-fg: rgba(142, 32, 32, 0.92);
 
   /* 칩(태그) — 카드 위에 얹히는 작은 캡슐 */
-  --chip-bg: rgba(255, 255, 255, 0.5);
-  --chip-border: rgba(255, 255, 255, 0.7);
-  --chip-fg: rgba(68, 49, 26, 0.88);
+  --chip-bg: rgba(22, 22, 26, 0.045);
+  --chip-border: rgba(22, 22, 26, 0.08);
+  --chip-fg: rgba(22, 22, 26, 0.78);
 
   /* 모달 뒤 배경 가림막 */
-  --scrim: rgba(15, 12, 8, 0.18);
+  --scrim: rgba(16, 16, 20, 0.2);
 
   /* 페이지 배경 */
-  --glow-mint: rgba(150, 228, 209, 0.4);
-  --glow-apricot: rgba(244, 182, 124, 0.32);
-  --glow-cream: rgba(255, 247, 232, 0.9);
-  --bg-spot-1: rgba(255, 255, 255, 0.95);
-  --bg-spot-2: rgba(255, 255, 255, 0.55);
-  --bg-spot-3: rgba(255, 238, 211, 0.7);
-  --bg-gradient: linear-gradient(180deg, #f9f4ea 0%, #f4edde 54%, #f2e8d7 100%);
-  --bg-grid-line: rgba(255, 255, 255, 0.14);
-  --bg-grid-opacity: 0.28;
+  --glow-mint: rgba(150, 228, 209, 0.16);
+  --glow-apricot: transparent;
+  --glow-cream: rgba(255, 255, 255, 0.7);
+  --bg-spot-1: rgba(255, 255, 255, 0.9);
+  --bg-spot-2: rgba(255, 255, 255, 0.45);
+  --bg-spot-3: rgba(235, 240, 238, 0.7);
+  --bg-gradient: linear-gradient(180deg, #fafaf9 0%, #f7f6f4 54%, #f3f2f0 100%);
+  --bg-grid-line: rgba(22, 22, 26, 0.035);
+  --bg-grid-opacity: 0.5;
 
   color-scheme: light;
 
@@ -68,7 +68,7 @@
   --radius-md: 16px; /* 리스트 아이템, 작은 카드 */
   --radius-lg: 20px; /* 글래스 카드, 모달 */
   --radius-xl: 28px; /* 히어로 패널 */
-  --shadow-pill: 0 6px 14px rgba(94, 64, 42, 0.12);
+  --shadow-pill: 0 6px 14px rgba(20, 20, 26, 0.1);
 
   /* 페이지 좌우 여백: 모바일에서 화면을 너무 많이 잃지 않도록 뷰포트에 비례 */
   --page-gutter: clamp(0.75rem, 3vw, 2rem);
@@ -79,7 +79,7 @@
   --dur-fast: 160ms;
   --dur-base: 240ms;
   --dur-slow: 520ms;
-  --focus-ring: rgba(94, 64, 42, 0.55);
+  --focus-ring: rgba(22, 22, 26, 0.65);
 }
 
 /* ---- 다크 테마 ----
@@ -97,26 +97,26 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --background: #15110d;
-    --foreground: #f3ece2;
+    --background: #121215;
+    --foreground: #ededf0;
     --background-soft: rgba(255, 255, 255, 0.06);
-    --text-2: rgba(243, 236, 226, 0.82);
-    --text-3: rgba(243, 236, 226, 0.56);
+    --text-2: rgba(237, 237, 240, 0.8);
+    --text-3: rgba(237, 237, 240, 0.58);
     --glass-bg: rgba(255, 255, 255, 0.06);
     --glass-border: rgba(255, 255, 255, 0.14);
     --glass-highlight: rgba(255, 255, 255, 0.16);
-    --glass-shadow: rgba(0, 0, 0, 0.35);
-    --surface: #1f1914;
+    --glass-shadow: rgba(0, 0, 0, 0.4);
+    --surface: #1a1a1e;
     --separator: rgba(255, 255, 255, 0.1);
-    --pill-border: rgba(255, 255, 255, 0.16);
-    --pill-bg: rgba(255, 255, 255, 0.08);
-    --pill-bg-hover: rgba(255, 255, 255, 0.16);
-    --pill-fg: rgba(243, 236, 226, 0.92);
-    --pill-neutral-bg: rgba(255, 255, 255, 0.1);
-    --pill-neutral-bg-hover: rgba(255, 255, 255, 0.18);
-    --pill-neutral-fg: rgba(243, 236, 226, 0.9);
+    --pill-border: rgba(120, 214, 194, 0.3);
+    --pill-bg: rgba(90, 200, 178, 0.14);
+    --pill-bg-hover: rgba(90, 200, 178, 0.24);
+    --pill-fg: rgba(178, 236, 224, 0.95);
+    --pill-neutral-bg: rgba(255, 255, 255, 0.08);
+    --pill-neutral-bg-hover: rgba(255, 255, 255, 0.16);
+    --pill-neutral-fg: rgba(237, 237, 240, 0.88);
     --field-bg: rgba(255, 255, 255, 0.08);
-    --field-fg: rgba(243, 236, 226, 0.92);
+    --field-fg: rgba(237, 237, 240, 0.92);
     --success-bg: rgba(44, 128, 84, 0.22);
     --success-border: rgba(96, 200, 140, 0.4);
     --success-fg: rgba(170, 236, 196, 0.95);
@@ -125,44 +125,44 @@
     --danger-fg: rgba(255, 180, 180, 0.95);
     --chip-bg: rgba(255, 255, 255, 0.1);
     --chip-border: rgba(255, 255, 255, 0.16);
-    --chip-fg: rgba(243, 236, 226, 0.86);
+    --chip-fg: rgba(237, 237, 240, 0.82);
     --scrim: rgba(0, 0, 0, 0.5);
-    --glow-mint: rgba(80, 160, 140, 0.22);
-    --glow-apricot: rgba(200, 120, 70, 0.18);
-    --glow-cream: rgba(90, 70, 50, 0.35);
-    --bg-spot-1: rgba(255, 255, 255, 0.06);
-    --bg-spot-2: rgba(255, 255, 255, 0.03);
-    --bg-spot-3: rgba(120, 90, 60, 0.18);
-    --bg-gradient: linear-gradient(180deg, #1a1511 0%, #15110d 54%, #120e0b 100%);
-    --bg-grid-line: rgba(255, 255, 255, 0.05);
+    --glow-mint: rgba(70, 150, 132, 0.14);
+    --glow-apricot: transparent;
+    --glow-cream: rgba(60, 60, 68, 0.3);
+    --bg-spot-1: rgba(255, 255, 255, 0.05);
+    --bg-spot-2: rgba(255, 255, 255, 0.025);
+    --bg-spot-3: rgba(60, 68, 66, 0.22);
+    --bg-gradient: linear-gradient(180deg, #17171b 0%, #121215 54%, #0f0f12 100%);
+    --bg-grid-line: rgba(255, 255, 255, 0.04);
     --bg-grid-opacity: 0.35;
-    --shadow-pill: 0 6px 14px rgba(0, 0, 0, 0.35);
-    --focus-ring: rgba(243, 236, 226, 0.7);
+    --shadow-pill: 0 6px 14px rgba(0, 0, 0, 0.4);
+    --focus-ring: rgba(237, 237, 240, 0.72);
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --background: #15110d;
-  --foreground: #f3ece2;
+  --background: #121215;
+  --foreground: #ededf0;
   --background-soft: rgba(255, 255, 255, 0.06);
-  --text-2: rgba(243, 236, 226, 0.82);
-  --text-3: rgba(243, 236, 226, 0.56);
+  --text-2: rgba(237, 237, 240, 0.8);
+  --text-3: rgba(237, 237, 240, 0.58);
   --glass-bg: rgba(255, 255, 255, 0.06);
   --glass-border: rgba(255, 255, 255, 0.14);
   --glass-highlight: rgba(255, 255, 255, 0.16);
-  --glass-shadow: rgba(0, 0, 0, 0.35);
-  --surface: #1f1914;
+  --glass-shadow: rgba(0, 0, 0, 0.4);
+  --surface: #1a1a1e;
   --separator: rgba(255, 255, 255, 0.1);
-  --pill-border: rgba(255, 255, 255, 0.16);
-  --pill-bg: rgba(255, 255, 255, 0.08);
-  --pill-bg-hover: rgba(255, 255, 255, 0.16);
-  --pill-fg: rgba(243, 236, 226, 0.92);
-  --pill-neutral-bg: rgba(255, 255, 255, 0.1);
-  --pill-neutral-bg-hover: rgba(255, 255, 255, 0.18);
-  --pill-neutral-fg: rgba(243, 236, 226, 0.9);
+  --pill-border: rgba(120, 214, 194, 0.3);
+  --pill-bg: rgba(90, 200, 178, 0.14);
+  --pill-bg-hover: rgba(90, 200, 178, 0.24);
+  --pill-fg: rgba(178, 236, 224, 0.95);
+  --pill-neutral-bg: rgba(255, 255, 255, 0.08);
+  --pill-neutral-bg-hover: rgba(255, 255, 255, 0.16);
+  --pill-neutral-fg: rgba(237, 237, 240, 0.88);
   --field-bg: rgba(255, 255, 255, 0.08);
-  --field-fg: rgba(243, 236, 226, 0.92);
+  --field-fg: rgba(237, 237, 240, 0.92);
   --success-bg: rgba(44, 128, 84, 0.22);
   --success-border: rgba(96, 200, 140, 0.4);
   --success-fg: rgba(170, 236, 196, 0.95);
@@ -171,19 +171,19 @@
   --danger-fg: rgba(255, 180, 180, 0.95);
   --chip-bg: rgba(255, 255, 255, 0.1);
   --chip-border: rgba(255, 255, 255, 0.16);
-  --chip-fg: rgba(243, 236, 226, 0.86);
+  --chip-fg: rgba(237, 237, 240, 0.82);
   --scrim: rgba(0, 0, 0, 0.5);
-  --glow-mint: rgba(80, 160, 140, 0.22);
-  --glow-apricot: rgba(200, 120, 70, 0.18);
-  --glow-cream: rgba(90, 70, 50, 0.35);
-  --bg-spot-1: rgba(255, 255, 255, 0.06);
-  --bg-spot-2: rgba(255, 255, 255, 0.03);
-  --bg-spot-3: rgba(120, 90, 60, 0.18);
-  --bg-gradient: linear-gradient(180deg, #1a1511 0%, #15110d 54%, #120e0b 100%);
-  --bg-grid-line: rgba(255, 255, 255, 0.05);
+  --glow-mint: rgba(70, 150, 132, 0.14);
+  --glow-apricot: transparent;
+  --glow-cream: rgba(60, 60, 68, 0.3);
+  --bg-spot-1: rgba(255, 255, 255, 0.05);
+  --bg-spot-2: rgba(255, 255, 255, 0.025);
+  --bg-spot-3: rgba(60, 68, 66, 0.22);
+  --bg-gradient: linear-gradient(180deg, #17171b 0%, #121215 54%, #0f0f12 100%);
+  --bg-grid-line: rgba(255, 255, 255, 0.04);
   --bg-grid-opacity: 0.35;
-  --shadow-pill: 0 6px 14px rgba(0, 0, 0, 0.35);
-  --focus-ring: rgba(243, 236, 226, 0.7);
+  --shadow-pill: 0 6px 14px rgba(0, 0, 0, 0.4);
+  --focus-ring: rgba(237, 237, 240, 0.72);
   color-scheme: dark;
 }
 

@@ -45,8 +45,8 @@ export const metadata: Metadata = {
 //* iOS Safari: 상단 바를 페이지 배경색으로 물들이고, 노치/홈 인디케이터 영역까지 콘텐츠가 확장되도록 합니다.
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f6f0e4" },
-    { media: "(prefers-color-scheme: dark)", color: "#15110d" },
+    { media: "(prefers-color-scheme: light)", color: "#f7f6f4" },
+    { media: "(prefers-color-scheme: dark)", color: "#121215" },
   ],
   viewportFit: "cover",
   width: "device-width",

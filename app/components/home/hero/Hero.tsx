@@ -77,11 +77,12 @@ export default function Hero() {
           >
             이력서 PDF
           </Link>
+          {/* 액센트는 주요 행동(이력서)에만. 나머지는 중성 톤으로 둔다. (#66) */}
           <Link
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className={`pill ${style.action}`}
+            className={`pill pill-neutral ${style.action}`}
           >
             GitHub
           </Link>
@@ -89,7 +90,7 @@ export default function Hero() {
             href={VELOG_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className={`pill ${style.action}`}
+            className={`pill pill-neutral ${style.action}`}
           >
             Velog
           </Link>
