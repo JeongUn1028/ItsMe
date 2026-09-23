@@ -9,6 +9,7 @@ import {
   RESUME_JSON_PATH,
   RESUME_PDF_URL,
 } from "@/lib/github/contentPaths";
+import { parseResumeForm } from "@/lib/resume/parseResumeForm";
 
 interface ResumeState {
   success: boolean | null;
@@ -22,8 +23,6 @@ interface ResumeData {
   pdfPath: string;
 }
 
-const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png"];
-
 export async function submitResumeAction(
   _prevState: ResumeState,
   formData: FormData,
@@ -33,42 +32,20 @@ export async function submitResumeAction(
     return { success: false, message: "로그인이 필요합니다." };
   }
 
-  //* 2. FormData 추출
-  const description = formData.get("description")?.toString().trim() ?? "";
-  const skillsInput = formData.get("skills")?.toString() ?? "";
-  const imageFile = formData.get("thumbnail");
-  const pdfFile = formData.get("pdf");
-
-  if (!description || !skillsInput) {
-    return { success: false, message: "모든 필드를 입력해주세요." };
+  //* 2. 입력 검증
+  const parsed = parseResumeForm(formData);
+  if (!parsed.ok) {
+    return { success: false, message: parsed.message };
   }
+  const { description, skills, image, pdf } = parsed.values;
 
-  const skills = skillsInput
-    .split(",")
-    .map((s) => s.trim())
-    .filter((s) => s.length > 0);
-  if (skills.length === 0) {
-    return { success: false, message: "최소 1개 이상의 기술을 입력해주세요." };
-  }
-
-  //* 3. 파일 검증 (업로드된 경우에만)
+  //* 3. 업로드된 파일만 커밋 대상에 담는다
   const changes: FileChange[] = [];
-
-  if (imageFile instanceof File && imageFile.size > 0) {
-    if (!ALLOWED_IMAGE_TYPES.includes(imageFile.type)) {
-      return {
-        success: false,
-        message: "프로필 이미지는 JPG 또는 PNG만 업로드할 수 있습니다.",
-      };
-    }
-    changes.push({ path: publicFilePath(RESUME_IMAGE_URL), content: imageFile });
+  if (image) {
+    changes.push({ path: publicFilePath(RESUME_IMAGE_URL), content: image });
   }
-
-  if (pdfFile instanceof File && pdfFile.size > 0) {
-    if (pdfFile.type !== "application/pdf") {
-      return { success: false, message: "이력서는 PDF 파일만 업로드할 수 있습니다." };
-    }
-    changes.push({ path: publicFilePath(RESUME_PDF_URL), content: pdfFile });
+  if (pdf) {
+    changes.push({ path: publicFilePath(RESUME_PDF_URL), content: pdf });
   }
 
   const newData: ResumeData = {
