@@ -29,8 +29,18 @@ export default defineConfig({
   },
   projects: [
     {
+      //* 1280×720 — 페이징 기준(1440px) 아래라 세로 스크롤로 동작해야 한다.
       name: "desktop",
       use: { ...devices["Desktop Chrome"], ...browserChannel },
+    },
+    {
+      //* 1600×1000 — 좌우 페이지 넘김이 켜지는 넓은 화면.
+      name: "desktop-wide",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1600, height: 1000 },
+        ...browserChannel,
+      },
     },
     {
       name: "mobile",

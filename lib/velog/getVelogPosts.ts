@@ -12,7 +12,8 @@ export const getVelogPosts = async () => {
         query: `query Posts($username: String!, $limit: Int!) { posts(username: $username, limit: $limit) {title tags url_slug released_at}}`,
         variables: {
           username: "jeongun1028",
-          limit: 3,
+          //* 페이지에 자리가 생겨 더 보여준다. (#65)
+          limit: 6,
         },
       }),
       next: { revalidate: 3600 },

@@ -26,13 +26,13 @@ export default defineConfig({
       all: true,
       include: ["lib/**/*.ts", "app/components/**/*.tsx"],
       reporter: ["text-summary", "lcov"],
-      //* 목표는 70%(핵심 로직 90%)이지만 현재는 38% 입니다.
+      //* 목표는 70%(핵심 로직 90%)이지만 현재는 44% 입니다.
       //* 우선 현재 수치를 하한선으로 고정해 회귀만 막고, #50 에서 테스트를 보강하며 단계적으로 올립니다.
       thresholds: {
-        statements: 38,
-        branches: 36,
-        functions: 44,
-        lines: 37,
+        statements: 43,
+        branches: 38,
+        functions: 47,
+        lines: 43,
       },
     },
   },

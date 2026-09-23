@@ -1,43 +1,48 @@
 import { Suspense } from "react";
 import Contact from "../components/home/contact/contact";
+import HomeDeck from "../components/home/deck/HomeDeck";
 import Hero from "../components/home/hero/Hero";
-import Links from "../components/home/links/links";
 import { VelogPosts } from "../components/home/velog/VelogPosts";
 import PortfolioCards from "../components/portfolio/portfolio-card/PortfolioCards";
 import PortfolioCardsSkeleton from "../components/ui/skeleton/PortfolioCardsSkeleton";
 import VelogPostsSkeleton from "../components/ui/skeleton/VelogPostsSkeleton";
+import deck from "../components/home/deck/HomeDeck.module.css";
 import style from "./page.module.css";
 
-//* Home Page
-//* 순서가 곧 우선순위다. 이름·포지셔닝 → 대표 프로젝트 → 글·링크·연락처. (#63)
+//* 데스크톱은 좌우 2페이지, 좁은 화면은 세로 스크롤. (#65)
+//* 페이지 순서가 곧 우선순위다: 누구인가 + 무엇을 만들었나 → 글 · 연락처
+const PAGES = [
+  { slug: "intro", label: "소개 · 대표 프로젝트" },
+  { slug: "contact", label: "글 · 연락처" },
+];
+
 export default function Home() {
   return (
     <div className={style.pageWrap}>
-      <main className={style.main}>
-        {/* 1. 누구인가 */}
-        <Hero />
-
-        {/* 2. 무엇을 만들었나 */}
-        <section aria-labelledby="projects-heading">
-          <h2 id="projects-heading" className={style.sectionTitle}>
-            대표 프로젝트
-          </h2>
-          <div className={style.portfolioGrid}>
-            <Suspense fallback={<PortfolioCardsSkeleton />}>
-              <PortfolioCards />
-            </Suspense>
+      <HomeDeck pages={PAGES}>
+        <section className={deck.page} aria-labelledby="projects-heading">
+          <Hero />
+          <div>
+            <h2 id="projects-heading" className={style.sectionTitle}>
+              대표 프로젝트
+            </h2>
+            <div className={style.portfolioGrid}>
+              <Suspense fallback={<PortfolioCardsSkeleton />}>
+                <PortfolioCards />
+              </Suspense>
+            </div>
           </div>
         </section>
 
-        {/* 3. 글 · 링크 · 연락처는 보조 정보라 프로젝트 뒤에 둔다 */}
-        <section className={style.secondaryGrid}>
-          <Suspense fallback={<VelogPostsSkeleton />}>
-            <VelogPosts />
-          </Suspense>
-          <Links />
-          <Contact />
+        <section className={deck.page} aria-label="글과 연락처">
+          <div className={style.secondaryGrid}>
+            <Suspense fallback={<VelogPostsSkeleton />}>
+              <VelogPosts />
+            </Suspense>
+            <Contact />
+          </div>
         </section>
-      </main>
+      </HomeDeck>
     </div>
   );
 }
