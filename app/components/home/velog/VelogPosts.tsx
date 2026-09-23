@@ -9,7 +9,7 @@ export async function VelogPosts() {
   return (
     <div
       className={`glass fade-up ${style.container}`}
-      style={{ "--i": 3 } as CSSProperties}
+      style={{ "--i": 1 } as CSSProperties}
     >
       <h1 className={style.title}>VELOG POSTS</h1>
       {posts.length > 0 ? (

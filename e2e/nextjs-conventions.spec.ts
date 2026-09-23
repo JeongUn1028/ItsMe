@@ -27,18 +27,10 @@ test("상세 페이지의 반응형 이미지에는 모두 sizes 가 지정되�
   expect(await responsiveImagesWithoutSizes(page)).toEqual([]);
 });
 
-test("이력서 PDF 링크는 새 탭에서 안전하게 열린다", async ({
-  page,
-  isMobile,
-}) => {
+test("이력서 PDF 링크는 새 탭에서 안전하게 열린다", async ({ page }) => {
   await gotoHome(page);
 
-  //* 데스크톱(xl)에서는 사진이 기본이라 소개글로 전환해야 링크가 드러난다.
-  if (!isMobile) {
-    await page.getByRole("button", { name: "소개글 보기" }).click();
-  }
-
-  const pdfLink = page.getByRole("link", { name: "Resume PDF 보기" });
+  const pdfLink = page.getByRole("link", { name: "이력서 PDF" });
   await expect(pdfLink).toHaveAttribute("target", "_blank");
   await expect(pdfLink).toHaveAttribute("rel", /noopener/);
   await expect(pdfLink).toHaveAttribute("href", /\.pdf$/);

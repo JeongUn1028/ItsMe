@@ -1,7 +1,7 @@
 @reference "../../../globals.css";
 
 .container {
-  @apply grid h-full w-full content-start gap-2 p-4 col-span-1 row-span-2 sm:col-span-2 xl:col-span-1 xl:col-start-3 xl:row-start-1;
+  @apply grid h-full w-full content-start gap-2 p-4 col-span-1 sm:col-span-2 xl:col-span-1;
   /* 고정 높이 카드라 포스트 3개가 딱 맞게 들어가야 하지만, 폰트/줄바꿈 차이로 넘칠 때는 카드 안에서 스크롤합니다. */
   min-height: 0;
   overflow-y: auto;

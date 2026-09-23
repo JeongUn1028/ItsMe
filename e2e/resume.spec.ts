@@ -1,25 +1,29 @@
 import { expect, test } from "@playwright/test";
 import { gotoHome } from "./helpers";
 
-test("Resume 소개글 토글", async ({ page, isMobile }) => {
+//* 전체 소개글은 <details> 로 접어 둔다. JS 없이 동작해야 하므로 동작 자체를 고정한다. (#63)
+
+test("소개 더 보기를 누르면 전체 소개글이 펼쳐진다", async ({ page }) => {
   await gotoHome(page);
 
-  if (isMobile) {
-    //* 모바일: 5줄로 접혀 있다가 '더 보기'로 펼쳐집니다.
-    const button = page.getByRole("button", { name: "더 보기" });
-    await expect(button).toBeVisible();
-    const desc = page.locator("text=프론트엔드 개발자").first();
-    const before = (await desc.boundingBox())!.height;
-    await button.click();
-    await expect(page.getByRole("button", { name: "접기" })).toBeVisible();
-    const after = (await desc.boundingBox())!.height;
-    expect(after).toBeGreaterThan(before);
-  } else {
-    //* 데스크톱(xl): 사진 ↔ 소개글 전환.
-    await page.setViewportSize({ width: 1440, height: 900 });
-    const button = page.getByRole("button", { name: "소개글 보기" });
-    await expect(button).toBeVisible();
-    await button.click();
-    await expect(page.getByRole("button", { name: "사진 보기" })).toBeVisible();
-  }
+  const summary = page.getByText("소개 더 보기");
+  await expect(summary).toBeVisible();
+
+  //* 접힌 상태에서는 나머지 문단이 보이지 않는다.
+  const detail = page.getByText(/그런 고민들을 개인 포트폴리오 프로젝트에서/);
+  await expect(detail).toBeHidden();
+
+  await summary.click();
+  await expect(detail).toBeVisible();
+
+  await summary.click();
+  await expect(detail).toBeHidden();
+});
+
+test("포지셔닝 문구는 접기와 무관하게 항상 보인다", async ({ page }) => {
+  await gotoHome(page);
+
+  await expect(
+    page.getByText(/사용자 경험과 코드 품질/).first(),
+  ).toBeVisible();
 });

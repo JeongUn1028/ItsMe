@@ -1,13 +1,24 @@
 @reference "../globals.css";
 
 .pageWrap {
-  @apply mx-auto flex w-full max-w-[1600px] flex-col items-center gap-4;
+  @apply mx-auto flex w-full max-w-[1600px] flex-col items-center;
 }
 
-.homeGrid {
+.main {
+  @apply flex w-full flex-col gap-8;
+}
+
+/* 3. 글 · 링크 · 연락처. 모바일에서도 프로젝트 뒤에 오도록 별도 섹션으로 둡니다. */
+.secondaryGrid {
   @apply grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3;
-  /* 모바일은 한 열이라 카드가 내용만큼 늘어나야 합니다 (고정 높이면 Velog/Resume 내용이 넘침). */
   grid-auto-rows: minmax(130px, auto);
+}
+
+.sectionTitle {
+  @apply m-0 mb-3 font-semibold;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  letter-spacing: -0.01em;
+  color: var(--text-1);
 }
 
 @media (min-width: 640px) {

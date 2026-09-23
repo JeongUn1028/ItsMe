@@ -1,0 +1,125 @@
+@reference "../../../globals.css";
+
+/* iOS 대형 위젯. 가장 좋은 자리에 이름·포지셔닝·기술·행동 유도를 한 번에 담는다. */
+.card {
+  @apply flex w-full flex-col gap-4 p-5 sm:p-6;
+}
+
+/* 넓은 화면에서는 소개와 행동 유도를 가로로 나눠 카드가 너무 길어지지 않게 한다. */
+@media (min-width: 1024px) {
+  .card {
+    @apply grid gap-x-8 gap-y-4;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-areas:
+      "header aside"
+      "lead   aside";
+    align-items: start;
+  }
+
+  .header {
+    grid-area: header;
+  }
+
+  .lead {
+    grid-area: lead;
+  }
+
+  .aside {
+    grid-area: aside;
+    @apply flex flex-col gap-3;
+  }
+}
+
+.header {
+  @apply flex items-center gap-4 sm:gap-5;
+}
+
+.imageWrap {
+  @apply shrink-0 overflow-hidden rounded-[var(--radius-md)];
+}
+
+.image {
+  @apply block object-cover;
+  width: clamp(72px, 18vw, 104px);
+  height: clamp(72px, 18vw, 104px);
+}
+
+.identity {
+  @apply flex min-w-0 flex-col gap-1;
+}
+
+.name {
+  @apply m-0 font-bold leading-none;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+}
+
+.headline {
+  @apply m-0 text-[0.92rem] leading-relaxed sm:text-base;
+  color: var(--text-2);
+}
+
+/* 카드가 옆 위젯 높이에 맞춰 늘어나므로, 남는 공간을 소개글로 채운다. */
+.lead {
+  @apply m-0 text-[0.88rem] leading-[1.75] sm:text-[0.92rem];
+  color: var(--text-2);
+}
+
+/* 나머지 소개글은 <details> 로 접는다. JS 없이 동작하고 키보드·스크린리더에 기본 지원된다. */
+.more {
+  @apply min-h-0 shrink-0;
+}
+
+/* 디스클로저는 CTA 와 경쟁하지 않도록 텍스트 + 셰브론으로 둔다.
+   pill-neutral 은 흰 반투명이라 글래스 카드 위에서 보이지 않았다. */
+.moreSummary {
+  @apply inline-flex w-fit cursor-pointer list-none items-center gap-1 text-[0.8rem] font-medium;
+  color: var(--text-3);
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.moreSummary::-webkit-details-marker {
+  display: none;
+}
+
+.moreSummary::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.more[open] .moreSummary::after {
+  transform: rotate(-135deg) translate(-1px, -1px);
+}
+
+.moreSummary:hover,
+.moreSummary:focus-visible {
+  color: var(--text-1);
+}
+
+.moreText {
+  @apply mt-2 max-h-36 overflow-y-auto pr-1 text-[0.88rem] leading-[1.7] whitespace-pre-line;
+  color: var(--text-2);
+  overscroll-behavior: contain;
+}
+
+.skills {
+  @apply m-0 flex list-none flex-wrap gap-1.5 p-0;
+}
+
+.skill {
+  @apply px-2.5 py-1 text-[0.76rem] font-medium;
+}
+
+.actions {
+  @apply flex flex-wrap gap-2;
+}
+
+.action {
+  @apply px-3 py-1.5 text-[0.82rem];
+}
