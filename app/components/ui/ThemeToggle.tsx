@@ -7,8 +7,8 @@ export type ThemePreference = "system" | "light" | "dark";
 
 const STORAGE_KEY = "theme";
 const THEME_COLOR: Record<"light" | "dark", string> = {
-  light: "#f6f0e4",
-  dark: "#15110d",
+  light: "#f7f6f4",
+  dark: "#121215",
 };
 const ORDER: ThemePreference[] = ["system", "dark", "light"];
 const LABEL: Record<ThemePreference, string> = {

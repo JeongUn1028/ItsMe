@@ -27,6 +27,11 @@ test.describe("다크 모드", () => {
     await gotoHome(page);
     expect(await bodyLuminance(page)).toBeGreaterThan(0.8);
 
+    const lightThemeColor = await page
+      .locator('meta[name="theme-color"]')
+      .first()
+      .getAttribute("content");
+
     const toggle = page.getByRole("button", { name: /테마/ });
     await toggle.click(); // system → dark
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
@@ -36,7 +41,8 @@ test.describe("다크 모드", () => {
       .locator('meta[name="theme-color"]')
       .first()
       .getAttribute("content");
-    expect(themeColor).not.toBe("#f6f0e4");
+    //* 팔레트 값을 하드코딩하지 않는다. 라이트에서 읽어둔 값과 달라지기만 하면 된다.
+    expect(themeColor).not.toBe(lightThemeColor);
 
     await page.reload();
     await page.locator('a[href^="/portfolio/"]').first().waitFor();
