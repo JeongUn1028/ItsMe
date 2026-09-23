@@ -4,9 +4,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import BackToHomeButton from "@/app/components/ui/BackToHomeBtn";
 import { useMDXComponents } from "@/mdx-components";
 import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
-import { Suspense } from "react";
-import AuthStatus from "./AuthStatus";
-import AuthStatusSkeleton from "../../ui/skeleton/AuthStatusSkeleton";
 import Image from "next/image";
 
 export function PortfolioContent({
@@ -27,9 +24,6 @@ export function PortfolioContent({
         <header className={style.header}>
           <div className={style.headerRow}>
             <BackToHomeButton className={style.backLink} />
-            <Suspense fallback={<AuthStatusSkeleton />}>
-              <AuthStatus slug={slug} thumbnail={portfolio.thumbnail} />
-            </Suspense>
           </div>
 
           <h1 className={style.title}>{portfolio.title}</h1>

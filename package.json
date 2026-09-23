@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:static": "node scripts/assert-static-routes.mjs",
+    "verify": "npm run lint && npm run type-check && npm run test:coverage && npm run build && npm run test:static"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",

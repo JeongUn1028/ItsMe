@@ -2,7 +2,7 @@
 
 import { deletePortfolioAction } from "@/app/actions/delete-portfolio.action";
 import { useActionState } from "react";
-import style from "./portfolio-slug.module.css";
+import style from "./PortfolioAdminActions.module.css";
 
 export default function DeleteForm({
   slug,
@@ -21,7 +21,7 @@ export default function DeleteForm({
       <input type="hidden" name="slug" value={slug} />
       <input type="hidden" name="thumbnail" value={thumbnail} />
       <button type="submit" disabled={isPending} className={`pill pill-danger ${style.deleteButton}`}>
-        {isPending ? "Deleting..." : "Delete"}
+        {isPending ? "삭제 중..." : "삭제"}
       </button>
     </form>
   );
