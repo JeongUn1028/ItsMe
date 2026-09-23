@@ -33,9 +33,12 @@
   }
 }
 
+/* 1280px 아래에서 2열로 두면 칸 수가 다른 카드끼리 맞물리지 않아 오른쪽에 빈 칸이 생긴다.
+   좁은 화면은 한 줄에 카드 하나씩 쌓는다. (#69) */
 .portfolioGrid {
-  @apply grid w-full grid-cols-2 grid-flow-row-dense gap-4 sm:grid-cols-2 xl:grid-cols-3;
-  grid-auto-rows: 150px;
+  @apply grid w-full grid-cols-1 grid-flow-row-dense gap-4 xl:grid-cols-3;
+  /* 모바일은 썸네일이 위에 오므로 글 영역이 눌리지 않도록 한 칸을 조금 높게 잡는다. (#69) */
+  grid-auto-rows: 172px;
 }
 
 @media (min-width: 640px) {

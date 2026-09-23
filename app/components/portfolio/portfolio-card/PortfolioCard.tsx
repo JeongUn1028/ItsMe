@@ -23,11 +23,9 @@ export default function PortfolioCard({
 
   const {
     isRowLayout,
-    mobileColSpan,
-    mobileRowSpan,
-    tabletColSpan,
+    narrowColSpan,
+    narrowRowSpan,
     desktopColSpan,
-    tabletRowSpan,
     desktopRowSpan,
   } = getSpanClasses(size);
 
@@ -35,7 +33,7 @@ export default function PortfolioCard({
     <Link
       href={`/portfolio/${slug}`}
       aria-label={`${title} 자세히 보기`}
-      className={`glass fade-up ${style.card} ${mobileColSpan} ${mobileRowSpan} ${tabletColSpan} ${desktopColSpan} ${tabletRowSpan} ${desktopRowSpan} ${isRowLayout ? style.rowLayout : style.columnLayout}`}
+      className={`glass fade-up ${style.card} ${narrowColSpan} ${narrowRowSpan} ${desktopColSpan} ${desktopRowSpan} ${isRowLayout ? style.rowLayout : style.columnLayout}`}
       style={{ "--i": index } as CSSProperties}
     >
       <div

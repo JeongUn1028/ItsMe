@@ -1,6 +1,5 @@
 type SpanSize = 1 | 2 | 3;
 
-type TabletSpanSize = 1 | 2;
 
 interface RawFrontmatter {
   //* 백그라운드에서 동작 하는 필드
@@ -31,4 +30,4 @@ interface Portfolio {
   contents: string;
 }
 
-export type { RawFrontmatter, Portfolio, SpanSize, TabletSpanSize };
+export type { RawFrontmatter, Portfolio, SpanSize };

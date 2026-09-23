@@ -11,8 +11,8 @@ export default function PortfolioCards() {
         <PortfolioCard
           key={portfolio.slug}
           index={index}
-          //* 첫 카드는 첫 화면에 보이므로 우선 로드한다. (LCP)
-          isPriority={index === 0}
+          //* 넓은 화면에서는 첫 두 카드가 함께 첫 화면에 들어와, 둘째 썸네일이 LCP 가 된다. (#69)
+          isPriority={index < 2}
           {...portfolio}
         />
       ))}
