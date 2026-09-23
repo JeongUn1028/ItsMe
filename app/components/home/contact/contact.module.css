@@ -34,6 +34,15 @@
   transition-duration: var(--dur-fast);
 }
 
+.actions {
+  @apply flex flex-row flex-wrap items-center justify-center gap-2;
+}
+
+/* .pill 에는 여백이 없으므로 Hero 의 버튼과 같은 크기로 맞춥니다. */
+.action {
+  @apply px-3 py-1.5 text-[0.82rem];
+}
+
 .value {
   @apply text-base;
 }
