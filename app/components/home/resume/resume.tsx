@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import style from "./resume.module.css";
 import { useState, type CSSProperties } from "react";
 import { getResume } from "@/lib/resume/getResume";
@@ -23,6 +24,7 @@ export default function Resume() {
             alt="profile image"
             width={220}
             height={220}
+            sizes="(max-width: 639px) 180px, (max-width: 1279px) 260px, 190px"
             priority
             className={style.image}
           />
@@ -39,14 +41,14 @@ export default function Resume() {
             </ul>
           </div>
           <div className={style.actions}>
-            <a
+            <Link
               href={pdfPath}
               target="_blank"
               rel="noopener noreferrer"
               className={`pill ${style.resumeLink}`}
             >
               Resume PDF 보기
-            </a>
+            </Link>
           </div>
         </div>
       </div>

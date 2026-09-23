@@ -51,10 +51,11 @@ export function PortfolioContent({
             >
               <Image
                 src={"/links/github_logo_icon.png"}
-            className="dark-invert"
+                className="dark-invert"
                 alt="GitHub"
                 width={32}
                 height={32}
+                sizes="32px"
               />
             </Link>
             {portfolio.velogLink && (
@@ -69,6 +70,7 @@ export function PortfolioContent({
                   alt="Velog"
                   width={32}
                   height={32}
+                  sizes="32px"
                 />
               </Link>
             )}

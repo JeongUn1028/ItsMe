@@ -66,6 +66,7 @@ export default function ImageUpload({ initialUrl }: { initialUrl?: string }) {
                   alt="썸네일 미리보기"
                   width={300}
                   height={200}
+                  sizes="300px"
                   className={style.thumbnailPreview}
                 />
                 <label htmlFor="thumbnail" className={style.changeButton}>
