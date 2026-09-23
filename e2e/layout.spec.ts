@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { gotoHome } from "./helpers";
+import { gotoHome, hasVelogPosts } from "./helpers";
 
 //* 레이아웃 회귀: 뷰포트 밖으로 넘치는 요소, 카드 밖으로 넘치는 콘텐츠를 잡습니다.
 
@@ -38,6 +38,8 @@ test("헤더 제목이 한 줄로 표시된다", async ({ page }) => {
 test("홈 카드 내용이 카드 밖으로 넘치지 않는다", async ({ page }) => {
   await gotoHome(page);
   //* Velog 카드: 마지막 포스트의 아래쪽이 카드 아래쪽 안에 있어야 합니다.
+  //* 외부 API 가 비어 있으면 검증할 대상이 없으므로 건너뜁니다.
+  test.skip(!(await hasVelogPosts(page)), "Velog 포스트가 없어 건너뜁니다");
   const card = page.locator(".glass", { hasText: "VELOG POSTS" }).first();
   const lastPost = card.locator('a[href*="velog.io"]').last();
   await expect(lastPost).toBeVisible();

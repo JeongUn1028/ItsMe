@@ -20,5 +20,20 @@ export default defineConfig({
     environment: "jsdom",
     exclude: ["e2e/**", "node_modules/**"],
     setupFiles: ["./vitest.setup.ts"],
+    coverage: {
+      provider: "v8",
+      //* 테스트가 건드리지 않은 파일도 분모에 포함해야 실제 수치를 볼 수 있습니다.
+      all: true,
+      include: ["lib/**/*.ts", "app/components/**/*.tsx"],
+      reporter: ["text-summary", "lcov"],
+      //* 목표는 70%(핵심 로직 90%)이지만 현재는 33% 입니다.
+      //* 우선 현재 수치를 하한선으로 고정해 회귀만 막고, #50 에서 테스트를 보강하며 단계적으로 올립니다.
+      thresholds: {
+        statements: 32,
+        branches: 35,
+        functions: 30,
+        lines: 32,
+      },
+    },
   },
 });
