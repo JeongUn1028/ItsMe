@@ -40,16 +40,6 @@ jobs:
       - name: Assert static routes
         run: npm run test:static
 
-      # 빌드 산출물을 e2e 잡에서 재사용해 빌드를 두 번 하지 않습니다.
-      - name: Upload build
-        uses: actions/upload-artifact@v4
-        with:
-          name: next-build
-          # 캐시 디렉터리는 용량만 크고 실행에 필요 없습니다.
-          path: |
-            .next
-            !.next/cache
-          retention-days: 1
 
   e2e:
     name: e2e (desktop · mobile)
@@ -65,11 +55,10 @@ jobs:
 
       - run: npm ci
 
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: next-build
-          path: .next
+      # 아티팩트로 넘기는 대신 여기서 다시 빌드한다.
+      # 빌드 자체는 몇 초라 upload/download 의 글롭 규칙에 의존하는 것보다 안정적이다.
+      - name: Build
+        run: npm run build
 
       # CI 에는 시스템 Chrome 이 없으므로 번들 Chromium 을 설치합니다.
       - name: Install Playwright browser
