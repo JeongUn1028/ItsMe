@@ -12,7 +12,8 @@
     grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
     grid-template-areas:
       "header aside"
-      "lead   aside";
+      "lead   aside"
+      "more   aside";
     align-items: start;
   }
 
@@ -24,9 +25,13 @@
     grid-area: lead;
   }
 
+  /* 영역을 지정하지 않으면 자동 배치로 아래에 새 행이 생겨 오른쪽 열이 카드 바닥에 닿지 못한다. */
+  .more {
+    grid-area: more;
+  }
+
   .aside {
     grid-area: aside;
-    @apply flex flex-col gap-3;
   }
 }
 
@@ -108,6 +113,23 @@
   overscroll-behavior: contain;
 }
 
+/* 좁은 화면에서는 기술 → 행동이 세로로 이어진다.
+   2열이 되는 1024px 이상에서는 오른쪽 열이 위로만 붙어 카드 아래가 140px 넘게 비었으므로,
+   열 전체 높이를 쓰고 기술은 위, 행동은 아래로 벌린다. (#69)
+   반응형 분기는 미디어쿼리 블록을 따로 두지 않고 한 선언에 변형으로 붙인다. */
+.aside {
+  @apply flex flex-col gap-4 lg:h-full lg:justify-between lg:gap-6 lg:self-stretch;
+}
+
+.skillGroup {
+  @apply flex flex-col gap-2;
+}
+
+.asideLabel {
+  @apply m-0 text-[0.72rem] font-semibold tracking-wide;
+  color: var(--text-3);
+}
+
 .skills {
   @apply m-0 flex list-none flex-wrap gap-1.5 p-0;
 }
@@ -117,9 +139,9 @@
 }
 
 .actions {
-  @apply flex flex-wrap gap-2;
+  @apply flex flex-wrap gap-2 lg:gap-2.5;
 }
 
 .action {
-  @apply px-3 py-1.5 text-[0.82rem];
+  @apply px-3.5 py-2 text-[0.85rem];
 }
