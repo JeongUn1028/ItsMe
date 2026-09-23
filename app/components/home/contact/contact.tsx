@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import style from "./contact.module.css";
 import type { CSSProperties } from "react";
 
@@ -14,26 +15,28 @@ export default function Contact() {
       <h2 className={style.title}>CONTACT</h2>
       <div className={style.content}>
         {/* 탭하면 메일 앱 / 전화 앱이 열리도록 실제 링크로 둡니다. */}
-        <a href={`mailto:${EMAIL}`} className={style.row}>
+        <Link href={`mailto:${EMAIL}`} className={style.row}>
           <Image
             src="/contact/email_icon.png"
             className="dark-invert"
             alt=""
             width={18}
             height={18}
+            sizes="18px"
           />
           <span className={style.value}>{EMAIL}</span>
-        </a>
-        <a href={`tel:${PHONE.replace(/-/g, "")}`} className={style.row}>
+        </Link>
+        <Link href={`tel:${PHONE.replace(/-/g, "")}`} className={style.row}>
           <Image
             src="/contact/phone_icon.png"
             className="dark-invert"
             alt=""
             width={18}
             height={18}
+            sizes="18px"
           />
           <span className={style.value}>{PHONE}</span>
-        </a>
+        </Link>
       </div>
     </div>
   );

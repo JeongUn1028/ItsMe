@@ -1,6 +1,7 @@
 "use client";
 
 import style from "./resume.module.css";
+import Link from "next/link";
 import { useRef } from "react";
 
 interface PdfUploadSectionProps {
@@ -92,14 +93,14 @@ export function PdfUploadSection({
               <div className={style.pdfSize}>업로드 완료</div>
             </div>
           </div>
-          <a
+          <Link
             href={pdfPath}
             target="_blank"
             rel="noopener noreferrer"
             className={style.pdfButton}
           >
             보기
-          </a>
+          </Link>
         </div>
       )}
     </div>
