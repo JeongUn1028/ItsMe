@@ -12,13 +12,22 @@ test("페이지가 가로로 넘치지 않는다", async ({ page }) => {
   }));
   expect(docW).toBeLessThanOrEqual(vw);
 
-  //* 뷰포트보다 넓은 요소가 하나도 없어야 합니다.
-  const wide = await page.evaluate(() =>
-    [...document.querySelectorAll("body *")]
+  //* 뷰포트보다 넓은 요소가 없어야 합니다.
+  //* 단, 가로 스크롤 컨테이너(홈 페이지 넘김) 안쪽은 의도된 배치라 제외합니다. (#65)
+  const wide = await page.evaluate(() => {
+    const inScroller = (el: Element) => {
+      for (let node = el.parentElement; node; node = node.parentElement) {
+        const overflowX = getComputedStyle(node).overflowX;
+        if (overflowX === "auto" || overflowX === "scroll") return true;
+      }
+      return false;
+    };
+    return [...document.querySelectorAll("body *")]
       .filter((el) => el.getBoundingClientRect().right > window.innerWidth + 1)
+      .filter((el) => !inScroller(el))
       .map((el) => `${el.tagName}.${el.className}`)
-      .slice(0, 5),
-  );
+      .slice(0, 5);
+  });
   expect(wide).toEqual([]);
 });
 

@@ -1,7 +1,8 @@
 @reference "../../../globals.css";
 
+/* h-full 이면 옆 Velog 카드 높이에 맞춰 늘어나 속이 텅 빈다. 내용만큼만 차지한다. (#65) */
 .card {
-  @apply flex h-full w-full flex-col justify-evenly p-4;
+  @apply flex w-full flex-col gap-3 p-4;
 }
 
 .title {
@@ -9,12 +10,11 @@
 }
 
 .content {
-  @apply flex flex-col items-center;
-  height: 70%;
+  @apply flex flex-col items-center gap-2;
 }
 
 .row {
-  @apply flex h-full flex-row items-center justify-center gap-2 rounded-full px-3 no-underline;
+  @apply flex flex-row items-center justify-center gap-2 rounded-full px-3 py-1.5 no-underline;
   color: var(--text-3);
   transition:
     color var(--dur-base) var(--ease-out),

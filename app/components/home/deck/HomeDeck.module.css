@@ -1,0 +1,83 @@
+@reference "../../../globals.css";
+
+/* 기본은 평범한 세로 스택. 넓은 화면(≥1440px)에서만 좌우 페이지 넘김으로 바뀐다. (#65)
+   1440px 미만에서는 한 페이지에 담을 콘텐츠가 뷰포트를 100~290px 넘겨서,
+   페이지 안에서 또 세로로 스크롤해야 하는 어색한 상태가 된다.
+   DOM 은 하나이고 레이아웃만 CSS 로 분기하므로 콘텐츠는 항상 크롤링 가능하다. */
+.deck {
+  @apply relative w-full;
+}
+
+.track {
+  @apply flex w-full flex-col gap-8;
+}
+
+.page {
+  @apply flex w-full flex-col gap-4;
+}
+
+.controls {
+  @apply hidden;
+}
+
+@media (min-width: 1440px) {
+  .track {
+    @apply snap-x snap-mandatory flex-row gap-0 overflow-x-auto overflow-y-hidden;
+    height: calc(100dvh - 9rem);
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .page {
+    @apply shrink-0 snap-center justify-center overflow-y-auto py-1 pr-1;
+    flex-basis: 100%;
+  }
+
+  .controls {
+    @apply mt-4 flex items-center justify-center gap-2;
+  }
+}
+
+.dot {
+  @apply h-2 rounded-full border-0 p-0;
+  width: 0.5rem;
+  background: var(--text-3);
+  opacity: 0.4;
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    width var(--dur-base) var(--ease-out);
+}
+
+.dotActive {
+  width: 1.4rem;
+  opacity: 1;
+}
+
+/* 페이징이 켜지는 폭에서만 노출한다.
+   미디어쿼리 블록을 따로 두면 소스 순서에 따라 display:none 이 이길 수 있어 변형으로 붙인다. */
+.arrow {
+  @apply absolute top-1/2 z-10 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-lg min-[1440px]:inline-flex;
+}
+
+.arrowPrev {
+  left: -0.75rem;
+}
+
+.arrowNext {
+  right: -0.75rem;
+}
+
+.arrow[disabled] {
+  @apply pointer-events-none opacity-0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    scroll-behavior: auto;
+  }
+}

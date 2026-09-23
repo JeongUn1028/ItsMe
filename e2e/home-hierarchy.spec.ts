@@ -39,7 +39,11 @@ test("이력서 PDF 로 가는 링크가 첫 화면에 있다", async ({ page })
   await expect(pdfLink).toHaveAttribute("href", /\.pdf$/);
 });
 
-test("대표 프로젝트가 글·연락처보다 위에 놓인다", async ({ page }) => {
+//* 1440px 이상에서는 좌우 페이지로 나뉘어 세로 순서가 성립하지 않는다.
+//* 그 경우의 위계는 home-paging.spec.ts 가 검증한다. (#65)
+test("대표 프로젝트가 글·연락처보다 위에 놓인다", async ({ page, viewport }) => {
+  test.skip((viewport?.width ?? 0) >= 1440, "좁은 화면의 세로 순서 규칙");
+
   await gotoHome(page);
 
   const projectsHeading = page.getByRole("heading", { name: "대표 프로젝트" });

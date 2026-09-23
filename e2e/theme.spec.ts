@@ -58,8 +58,9 @@ test.describe("다크 모드", () => {
     const ctx = await browser.newContext({ colorScheme: "dark" });
     const page = await ctx.newPage();
     await gotoHome(page);
+    //* Links 카드는 Hero 와 중복이라 삭제됐다(#65). 남아 있는 연락처 아이콘으로 검증한다.
     const filter = await page
-      .locator('img[alt="GitHub"]')
+      .locator('img[src*="email_icon"], img[src*="_next/image"][srcset*="email_icon"]')
       .first()
       .evaluate((el) => getComputedStyle(el).filter);
     expect(filter).toContain("invert");
