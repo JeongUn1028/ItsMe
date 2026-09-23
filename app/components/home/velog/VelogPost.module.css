@@ -33,8 +33,12 @@
   color: var(--text-1);
 }
 
+.meta {
+  @apply flex flex-row items-center justify-between gap-2;
+}
+
 .tag {
-  @apply flex flex-wrap gap-1;
+  @apply flex min-w-0 flex-wrap gap-1;
   max-height: 1.55rem;
   overflow: hidden;
 }
@@ -43,12 +47,8 @@
   @apply px-2 py-0.5 text-[0.72rem] font-medium;
 }
 
-.dateContainer {
-  @apply mt-0.5 flex w-full justify-end;
-}
-
-.dateContainer p {
-  @apply text-xs;
+.date {
+  @apply shrink-0 text-xs;
   color: var(--text-3);
 }
 
@@ -59,11 +59,5 @@
 
   .tag {
     @apply gap-1.5;
-    max-height: none;
-    overflow: visible;
-  }
-
-  .dateContainer {
-    @apply mt-0.5;
   }
 }

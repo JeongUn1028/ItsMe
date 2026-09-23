@@ -30,8 +30,15 @@ test("상세 페이지의 반응형 이미지에는 모두 sizes 가 지정되�
 test("이력서 PDF 링크는 새 탭에서 안전하게 열린다", async ({ page }) => {
   await gotoHome(page);
 
-  const pdfLink = page.getByRole("link", { name: "이력서 PDF" });
-  await expect(pdfLink).toHaveAttribute("target", "_blank");
-  await expect(pdfLink).toHaveAttribute("rel", /noopener/);
-  await expect(pdfLink).toHaveAttribute("href", /\.pdf$/);
+  //* Hero 와 CONTACT 양쪽에 같은 링크가 있으므로 모두 확인한다. (#69)
+  const pdfLinks = page.getByRole("link", { name: "이력서 PDF" });
+  const count = await pdfLinks.count();
+  expect(count).toBeGreaterThan(0);
+
+  for (let index = 0; index < count; index += 1) {
+    const pdfLink = pdfLinks.nth(index);
+    await expect(pdfLink).toHaveAttribute("target", "_blank");
+    await expect(pdfLink).toHaveAttribute("rel", /noopener/);
+    await expect(pdfLink).toHaveAttribute("href", /\.pdf$/);
+  }
 });

@@ -15,14 +15,11 @@ describe("getSpanClasses", () => {
     expect(getSpanClasses([1, 2]).isRowLayout).toBe(false);
   });
 
-  it("데스크톱과 태블릿의 칸 수 클래스를 함께 돌려준다", () => {
+  it("3열이 되는 데스크톱에만 칸 수를 적용한다", () => {
     const spans = getSpanClasses([3, 2]);
 
     expect(spans.desktopColSpan).toBe("xl:col-span-3");
     expect(spans.desktopRowSpan).toBe("xl:row-span-2");
-    //* 태블릿은 2열이라 3칸짜리도 2칸으로 줄인다.
-    expect(spans.tabletColSpan).toBe("sm:col-span-2");
-    expect(spans.tabletRowSpan).toBe("sm:row-span-2");
   });
 
   it("size 가 비어 있으면 1x1 로 채운다", () => {
@@ -33,16 +30,18 @@ describe("getSpanClasses", () => {
     expect(spans.isRowLayout).toBe(true);
   });
 
-  it("모바일에서는 항상 2칸을 차지한다", () => {
+  //* size 와 무관하게 좁은 화면에서는 한 줄에 카드 하나씩, 같은 높이로 쌓는다. (#69)
+  it("좁은 화면에서는 size 와 관계없이 한 줄을 차지한다", () => {
     const sizes: SpanSize[][] = [
       [1, 1],
       [2, 1],
       [1, 2],
+      [3, 2],
     ];
     for (const size of sizes) {
       const spans = getSpanClasses(size);
-      expect(spans.mobileColSpan).toBe("col-span-2");
-      expect(spans.mobileRowSpan).toBe("row-span-2");
+      expect(spans.narrowColSpan).toBe("col-span-1");
+      expect(spans.narrowRowSpan).toBe("row-span-2 sm:row-span-1");
     }
   });
 });

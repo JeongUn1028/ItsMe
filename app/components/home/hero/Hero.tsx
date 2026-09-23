@@ -2,11 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { getResume } from "@/lib/resume/getResume";
+import { GITHUB_URL, VELOG_URL } from "@/lib/profile/links";
 import style from "./Hero.module.css";
 
 const NAME = "이정운";
-const GITHUB_URL = "https://github.com/JEONGUN1028";
-const VELOG_URL = "https://velog.io/@jeongun1028";
 
 /**
  * 홈 최상단 위젯. 이름 · 포지셔닝 한 줄 · 주력 기술 · 행동 유도를 한 화면에 담는다.
@@ -60,13 +59,20 @@ export default function Hero() {
       )}
 
       <div className={style.aside}>
-        <ul className={style.skills}>
-          {skills.map((skill) => (
-            <li key={skill} className={`chip ${style.skill}`}>
-              {skill}
-            </li>
-          ))}
-        </ul>
+        {/* 칩(정보)과 버튼(행동)이 같은 캡슐이라 한 덩어리로 읽혔다.
+            이름표와 크기로 역할을 갈라 준다. (#69) */}
+        <div className={style.skillGroup}>
+          <p id="skills-label" className={style.asideLabel}>
+            주력 기술
+          </p>
+          <ul aria-labelledby="skills-label" className={style.skills}>
+            {skills.map((skill) => (
+              <li key={skill} className={`chip ${style.skill}`}>
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className={style.actions}>
           <Link

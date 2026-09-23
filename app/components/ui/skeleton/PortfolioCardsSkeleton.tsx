@@ -16,11 +16,9 @@ export default function PortfolioCardsSkeleton() {
       {skeletonLayouts.map((size, index) => {
         const {
           isRowLayout,
-          mobileColSpan,
-          mobileRowSpan,
-          tabletColSpan,
+          narrowColSpan,
+          narrowRowSpan,
           desktopColSpan,
-          tabletRowSpan,
           desktopRowSpan,
         } = getSpanClasses([...size]);
 
@@ -28,7 +26,7 @@ export default function PortfolioCardsSkeleton() {
           <div
             key={index}
             aria-hidden="true"
-            className={`glass ${cardStyle.card} ${mobileColSpan} ${mobileRowSpan} ${tabletColSpan} ${desktopColSpan} ${tabletRowSpan} ${desktopRowSpan} ${isRowLayout ? cardStyle.rowLayout : cardStyle.columnLayout} ${style.skeletonCard}`}
+            className={`glass ${cardStyle.card} ${narrowColSpan} ${narrowRowSpan} ${desktopColSpan} ${desktopRowSpan} ${isRowLayout ? cardStyle.rowLayout : cardStyle.columnLayout} ${style.skeletonCard}`}
           >
             <div
               className={`${cardStyle.thumbnailWrap} ${isRowLayout ? cardStyle.thumbnailWrapRow : cardStyle.thumbnailWrapColumn} ${style.thumbnailSkeleton} shimmer`}
