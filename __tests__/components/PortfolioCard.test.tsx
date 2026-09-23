@@ -28,6 +28,15 @@ describe("PortfolioCard", () => {
     expect(link.className).toContain("fade-up");
   });
 
+  //* 세로가 긴 카드는 썸네일과 본문을 세로로 쌓는다. 가로 카드와 다른 분기다.
+  test("세로로 긴 카드도 같은 정보를 담는다", () => {
+    render(<PortfolioCard {...portfolio} size={[1, 2]} />);
+
+    const link = screen.getByRole("link", { name: "샘플 프로젝트 자세히 보기" });
+    expect(link.className).toContain("xl:row-span-2");
+    expect(screen.getByText("요약")).toBeDefined();
+  });
+
   test("제목, 요약, 태그를 표시한다", () => {
     render(<PortfolioCard {...portfolio} />);
 

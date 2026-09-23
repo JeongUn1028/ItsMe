@@ -6,8 +6,8 @@ import type { CSSProperties } from "react";
 export default function Links() {
   return (
     <div
-      className={`glass fade-up col-span-1 row-span-1 xl:col-start-2 xl:row-start-1 ${style.card}`}
-      style={{ "--i": 1 } as CSSProperties}
+      className={`glass fade-up col-span-1 ${style.card}`}
+      style={{ "--i": 2 } as CSSProperties}
     >
       <h1 className={style.title}>GIT/VELOG LINKS</h1>
       <div className={style.content}>

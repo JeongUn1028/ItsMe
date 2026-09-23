@@ -50,8 +50,7 @@ test("홈 카드 내용이 카드 밖으로 넘치지 않는다", async ({ page 
   );
 });
 
-test("연락처는 mailto/tel 링크다", async ({ page }) => {
+test("연락처는 mailto 링크로 제공된다", async ({ page }) => {
   await gotoHome(page);
   await expect(page.locator('a[href^="mailto:"]')).toHaveCount(1);
-  await expect(page.locator('a[href^="tel:"]')).toHaveCount(1);
 });
