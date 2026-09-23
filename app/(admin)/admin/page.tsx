@@ -4,6 +4,7 @@ import Resume from "../../components/home/resume/resume";
 import PortfolioCard from "../../components/portfolio/portfolio-card/PortfolioCard";
 import { Portfolio } from "@/lib/types/portfolioTypes";
 import Link from "next/link";
+import PortfolioAdminActions from "../../components/portfolio/portfolio-admin-actions/PortfolioAdminActions";
 
 //* Admin Page
 export default function Page() {
@@ -34,7 +35,13 @@ export default function Page() {
           <h2 className={style.sectionTitle}>Portfolio</h2>
           <div className={style.portfolioGrid}>
             {portfolio.map((portfolio: Portfolio) => (
-              <PortfolioCard key={portfolio.slug} {...portfolio} />
+              <div key={portfolio.slug} className={style.portfolioItem}>
+                <PortfolioCard {...portfolio} />
+                <PortfolioAdminActions
+                  slug={portfolio.slug}
+                  thumbnail={portfolio.thumbnail}
+                />
+              </div>
             ))}
           </div>
         </div>

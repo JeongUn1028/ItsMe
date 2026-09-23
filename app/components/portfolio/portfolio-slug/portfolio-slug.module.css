@@ -34,14 +34,8 @@
   @apply flex flex-wrap items-center justify-between gap-3;
 }
 
-.actionGroup {
-  @apply flex flex-wrap items-center gap-2;
-}
-
-/* 상단 액션 버튼은 전역 .pill 을 사용하고, 여기서는 크기만 정합니다. */
-.backLink,
-.editLink,
-.deleteButton {
+/* 뒤로가기 버튼은 전역 .pill 을 사용하고, 여기서는 크기만 정합니다. */
+.backLink {
   @apply px-3 py-1 text-sm;
 }
 

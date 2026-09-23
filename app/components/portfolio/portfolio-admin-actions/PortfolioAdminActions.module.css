@@ -1,0 +1,14 @@
+@reference "../../../globals.css";
+
+.actionGroup {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.editLink,
+.deleteButton {
+  @apply px-3 py-1 text-sm;
+}
+
+.deleteForm {
+  @apply contents;
+}
