@@ -5,6 +5,7 @@ import BackToHomeButton from "@/app/components/ui/BackToHomeBtn";
 import { useMDXComponents } from "@/mdx-components";
 import { getPortfolioData } from "@/lib/portfolio/getPortfolioData";
 import Image from "next/image";
+import { GitHubIcon } from "@/app/components/ui/icons";
 
 export function PortfolioContent({
   params,
@@ -49,14 +50,7 @@ export function PortfolioContent({
               rel="noopener noreferrer"
               className={style.resourceLink}
             >
-              <Image
-                src={"/links/github_logo_icon.png"}
-                className="dark-invert"
-                alt="GitHub"
-                width={32}
-                height={32}
-                sizes="32px"
-              />
+              <GitHubIcon size={32} title="GitHub" />
             </Link>
             {portfolio.velogLink && (
               <Link
