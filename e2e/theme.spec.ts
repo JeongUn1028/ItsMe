@@ -54,16 +54,22 @@ test.describe("다크 모드", () => {
     expect(await bodyLuminance(page)).toBeGreaterThan(0.8);
   });
 
-  test("다크 모드에서 어두운 아이콘은 반전되어 보인다", async ({ browser }) => {
+  //* 아이콘은 filter: invert 로 뒤집지 않고 SVG 가 글자색(currentColor)을 그대로 따른다. (#44)
+  test("다크 모드에서 아이콘은 반전 없이 글자색을 따라 밝게 보인다", async ({ browser }) => {
     const ctx = await browser.newContext({ colorScheme: "dark" });
     const page = await ctx.newPage();
     await gotoHome(page);
-    //* Links 카드는 Hero 와 중복이라 삭제됐다(#65). 남아 있는 연락처 아이콘으로 검증한다.
-    const filter = await page
-      .locator('img[src*="email_icon"], img[src*="_next/image"][srcset*="email_icon"]')
-      .first()
-      .evaluate((el) => getComputedStyle(el).filter);
-    expect(filter).toContain("invert");
+
+    await expect(page.locator(".dark-invert")).toHaveCount(0);
+    const icon = page.locator('a[href^="mailto:"] svg');
+    await expect(icon).toHaveCount(1);
+    const { filter, luminance } = await icon.evaluate((el) => {
+      const cs = getComputedStyle(el);
+      const [r, g, b] = (cs.color.match(/\d+/g) ?? ["0", "0", "0"]).map(Number);
+      return { filter: cs.filter, luminance: (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 };
+    });
+    expect(filter).toBe("none");
+    expect(luminance).toBeGreaterThan(0.5);
     await ctx.close();
   });
 });

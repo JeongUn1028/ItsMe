@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import style from "./contact.module.css";
 import type { CSSProperties } from "react";
 import { EMAIL, GITHUB_URL, VELOG_URL } from "@/lib/profile/links";
 import { getResume } from "@/lib/resume/getResume";
+import { EmailIcon } from "@/app/components/ui/icons";
 
 export default function Contact() {
   const { pdfPath } = getResume();
@@ -21,14 +21,7 @@ export default function Contact() {
         {/* 탭하면 메일 앱이 열리도록 실제 링크로 둡니다.
             전화번호는 공개 노출 대신 이력서 PDF 안에만 둡니다. (#63) */}
         <Link href={`mailto:${EMAIL}`} className={style.row}>
-          <Image
-            src="/contact/email_icon.png"
-            className="dark-invert"
-            alt=""
-            width={18}
-            height={18}
-            sizes="18px"
-          />
+          <EmailIcon size={18} />
           <span className={style.value}>{EMAIL}</span>
         </Link>
 

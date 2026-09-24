@@ -9,7 +9,7 @@
 }
 
 .intro {
-  @apply hidden flex-col justify-between rounded-[var(--radius-xl)] p-8 lg:flex;
+  @apply hidden flex-col justify-between rounded-[var(--radius-xl)] squircle p-8 lg:flex;
   background:
     linear-gradient(150deg, var(--glass-bg), transparent),
     radial-gradient(circle at top left, var(--glass-highlight), transparent 34%);
@@ -115,7 +115,7 @@
 }
 
 .errorMessage {
-  @apply mt-4 rounded-[var(--radius-sm)] p-4 text-sm;
+  @apply mt-4 rounded-[var(--radius-sm)] squircle p-4 text-sm;
   background: var(--danger-bg);
   border: 1px solid var(--danger-border);
   color: var(--danger-fg);
