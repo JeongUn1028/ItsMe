@@ -24,6 +24,20 @@
   overflow-x: hidden;
 }
 
+/* 시트 안에서는 카드가 아니라 시트의 본문이다.
+   자체 테두리·모서리가 남으면 손잡이 아래로 이음새가 보인다. (#43) */
+@media (max-width: 767px) {
+  .modalScrollable {
+    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+}
+
 .header {
   @apply flex flex-col gap-4 border-b px-5 py-5 sm:px-8;
   border-color: var(--separator);
