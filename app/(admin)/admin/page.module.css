@@ -5,7 +5,7 @@
 }
 
 .actionsSection {
-  @apply flex w-full flex-col gap-3 rounded-[var(--radius-lg)] p-4 sm:flex-row sm:items-center sm:justify-between;
+  @apply flex w-full flex-col gap-3 rounded-[var(--radius-lg)] squircle p-4 sm:flex-row sm:items-center sm:justify-between;
 }
 
 .actionsTitle {
@@ -69,11 +69,11 @@
 }
 
 .resumeSection {
-  @apply flex min-h-0 w-full flex-col rounded-[var(--radius-lg)] p-4;
+  @apply flex min-h-0 w-full flex-col rounded-[var(--radius-lg)] squircle p-4;
 }
 
 .portfolioSection {
-  @apply flex min-h-0 w-full flex-col rounded-[var(--radius-lg)] p-4;
+  @apply flex min-h-0 w-full flex-col rounded-[var(--radius-lg)] squircle p-4;
 }
 
 .sectionTitle {

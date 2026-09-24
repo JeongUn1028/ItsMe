@@ -40,7 +40,7 @@
 }
 
 .imageWrap {
-  @apply shrink-0 overflow-hidden rounded-[var(--radius-md)];
+  @apply shrink-0 overflow-hidden rounded-[var(--radius-md)] squircle;
 }
 
 .image {

@@ -9,7 +9,7 @@
 }
 
 .modal {
-  @apply mx-auto w-full max-w-[860px] overflow-hidden rounded-[var(--radius-lg)];
+  @apply mx-auto w-full max-w-[860px] overflow-hidden rounded-[var(--radius-lg)] squircle;
   background: var(--surface);
   border: 1px solid var(--glass-border);
   box-shadow:

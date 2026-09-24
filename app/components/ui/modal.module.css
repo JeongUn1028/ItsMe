@@ -25,12 +25,14 @@
   z-index: 1000;
   width: min(980px, calc(100vw - 48px));
   max-height: calc(100vh - 48px);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
+  corner-shape: var(--corner-shape);
   overscroll-behavior: contain;
   opacity: 0;
   transform: translateX(-50%) translateY(14px) scale(0.985);
+  /* 카드가 살짝 커지며 떠오르는 등장은 약간 튀는 스프링으로 */
   transition:
-    transform var(--modal-dur) var(--ease-out),
+    transform var(--modal-dur) var(--ease-spring),
     opacity var(--modal-dur) ease;
   will-change: transform, opacity;
 }
@@ -74,8 +76,10 @@
     left: 0;
     width: 100%;
     max-height: 92dvh;
-    border-radius: 20px 20px 0 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     transform: translateY(100%);
+    /* 바닥에 붙은 시트가 튀어 오르면 아래로 틈이 보이므로 튀지 않는 커브를 쓴다. */
+    transition-timing-function: var(--ease-out), ease;
   }
 
   .dialogVisible {

@@ -1,7 +1,7 @@
 @reference "../../../globals.css";
 
 .card {
-  @apply flex h-full w-full overflow-hidden p-4 rounded-[var(--radius-sm)] text-inherit no-underline;
+  @apply flex h-full w-full overflow-hidden p-4 rounded-[var(--radius-sm)] squircle text-inherit no-underline;
   gap: 0.8rem;
   /* transition 대신 실제로 바뀌는 속성만 지정해 불필요한 리페인트를 줄입니다. */
   transition:
@@ -49,7 +49,7 @@
 }
 
 .thumbnailWrap {
-  @apply w-full shrink-0 overflow-hidden rounded-[var(--radius-sm)];
+  @apply w-full shrink-0 overflow-hidden rounded-[var(--radius-sm)] squircle;
   flex-basis: 52%;
 }
 
