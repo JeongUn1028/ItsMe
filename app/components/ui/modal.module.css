@@ -1,0 +1,88 @@
+@reference "../../globals.css";
+
+/* 열고 닫는 길이는 컴포넌트가 --modal-dur 로 넘긴다.
+   OS 의 모션 감소 설정이 켜져 있으면 0ms 가 들어와 즉시 열리고 닫힌다. */
+
+.scrim {
+  @apply fixed inset-0;
+  z-index: 999;
+  background: var(--scrim);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity var(--modal-dur) ease;
+}
+
+.scrimVisible {
+  opacity: 1;
+}
+
+/* 데스크톱: 화면 위쪽 가운데에 뜨는 카드 */
+.dialog {
+  @apply fixed overflow-hidden outline-none;
+  top: 24px;
+  left: 50%;
+  z-index: 1000;
+  width: min(980px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  border-radius: 18px;
+  overscroll-behavior: contain;
+  opacity: 0;
+  transform: translateX(-50%) translateY(14px) scale(0.985);
+  transition:
+    transform var(--modal-dur) var(--ease-out),
+    opacity var(--modal-dur) ease;
+  will-change: transform, opacity;
+}
+
+.dialogVisible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* 손잡이는 시트일 때만 쓰인다. */
+.grabber {
+  @apply hidden w-full shrink-0 items-center justify-center;
+  height: 22px;
+  cursor: grab;
+  /* 끌어내리는 동안 브라우저 기본 스크롤과 다투지 않게 한다. */
+  touch-action: none;
+  background: var(--surface);
+}
+
+.grabber::before {
+  content: "";
+  width: 36px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--separator);
+}
+
+.grabber:active {
+  cursor: grabbing;
+}
+
+/* 모바일: 아래에서 올라오는 iOS 시트 */
+@media (max-width: 767px) {
+  .dialog {
+    @apply flex flex-col;
+    /* 손잡이와 본문이 한 장의 면으로 이어지게 시트 자체에 배경을 준다. */
+    background: var(--surface);
+    box-shadow: 0 -8px 32px var(--glass-shadow);
+    top: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+  }
+
+  .dialogVisible {
+    transform: translateY(0);
+  }
+
+  .grabber {
+    @apply flex;
+  }
+}

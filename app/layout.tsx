@@ -74,7 +74,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* 모바일 시트가 열리면 이 래퍼만 살짝 물러납니다. 배경 레이어(body::before/after)와
+            포털(#modal-root)은 바깥에 있어 영향을 받지 않습니다. (#43) */}
+        <div id="page-root">{children}</div>
         {/* Portal로 렌더링되는 모달 전용 DOM 루트입니다. */}
         <div id="modal-root"></div>
         {/* @modal parallel route가 여기로 주입됩니다. */}

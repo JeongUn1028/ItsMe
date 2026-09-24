@@ -1,11 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
+import style from "./modal.module.css";
 
 const ANIMATION_MS = 240;
-const EASE_OUT = "cubic-bezier(0.22, 1, 0.36, 1)";
+//* 시트를 닫기로 판단하는 기준: 이만큼 끌어내렸거나, 이 속도 이상으로 튕겼을 때. (#43)
+const DISMISS_DISTANCE_PX = 96;
+const DISMISS_VELOCITY_PX_PER_MS = 0.6;
+const SHEET_QUERY = "(max-width: 767px)";
 
 //* OS 의 모션 감소 설정이 켜져 있으면 애니메이션 없이 즉시 열고 닫습니다.
 const getAnimationMs = () =>
@@ -25,6 +30,15 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
   // isVisible을 ref로도 추적하여 closeModal이 isVisible state에 의존하지 않도록 합니다.
   const isVisibleRef = useRef(false);
   const closeTimerRef = useRef<number | null>(null);
+  //* 모바일에서만 시트로 동작하므로, 레이아웃 분기와 같은 기준을 JS 에서도 본다.
+  const [isSheet, setIsSheet] = useState(false);
+  const dragRef = useRef<{
+    pointerId: number;
+    startY: number;
+    lastY: number;
+    lastTime: number;
+    offset: number;
+  } | null>(null);
 
   const closeModal = useCallback(() => {
     if (!isVisibleRef.current) {
@@ -58,6 +72,32 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
       router.replace("/");
     }, animationMsRef.current);
   }, [pathname, router]);
+
+  //* 시트인지 여부는 열려 있는 동안 회전 등으로 바뀔 수 있어 계속 듣습니다.
+  useEffect(() => {
+    const query = window.matchMedia(SHEET_QUERY);
+    const sync = () => setIsSheet(query.matches);
+
+    sync();
+    query.addEventListener("change", sync);
+
+    return () => {
+      query.removeEventListener("change", sync);
+    };
+  }, []);
+
+  //* 시트가 열려 있는 동안 뒤 페이지를 살짝 물러나게 합니다. (iOS 15 스타일)
+  useEffect(() => {
+    if (!isSheet || !isVisible) {
+      return;
+    }
+
+    document.body.dataset.sheetOpen = "true";
+
+    return () => {
+      delete document.body.dataset.sheetOpen;
+    };
+  }, [isSheet, isVisible]);
 
   useEffect(() => {
     // 클라이언트에서만 portal 렌더링이 가능하므로 마운트 여부를 기록합니다.
@@ -113,6 +153,84 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
     }
   }, [isMounted]);
 
+
+  //* 시트를 아래로 끌어 닫습니다. 안쪽이 이미 스크롤돼 있으면 스크롤이 우선입니다.
+  const canStartDrag = (target: EventTarget | null) => {
+    if (!(target instanceof Element)) {
+      return false;
+    }
+    if (target.closest(`.${style.grabber}`)) {
+      return true;
+    }
+
+    let node: Element | null = target;
+    while (node && node !== dialogRef.current) {
+      if (node.scrollTop > 0) {
+        return false;
+      }
+      node = node.parentElement;
+    }
+    return true;
+  };
+
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    const sheet = dialogRef.current;
+    if (!isSheet || !sheet || dragRef.current || !canStartDrag(event.target)) {
+      return;
+    }
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startY: event.clientY,
+      lastY: event.clientY,
+      lastTime: event.timeStamp,
+      offset: 0,
+    };
+    sheet.setPointerCapture(event.pointerId);
+    sheet.style.transition = "none";
+  };
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    const sheet = dialogRef.current;
+    if (!drag || !sheet || drag.pointerId !== event.pointerId) {
+      return;
+    }
+
+    //* 위로 끄는 동작은 무시하고 아래 방향만 따라갑니다.
+    drag.offset = Math.max(0, event.clientY - drag.startY);
+    drag.lastY = event.clientY;
+    drag.lastTime = event.timeStamp;
+    sheet.style.transform = `translateY(${drag.offset}px)`;
+  };
+
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    const sheet = dialogRef.current;
+    if (!drag || !sheet || drag.pointerId !== event.pointerId) {
+      return;
+    }
+
+    dragRef.current = null;
+    if (sheet.hasPointerCapture(event.pointerId)) {
+      sheet.releasePointerCapture(event.pointerId);
+    }
+
+    const elapsed = Math.max(1, event.timeStamp - drag.lastTime);
+    const velocity = (event.clientY - drag.lastY) / elapsed;
+
+    //* 인라인으로 덮어쓴 값을 지워 클래스의 열림/닫힘 transform 으로 돌려놓습니다.
+    sheet.style.transition = "";
+    sheet.style.transform = "";
+
+    if (
+      drag.offset > DISMISS_DISTANCE_PX ||
+      velocity > DISMISS_VELOCITY_PX_PER_MS
+    ) {
+      closeModal();
+    }
+  };
+
   if (!isMounted) {
     return null;
   }
@@ -128,16 +246,8 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
       <div
         role="presentation"
         onClick={closeModal}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 999,
-          background: "var(--scrim)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-          opacity: isVisible ? 1 : 0,
-          transition: `opacity ${animationMsRef.current}ms ease`,
-        }}
+        className={`${style.scrim} ${isVisible ? style.scrimVisible : ""}`}
+        style={{ "--modal-dur": `${animationMsRef.current}ms` } as CSSProperties}
       />
       <div
         ref={dialogRef}
@@ -146,25 +256,19 @@ export const Modal = ({ children }: { children: React.ReactNode }) => {
         aria-label="포트폴리오 상세"
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
-        style={{
-          position: "fixed",
-          top: "24px",
-          left: "50%",
-          transform: isVisible
-            ? "translateX(-50%) translateY(0) scale(1)"
-            : "translateX(-50%) translateY(14px) scale(0.985)",
-          zIndex: 1000,
-          width: "min(980px, calc(100vw - 48px))",
-          maxHeight: "calc(100vh - 48px)",
-          overflow: "hidden",
-          overscrollBehavior: "contain",
-          borderRadius: "18px",
-          opacity: isVisible ? 1 : 0,
-          outline: "none",
-          transition: `transform ${animationMsRef.current}ms ${EASE_OUT}, opacity ${animationMsRef.current}ms ease`,
-          willChange: "transform, opacity",
-        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        className={`${style.dialog} ${isVisible ? style.dialogVisible : ""}`}
+        style={{ "--modal-dur": `${animationMsRef.current}ms` } as CSSProperties}
       >
+        {/* 시트일 때만 보이는 손잡이. 스크린리더에는 의미가 없어 숨깁니다. */}
+        <div
+          aria-hidden="true"
+          data-testid="sheet-grabber"
+          className={style.grabber}
+        />
         {children}
       </div>
     </>,
